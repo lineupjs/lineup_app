@@ -1,0 +1,79 @@
+{
+  "name": "lineup_app",
+  "homepage": "https://github.com/sgratzl/lineup_app",
+  "version": "1.0.0-alpha.1",
+  "author": {
+    "name": "Samuel Gratzl",
+    "email": "samuel_gratzl@gmx.at"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/sgratzl/lineup_app/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sgratzl/lineup_app.git"
+  },
+  "private": true,
+  "scripts": {
+    "clean": "rimraf build dist",
+    "compile": "tsc",
+    "lint": "tslint --project tsconfig.json -c tslint.json && stylelint src/**/*.scss",
+    "docs": "typedoc --out ./build/docs/ src tsd.d.ts",
+    "prebuild": "npm run clean && (node -e \"process.exit(process.env.PHOVEA_SKIP_TESTS === undefined?1:0)\" || npm run test)",
+    "pretest": "npm run clean && npm run compile",
+    "test": "node -e \"require('fs').existsSync('./tests')?0:1\" || karma start",
+    "posttest": "npm run lint",
+    "test:watch": "karma start --autoWatch=true --singleRun=false",
+    "build:dev": "webpack",
+    "build": "webpack --env prod",
+    "watch": "webpack --watch",
+    "preversion": "npm test",
+    "release:major": "npm version major && npm run build && git push --follow-tags",
+    "release:minor": "npm version minor && npm run build && git push --follow-tags",
+    "release:patch": "npm version patch && npm run build && git push --follow-tags",
+    "release:pre": "npm version prerelease && npm run build && git push --follow-tags",
+    "start": "webpack-dev-server",
+    "predist": "npm run build && npm run docs",
+    "dist": "mkdirp dist && cd build && tar cvzf ../dist/lineup_app.tar.gz --exclude \"docs\" * && cd .."
+  },
+  "devDependencies": {
+    "@types/jasmine": "^2.8.6",
+    "awesome-typescript-loader": "^3.4.1",
+    "css-loader": "^0.28.9",
+    "extract-loader": "^1.0.2",
+    "extract-text-webpack-plugin": "^3.0.2",
+    "file-loader": "^1.1.6",
+    "jasmine": "^2.9.0",
+    "jasmine-promises": "^0.4.1",
+    "json-loader": "^0.5.7",
+    "karma": "^2.0.0",
+    "karma-chrome-launcher": "^2.2.0",
+    "karma-jasmine": "^1.1.1",
+    "karma-junit-reporter": "^1.2.0",
+    "karma-sourcemap-loader": "^0.3.7",
+    "karma-webpack": "^2.0.9",
+    "mkdirp": "^0.5.1",
+    "node-sass": "^4.7.2",
+    "rimraf": "^2.6.2",
+    "raw-loader": "^1.0.0-beta.0",
+    "sass-loader": "^6.0.6",
+    "style-loader": "^0.20.1",
+    "stylelint": "^8.4.0",
+    "stylelint-config-standard": "^18.0.0",
+    "stylelint-scss": "^2.3.0",
+    "tslint": "^5.9.1",
+    "tslint-consistent-codestyle": "^1.11.0",
+    "tslint-eslint-rules": "^4.1.1",
+    "typedoc": "^0.10.0",
+    "typescript": "^2.7.1",
+    "uglify-es": "^3.3.9",
+    "uglifyjs-webpack-plugin": "^1.1.8",
+    "url-loader": "^0.6.2",
+    "webpack": "^3.10.0",
+    "webpack-dev-server": "^2.11.1"
+  },
+  "dependencies": {
+    "lineupjs": "^3.0.1-beta.3"
+  }
+}
