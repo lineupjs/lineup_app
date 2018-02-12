@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>LineUp App</title>
+  <!--Import Google Icon Font-->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link type="text/css" rel="stylesheet" href="./app.css" media="screen,projection" />
+
+  <!--Let browser know website is optimized for mobile-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+
+<body>
+  <header>
+    <nav>
+      <div class="nav-wrapper">
+        <a href="#" class="brand-logo" onclick="window.location.reload()">
+          LineUp</a>
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+          <li>
+            <a href="#">A</a>
+          </li>
+          <li>
+            <a href="#">B</a>
+          </li>
+          <li>
+            <a href="#">E</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+
+  <main data-state="initial">
+    <div class="lu"></div>
+    <div class="container valign-wrapper">
+      <div class="row" style="flex: 1 1 auto">
+        <div class="center-align col s12" id="dropper">
+          <a class="btn btn-floating btn-large pulse" title="Drop file here">
+            <i class="material-icons">file_upload</i>
+          </a>
+          <input type="file">
+        </div>
+        <div class="center-align col s12" id="uploader">
+          <i class="material-icons medium">build</i>
+          <div class="progress">
+            <div class="indeterminate"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="page-footer">
+    <div class="footer-copyright">
+      <div class="container">
+        © 2017
+        <a class="grey-text text-lighten-4" href="https://github.com/sgratzl" target="_blank">Samuel Gratzl</a>
+        <a class="grey-text text-lighten-4 right" href="https://github.com/sgratzl/lineupjs">LineUp.js</a>
+      </div>
+    </div>
+  </footer>
+
+
+  <script type="text/javascript" src="./app.js"></script>
+</body>
+
+</html>
