@@ -3,10 +3,9 @@ import './style.scss';
 import 'jquery';
 import 'imports-loader?jQuery=jquery!materialize-css';
 import { parse, ParseResult } from 'papaparse';
-import { builder, LineUp } from 'lineupjs';
+import { builder } from 'lineupjs';
 import 'lineupjs/build/LineUpJS.css';
 
-let lineup: LineUp;
 
 function uploadFile(file: File) {
   return new Promise<ParseResult>((resolve) => {
@@ -19,7 +18,7 @@ function uploadFile(file: File) {
   });
 }
 function convertFile(result: ParseResult) {
-  lineup = builder(result.data)
+  builder(result.data)
     .deriveColumns(...result.meta.fields)
     .deriveColors()
     .rowHeight(22, 2)
@@ -39,7 +38,7 @@ function showFile(file: File) {
 }
 {
   const file = (<HTMLInputElement>document.querySelector('input[type=file]'));
-  file.addEventListener('change', (evt) => {
+  file.addEventListener('change', () => {
     showFile(file.files![0]);
   });
   (<HTMLElement>document.querySelector('#dropper a')).addEventListener('click', (evt) => {
