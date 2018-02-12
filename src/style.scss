@@ -18,11 +18,11 @@ body {
         display: flex;
         flex-direction: column;
 
-        >div {
+        > div {
             flex: 1 1 auto;
             z-index: 100;
             opacity: 1;
-            transform: opacity 0.5s ease;
+            transition: opacity 0.5s ease;
         }
 
         .lu {
@@ -33,7 +33,7 @@ body {
             bottom: 0;
             visibility: hidden;
             opacity: 0.0;
-            transform: opacity 0.5s ease;
+            transition: opacity 0.5s ease;
             pointer-events: none;
         }
 
