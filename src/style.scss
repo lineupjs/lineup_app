@@ -8,71 +8,71 @@ $secondary-color: color("deep-purple", "lighten-1");
 @import '~materialize-css/sass/materialize';
 
 body {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+
+  >main {
+    flex: 1 0 auto;
+    position: relative;
     display: flex;
-    min-height: 100vh;
     flex-direction: column;
 
-    >main {
-        flex: 1 0 auto;
-        position: relative;
-        display: flex;
-        flex-direction: column;
-
-        > div {
-            flex: 1 1 auto;
-            z-index: 100;
-            opacity: 1;
-            transition: opacity 0.5s ease;
-        }
-
-        .lu {
-            position: absolute;
-            left: 0;
-            right: 0;
-            top: 0;
-            bottom: 0;
-            visibility: hidden;
-            opacity: 0.0;
-            transition: opacity 0.5s ease;
-            pointer-events: none;
-        }
-
-        &[data-state=initial] {
-            #uploader {
-                display: none;
-            }
-        }
-
-        &[data-state=uploading] {
-            #dropper {
-                display: none;
-            }
-
-            .lu {
-                visibility: visible;
-            }
-        }
-
-        &[data-state=ready] {
-            >*:not(.lu) {
-                display: none;
-            }
-
-            .lu {
-                visibility: visible;
-                pointer-events: all;
-                opacity: 1;
-            }
-        }
+    >div {
+      flex: 1 1 auto;
+      z-index: 100;
+      opacity: 1;
+      transition: opacity 0.5s ease;
     }
+
+    .lu {
+      position: absolute;
+      left: 5px;
+      right: 5px;
+      top: 5px;
+      bottom: 5px;
+      visibility: hidden;
+      opacity: 0.0;
+      transition: opacity 0.5s ease;
+      pointer-events: none;
+    }
+
+    &[data-state=initial] {
+      #uploader {
+        display: none;
+      }
+    }
+
+    &[data-state=uploading] {
+      #dropper {
+        display: none;
+      }
+
+      .lu {
+        visibility: visible;
+      }
+    }
+
+    &[data-state=ready] {
+      >*:not(.lu) {
+        display: none;
+      }
+
+      .lu {
+        visibility: visible;
+        pointer-events: all;
+        opacity: 1;
+      }
+    }
+  }
 }
 
 input[type=file] {
-    position: absolute;
-    left: -10000px;
-    visibility: hidden;
+  position: absolute;
+  left: -10000px;
+  visibility: hidden;
 }
 
 .brand-logo {
-    margin-left: 1em;
+  margin-left: 1em;
 }

@@ -3,9 +3,15 @@ import './style.scss';
 import 'jquery';
 import 'imports-loader?jQuery=jquery!materialize-css';
 import { parse, ParseResult } from 'papaparse';
-import { builder } from 'lineupjs';
+import { builder, LineUp } from 'lineupjs';
 import 'lineupjs/build/LineUpJS.css';
 
+
+let lineup: LineUp;
+let uploadedFile: File;
+const uploader = <HTMLElement>document.querySelector('main');
+const downloadCSV = <HTMLLinkElement>document.querySelector('#downloadCSV');
+const downloadCSVHelper = <HTMLLinkElement>document.querySelector('#downloadCSVHelper');
 
 function uploadFile(file: File) {
   return new Promise<ParseResult>((resolve) => {
@@ -18,24 +24,37 @@ function uploadFile(file: File) {
   });
 }
 function convertFile(result: ParseResult) {
-  builder(result.data)
+  lineup = builder(result.data)
     .deriveColumns(...result.meta.fields)
     .deriveColors()
     .rowHeight(22, 2)
     .defaultRanking()
     .build(<HTMLElement>document.querySelector('div.lu'));
 }
-const uploader = <HTMLElement>document.querySelector('main');
 
 function showFile(file: File) {
+  uploadedFile = file;
   uploader.dataset.state = 'uploading';
   uploadFile(file)
     .then(convertFile)
     .then(() => new Promise<any>((resolve) => setTimeout(resolve, 500)))
     .then(() => {
+      downloadCSV.classList.remove('disabled');
       uploader.dataset.state = 'ready';
     });
 }
+
+downloadCSV.addEventListener('click', (evt) => {
+  evt.preventDefault();
+  evt.stopPropagation();
+  lineup.data.exportTable(lineup.data.getRankings()[0], {}).then((csv) => {
+    // download link
+    downloadCSVHelper.href = `data:text/csv;charset=utf-8,${csv}`;
+    (<any>downloadCSVHelper).download = `${uploadedFile.name}.csv`;
+    downloadCSVHelper.click();
+  });
+});
+
 {
   const file = (<HTMLInputElement>document.querySelector('input[type=file]'));
   file.addEventListener('change', () => {
