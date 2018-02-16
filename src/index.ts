@@ -119,6 +119,8 @@ function showFile(file: File) {
       }
     };
 
+    const loading = Materialize.toast((<HTMLElement>document.querySelector('#export-helper')).innerHTML, 100000);
+
     fetch('https://api.github.com/gists', {
       body: JSON.stringify(data),
       cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
@@ -132,6 +134,7 @@ function showFile(file: File) {
       referrer: 'no-referrer'
     }).then((r) => r.json())
       .then((r: any) => {
+        loading.remove();
         Materialize.toast(`
           <span>Successfully exported</span>
           <a class="btn-flat toast-action" href="${r.html_url}" target="_blank">Open Gist</button>
@@ -139,6 +142,7 @@ function showFile(file: File) {
         `, 10000);
       })
       .catch((error) => {
+        loading.remove();
         Materialize.toast(`
           <span>Error during export</span>
           <span>${error}</span>
