@@ -1,41 +1,18 @@
 import 'file-loader?name=index.html!./index.html';
 import './style.scss';
-import 'materialize-css';
+import * as Materialize from 'materialize-css';
 import {parse, ParseResult} from 'papaparse';
 import {builder, LineUp} from 'lineupjs';
 import 'lineupjs/build/LineUpJS.css';
+
+import CODEPEN_CSS from 'raw-loader!../templates/style.tcss';
+import CODEPEN_JS from 'raw-loader!../templates/index.js';
+import GIST_HTML from 'raw-loader!../templates/index.html';
 
 
 let lineup: LineUp;
 let uploadedFile: File;
 const uploader = <HTMLElement>document.querySelector('main');
-
-const downloadCSV = <HTMLLinkElement>document.querySelector('#downloadCSV');
-const downloadCSVHelper = <HTMLLinkElement>document.querySelector('#downloadCSVHelper');
-const createCodepen = <HTMLLinkElement>document.querySelector('#createCodePen');
-const createCodepenHelper = <HTMLFormElement>document.querySelector('#createCodePenHelper');
-
-const CODEPEN_CSS = `.lu {
-  clear: both;
-  position: absolute;
-  top: 1px;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  padding: 0;
-}`;
-
-const CODEPEN_JS = `const arr = [];
-const cats = ['c1', 'c2', 'c3'];
-for (let i = 0; i < 100; ++i) {
-  arr.push({
-    a: Math.random() * 10,
-    d: 'Row ' + i,
-    cat: cats[Math.floor(Math.random() * 3)],
-    cat2: cats[Math.floor(Math.random() * 3)]
-  })
-}
-const lineup = LineUpJS.asLineUp(document.body, arr);`;
 
 function uploadFile(file: File) {
   return new Promise<ParseResult>((resolve) => {
@@ -70,43 +47,99 @@ function showFile(file: File) {
     });
 }
 
-downloadCSV.addEventListener('click', (evt) => {
-  evt.preventDefault();
-  evt.stopPropagation();
-  lineup.data.exportTable(lineup.data.getRankings()[0], {}).then((csv) => {
-    // download link
-    downloadCSVHelper.href = `data:text/csv;charset=utf-8,${csv}`;
-    (<any>downloadCSVHelper).download = `${uploadedFile.name}.csv`;
-    downloadCSVHelper.click();
+{
+  const downloadCSV = <HTMLLinkElement>document.querySelector('#downloadCSV');
+  const downloadCSVHelper = <HTMLLinkElement>document.querySelector('#downloadCSVHelper');
+  downloadCSV.addEventListener('click', (evt) => {
+    evt.preventDefault();
+    evt.stopPropagation();
+    lineup.data.exportTable(lineup.data.getRankings()[0], {}).then((csv) => {
+      // download link
+      downloadCSVHelper.href = `data:text/csv;charset=utf-8,${csv}`;
+      (<any>downloadCSVHelper).download = `${uploadedFile.name}.csv`;
+      downloadCSVHelper.click();
+    });
   });
-});
+}
+{
+  const createCodepen = <HTMLLinkElement>document.querySelector('#createCodePen');
+  const createCodepenHelper = <HTMLFormElement>document.querySelector('#createCodePenHelper');
+  createCodepen.addEventListener('click', (evt) => {
+    evt.preventDefault();
+    evt.stopPropagation();
 
-createCodepen.addEventListener('click', (evt) => {
-  evt.preventDefault();
-  evt.stopPropagation();
+    const data = {
+      title: `LineUp ${uploadedFile.name}`,
+      description: 'this is an auto exported from the LineUp demo app',
+      html: ``,
+      css: CODEPEN_CSS,
+      css_pre_processor: 'scss',
+      css_starter: 'normalize',
+      js: CODEPEN_JS,
+      js_pre_processor: 'babel',
+      js_modernizr: false,
+      css_external: 'https://sgratzl.github.io/lineupjs_docs/master/LineUpJS.min.css',
+      js_external: 'https://sgratzl.github.io/lineupjs_docs/master/LineUpJS.min.js'
+    };
 
-  const data = {
-    title: `LineUp ${uploadedFile.name}`,
-    description: 'this is an auto exported from the LineUp demo app',
-    html: ``,
-    css: CODEPEN_CSS,
-    css_pre_processor: 'scss',
-    css_starter: 'normalize',
-    js: CODEPEN_JS,
-    js_pre_processor: 'babel',
-    js_modernizr: false,
-    css_external: 'https://sgratzl.github.io/lineupjs_docs/master/LineUpJS.min.css',
-    js_external: 'https://sgratzl.github.io/lineupjs_docs/master/LineUpJS.min.js'
-  };
+    const json = JSON.stringify(data)
+      // Quotes will screw up the JSON
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&apos;');
 
-  const json = JSON.stringify(data)
-    // Quotes will screw up the JSON
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&apos;');
+    createCodepenHelper.querySelector('input')!.value = json;
+    createCodepenHelper.submit();
+  });
+}
+{
+  const createGist = <HTMLLinkElement>document.querySelector('#createGist');
+  createGist.addEventListener('click', (evt) => {
+    evt.preventDefault();
+    evt.stopPropagation();
 
-  createCodepenHelper.querySelector('input')!.value = json;
-  createCodepenHelper.submit();
-});
+    const data = {
+      description: `LineUp ${uploadedFile.name}`,
+      public: false,
+      files: {
+        'index.html': {
+          content: GIST_HTML
+        },
+        'index.js': {
+          content: CODEPEN_JS
+        },
+        'style.css': {
+          content: CODEPEN_CSS
+        }
+      }
+    };
+
+    fetch('https://api.github.com/gists', {
+      body: JSON.stringify(data),
+      cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+      credentials: 'same-origin', // include, *omit
+      headers: {
+        'content-type': 'application/json'
+      },
+      method: 'POST',
+      mode: 'cors',
+      redirect: 'follow',
+      referrer: 'no-referrer'
+    }).then((r) => r.json())
+      .then((r: any) => {
+        Materialize.toast(`
+          <span>Successfully exported</span>
+          <a class="btn-flat toast-action" href="${r.html_url}" target="_blank">Open Gist</button>
+          <a class="btn-flat toast-action" href="https://bl.ocks.org/${r.id}" target="_blank">Open Bl.ocks</button>
+        `, 10000);
+      })
+      .catch((error) => {
+        Materialize.toast(`
+          <span>Error during export</span>
+          <span>${error}</span>
+        `, 10000, 'red darken-1');
+      });
+  });
+}
 
 {
   const file = (<HTMLInputElement>document.querySelector('input[type=file]'));

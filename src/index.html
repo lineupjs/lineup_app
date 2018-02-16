@@ -18,18 +18,26 @@
       <a href="#" class="brand-logo" onclick="window.location.reload()">
         LineUp</a>
       <div class="fixed-action-btn horizontal" style="position: initial">
-        <a id="downloadCSV" class="btn-floating btn-large halfway-fab waves-effect waves-light disabled" title="Download CSV">
+        <a class="btn-floating btn-large halfway-fab waves-effect waves-light disabled">
           <i class="material-icons">file_download</i>
         </a>
         <ul>
           <li>
-            <a href="#" id="createCodePen" title="Export to CodePen.io" class="btn-floating black waves-effect waves-light">
+            <a href="#" id="createCodePen" class="btn-floating black waves-effect waves-light tooltipped" data-position="bottom" data-delay="50"
+              data-tooltip="Export to CodePen.io">
               <i class="material-icons fa fa-codepen"></i>
             </a>
           </li>
           <li>
-            <a href="#" id="createGist" title="Export to Github Gist" class="btn-floating black waves-effect waves-light">
+            <a href="#" id="createGist" class="btn-floating black waves-effect waves-light tooltipped" data-position="bottom" data-delay="50"
+              data-tooltip="Export to Github Gist">
               <i class="material-icons fa fa-github"></i>
+            </a>
+          </li>
+          <li>
+            <a href="#" id="downloadCSV" class="btn-floating black waves-effect waves-light tooltipped" data-position="bottom" data-delay="50"
+              data-tooltip="Download CSV">
+              <i class="material-icons fa fa-file-o"></i>
             </a>
           </li>
         </ul>
@@ -68,8 +76,8 @@
   </footer>
 
   <div style="position: absolute; left: -10000px">
-    <a href="#" id="downloadCSVHelper" style="visibility: hidden"></a>
-    <form id="createCodePenHelper" method="post" action="https://codepen.io/pen/define" target="_blank" style="visibility: hidden">
+    <a href="#" id="downloadCSVHelper" target="_blank"></a>
+    <form id="createCodePenHelper" method="post" action="https://codepen.io/pen/define" target="_blank">
       <input type="hidden" name="data">
     </form>
   </div>
