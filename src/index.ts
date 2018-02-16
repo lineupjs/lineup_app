@@ -12,16 +12,22 @@ import GIST_HTML from 'raw-loader!../templates/index.html';
 
 let lineup: LineUp;
 let uploadedFile: File;
+let uploadedFileContent: string;
 const uploader = <HTMLElement>document.querySelector('main');
 
 function uploadFile(file: File) {
   return new Promise<ParseResult>((resolve) => {
-    parse(file, {
-      dynamicTyping: true,
-      header: true,
-      complete: resolve,
-      skipEmptyLines: true
-    });
+    const reader = new FileReader();
+    reader.onload = () => {
+      uploadedFileContent = String(reader.result);
+      const parsed = parse(uploadedFileContent, {
+        dynamicTyping: true,
+        header: true,
+        skipEmptyLines: true
+      });
+      resolve(parsed);
+    };
+    reader.readAsText(file);
   });
 }
 function convertFile(result: ParseResult) {
@@ -71,7 +77,7 @@ function showFile(file: File) {
     const data = {
       title: `LineUp ${uploadedFile.name}`,
       description: 'this is an auto exported from the LineUp demo app',
-      html: ``,
+      html: `<script id="data" type="text/csv">${uploadedFileContent}</script>`,
       css: CODEPEN_CSS,
       css_pre_processor: 'scss',
       css_starter: 'normalize',
@@ -79,7 +85,7 @@ function showFile(file: File) {
       js_pre_processor: 'babel',
       js_modernizr: false,
       css_external: 'https://sgratzl.github.io/lineupjs_docs/master/LineUpJS.min.css',
-      js_external: 'https://sgratzl.github.io/lineupjs_docs/master/LineUpJS.min.js'
+      js_external: 'https://sgratzl.github.io/lineupjs_docs/master/LineUpJS.min.js;https://cdn.rawgit.com/mholt/PapaParse/master/papaparse.min.js'
     };
 
     const json = JSON.stringify(data)
@@ -102,7 +108,7 @@ function showFile(file: File) {
       public: false,
       files: {
         'index.html': {
-          content: GIST_HTML
+          content: GIST_HTML.replace('DATADATA', uploadedFileContent)
         },
         'index.js': {
           content: CODEPEN_JS
