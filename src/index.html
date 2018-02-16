@@ -21,7 +21,15 @@
           <a href="#" id="downloadCSV" title="Download as CSV" class="btn-floating btn-large waves-effect waves-light disabled">
             <i class="material-icons">file_download</i>
           </a>
-          <a href="#" id="downloadCSVHelper" display="none"></a>
+          <a href="#" id="downloadCSVHelper" style="visibility: hidden"></a>
+        </li>
+        <li>
+          <a href="#" id="createCodePen" title="Export to CodePen.io" class="btn-floating btn-large waves-effect waves-light disabled">
+            <i class="material-icons">cloud_upload</i>
+          </a>
+          <form id="createCodePenHelper" method="post" target="_blank" style="visibility: hidden">
+            <input type="hidden" name="data">
+          </form>
         </li>
       </ul>
     </div>
