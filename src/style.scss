@@ -12,13 +12,13 @@ body {
   min-height: 100vh;
   flex-direction: column;
 
-  >main {
+  > main {
     flex: 1 0 auto;
     position: relative;
     display: flex;
     flex-direction: column;
 
-    >div {
+    > div {
       flex: 1 1 auto;
       z-index: 100;
       opacity: 1;
@@ -54,7 +54,7 @@ body {
     }
 
     &[data-state=ready] {
-      >*:not(.lu) {
+      > *:not(.lu) {
         display: none;
       }
 
@@ -75,4 +75,9 @@ input[type=file] {
 
 .brand-logo {
   margin-left: 1em;
+}
+
+nav .fixed-action-btn li {
+  float: unset;
+  text-align: right;
 }

@@ -16,28 +16,24 @@
     <div class="nav-wrapper">
       <a href="#" class="brand-logo" onclick="window.location.reload()">
         LineUp</a>
-      <ul id="nav-mobile" class="right hide-on-med-and-down">
-        <li>
-          <a href="#" id="downloadCSV" title="Download as CSV" class="btn-floating btn-large waves-effect waves-light disabled">
-            <i class="material-icons">file_download</i>
-          </a>
-          <a href="#" id="downloadCSVHelper" style="visibility: hidden"></a>
-        </li>
-        <li>
-          <a href="#" id="createCodePen" title="Export to CodePen.io" class="btn-floating btn-large waves-effect waves-light disabled">
-            <i>
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 26 26" fill="none" stroke="white" stroke-width="2.3" stroke-linecap="round"
-                stroke-linejoin="round" style="transform: scale(0.5)">
-                <path d="M22 16.7L33 24l11-7.3V9.3L33 2L22 9.3V16.7z M44 16.7L33 9.3l-11 7.4 M22 9.3l11 7.3 l11-7.3 M33 2v7.3 M33 16.7V24"
-                  transform="translate(-20,0)" />
-              </svg>
-            </i>
-          </a>
-          <form id="createCodePenHelper" method="post" action="https://codepen.io/pen/define" target="_blank" style="visibility: hidden">
-            <input type="hidden" name="data">
-          </form>
-        </li>
-      </ul>
+      <div class="fixed-action-btn horizontal" style="position: initial">
+        <a id="downloadCSV" class="btn-floating btn-large halfway-fab waves-effect waves-light disabled" title="Download CSV">
+          <i class="material-icons">file_download</i>
+        </a>
+        <ul>
+          <li>
+            <a href="#" id="createCodePen" title="Export to CodePen.io" class="btn-floating black waves-effect waves-light">
+              <i>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 26 26" fill="none" stroke="white" stroke-width="2.3" stroke-linecap="round"
+                  stroke-linejoin="round" style="transform: scale(0.5)">
+                  <path d="M22 16.7L33 24l11-7.3V9.3L33 2L22 9.3V16.7z M44 16.7L33 9.3l-11 7.4 M22 9.3l11 7.3 l11-7.3 M33 2v7.3 M33 16.7V24"
+                    transform="translate(-20,0)" />
+                </svg>
+              </i>
+            </a>
+          </li>
+        </ul>
+      </div>
     </div>
   </nav>
 
@@ -71,6 +67,12 @@
     </div>
   </footer>
 
+  <div style="position: absolute; left: -10000px">
+    <a href="#" id="downloadCSVHelper" style="visibility: hidden"></a>
+    <form id="createCodePenHelper" method="post" action="https://codepen.io/pen/define" target="_blank" style="visibility: hidden">
+      <input type="hidden" name="data">
+    </form>
+  </div>
 
   <script type="text/javascript" src="./app.js"></script>
 </body>

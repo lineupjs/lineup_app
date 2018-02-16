@@ -1,7 +1,6 @@
 import 'file-loader?name=index.html!./index.html';
 import './style.scss';
-import 'jquery';
-import 'imports-loader?jQuery=jquery!materialize-css';
+import 'materialize-css';
 import {parse, ParseResult} from 'papaparse';
 import {builder, LineUp} from 'lineupjs';
 import 'lineupjs/build/LineUpJS.css';
@@ -64,8 +63,9 @@ function showFile(file: File) {
     .then(convertFile)
     .then(() => new Promise<any>((resolve) => setTimeout(resolve, 500)))
     .then(() => {
-      downloadCSV.classList.remove('disabled');
-      createCodepen.classList.remove('disabled');
+      Array.from(document.querySelectorAll('.nav-wrapper a.disabled')).forEach((d: HTMLElement) => {
+        d.classList.remove('disabled');
+      });
       uploader.dataset.state = 'ready';
     });
 }
