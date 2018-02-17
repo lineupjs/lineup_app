@@ -13,7 +13,7 @@
       "es2016.array.include",
       "es2017.object"
     ],
-    "declaration": true,
+    "declaration": false,
     "declarationDir": "./build/typings",
     "removeComments": true,
     "noImplicitAny": true,
