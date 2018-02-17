@@ -6,7 +6,16 @@ LineUp App
 LineUp is an interactive technique designed to create, visualize and explore rankings of items based on a set of heterogeneous attributes. 
 This is a demo application using [LineUp.js](https://github.com/sgratzl/lineupjs). Details about the LineUp visualization technique can be found at [http://lineup.caleydo.org](http://lineup.caleydo.org). 
 
-TODO
+The application is deployed at: https://sgratzl.github.io/lineupjs_docs/app
+
+**Features**
+ * CSV Import
+ * CSV Export
+ * JSON Export
+ * CodePen Export
+ * Github Gist Export
+
+
 
 Supported Browsers
 ------------------
