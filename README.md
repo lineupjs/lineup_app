@@ -15,7 +15,7 @@ The application is deployed at: https://sgratzl.github.io/lineupjs_docs/app
  * CodePen Export
  * Github Gist Export
 
-
+![Screenshot](https://user-images.githubusercontent.com/4129778/36336600-8590a932-1389-11e8-8de0-269079efc37b.png) 
 
 Supported Browsers
 ------------------
