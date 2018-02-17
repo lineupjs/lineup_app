@@ -18,9 +18,13 @@ function build(builder: Promise<IDataset>) {
   uploader.dataset.state = 'uploading';
   builder.then((d: IDataset) => {
     dataset = d;
-    lineup = d.build(<HTMLElement>document.querySelector('div.lu'));
+    lineup = d.build(<HTMLElement>document.querySelector('div.lu-c'));
   }).then(() => new Promise<any>((resolve) => setTimeout(resolve, 500)))
     .then(() => {
+      const next = `#${dataset!.id}`;
+      if (location.hash !== 'next') {
+        location.assign(next);
+      }
       (<HTMLElement>document.querySelector('.brand-logo')).textContent = document.title = `LineUp ${dataset!.title}`;
       Array.from(document.querySelectorAll('.nav-wrapper a.disabled')).forEach((d: HTMLElement) => {
         d.classList.remove('disabled');
@@ -42,8 +46,23 @@ function reset() {
   uploader.dataset.state = 'initial';
 }
 
+function rebuildCarousel() {
+  const base = <HTMLElement>document.querySelector('.carousel');
+  $('.carousel').carousel('destroy');
+  delete base.dataset.namespace;
+  base.classList.remove('initialized');
+  base.innerHTML = '';
+  data.forEach((d) => base.insertAdjacentHTML('afterbegin', toCard(d)));
+
+  // init carousel
+  $('.carousel').carousel();
+}
+
 function showFile(file: File) {
-  build(fromFile(file));
+  build(fromFile(file).then((r) => {
+    data.unshift(r);
+    return r;
+  }));
 }
 
 {
@@ -185,14 +204,7 @@ function showFile(file: File) {
   });
 }
 
-{
-  const base = <HTMLElement>document.querySelector('.carousel');
-
-  data.forEach((d) => base.insertAdjacentHTML('afterbegin', toCard(d)));
-  // init carousel
-  $(() => $('.carousel').carousel());
-
-}
+rebuildCarousel();
 
 {
   const h = location.hash.slice(1);
@@ -205,6 +217,7 @@ function showFile(file: File) {
       return;
     }
     reset();
+    rebuildCarousel();
     if (newDataset) {
       build(Promise.resolve(newDataset));
     }
