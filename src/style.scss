@@ -25,18 +25,6 @@ body {
       transition: opacity 0.5s ease;
     }
 
-    .lu {
-      position: absolute;
-      left: 5px;
-      right: 5px;
-      top: 5px;
-      bottom: 5px;
-      visibility: hidden;
-      opacity: 0;
-      transition: opacity 0.5s ease;
-      pointer-events: none;
-    }
-
     &[data-state=initial] {
       #uploader {
         display: none;
@@ -67,9 +55,6 @@ body {
   }
 }
 
-input[type=file] {
-}
-
 .brand-logo {
   margin-left: 1em;
 }
@@ -81,4 +66,33 @@ nav .fixed-action-btn li {
   > a {
     margin: 0;
   }
+}
+
+.carousel {
+  height: 600px;
+
+  .card-image {
+    height: 250px;
+  }
+
+  .carousel-item {
+    width: 500px;
+    height: 400px;
+  }
+
+  .card-reveal p {
+    text-align: justify;
+  }
+}
+
+.lu {
+  position: absolute;
+  left: 5px;
+  right: 5px;
+  top: 5px;
+  bottom: 5px;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  pointer-events: none;
 }

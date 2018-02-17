@@ -10,10 +10,7 @@ import CODEPEN_CSS from 'raw-loader!../templates/style.tcss';
 import CODEPEN_JS from 'raw-loader!../templates/index.js';
 import GIST_HTML from 'raw-loader!../templates/index.html';
 
-// init carousel
-$(() => $('.carousel').carousel({
-  indicators: true
-}));
+import data, {toCard} from './data';
 
 let lineup: LineUp;
 let uploadedName: string;
@@ -196,4 +193,13 @@ function showFile(file: File) {
     showFile(evt.dataTransfer.files[0]);
     evt.preventDefault();
   });
+}
+
+{
+  const base = <HTMLElement>document.querySelector('.carousel');
+
+  data.forEach((d) => base.insertAdjacentHTML('afterbegin', toCard(d)));
+  // init carousel
+  $(() => $('.carousel').carousel());
+
 }
