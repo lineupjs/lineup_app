@@ -11,11 +11,12 @@ import GIST_HTML from 'raw-loader!../templates/index.html';
 
 
 let lineup: LineUp;
-let uploadedFile: File;
+let uploadedName: string;
 let uploadedFileContent: string;
 const uploader = <HTMLElement>document.querySelector('main');
 
 function uploadFile(file: File) {
+  uploadedName = file.name.split('.').slice(0, -1).join('.');
   return new Promise<ParseResult>((resolve) => {
     const reader = new FileReader();
     reader.onload = () => {
@@ -40,12 +41,12 @@ function convertFile(result: ParseResult) {
 }
 
 function showFile(file: File) {
-  uploadedFile = file;
   uploader.dataset.state = 'uploading';
   uploadFile(file)
     .then(convertFile)
     .then(() => new Promise<any>((resolve) => setTimeout(resolve, 500)))
     .then(() => {
+      (<HTMLElement>document.querySelector('.brand-logo')).textContent = document.title = `LineUp ${uploadedName}`;
       Array.from(document.querySelectorAll('.nav-wrapper a.disabled')).forEach((d: HTMLElement) => {
         d.classList.remove('disabled');
       });
@@ -61,7 +62,7 @@ function showFile(file: File) {
     lineup.data.exportTable(lineup.data.getRankings()[0], {}).then((csv) => {
       // download link
       downloadHelper.href = `data:text/csv;charset=utf-8,${csv}`;
-      (<any>downloadHelper).download = `${uploadedFile.name}.csv`;
+      (<any>downloadHelper).download = `${uploadedName}.csv`;
       downloadHelper.click();
     });
   });
@@ -81,7 +82,7 @@ function showFile(file: File) {
     });
     // download link
     downloadHelper.href = `data:application/json;charset=utf-8,${JSON.stringify(json)}`;
-    (<any>downloadHelper).download = `${uploadedFile.name}.json`;
+    (<any>downloadHelper).download = `${uploadedName}.json`;
     downloadHelper.click();
   });
 }
@@ -93,7 +94,7 @@ function showFile(file: File) {
     evt.stopPropagation();
 
     const data = {
-      title: `LineUp ${uploadedFile.name}`,
+      title: document.title,
       description: 'this is an auto exported from the LineUp demo app',
       html: `<script id="data" type="text/csv">${uploadedFileContent}</script>`,
       css: CODEPEN_CSS,
@@ -122,7 +123,7 @@ function showFile(file: File) {
     evt.stopPropagation();
 
     const data = {
-      description: `LineUp ${uploadedFile.name}`,
+      description: document.title,
       public: false,
       files: {
         'index.html': {
