@@ -2,7 +2,7 @@ import 'file-loader?name=index.html!./index.html';
 import './style.scss';
 import * as Materialize from 'materialize-css';
 import {parse, ParseResult} from 'papaparse';
-import {builder, LineUp} from 'lineupjs';
+import {builder, LineUp, isSupportType, LocalDataProvider} from 'lineupjs';
 import 'lineupjs/build/LineUpJS.css';
 
 import CODEPEN_CSS from 'raw-loader!../templates/style.tcss';
@@ -54,17 +54,35 @@ function showFile(file: File) {
 }
 
 {
-  const downloadCSV = <HTMLLinkElement>document.querySelector('#downloadCSV');
-  const downloadCSVHelper = <HTMLLinkElement>document.querySelector('#downloadCSVHelper');
-  downloadCSV.addEventListener('click', (evt) => {
+  const downloadHelper = <HTMLLinkElement>document.querySelector('#downloadHelper');
+  document.querySelector('#downloadCSV')!.addEventListener('click', (evt) => {
     evt.preventDefault();
     evt.stopPropagation();
     lineup.data.exportTable(lineup.data.getRankings()[0], {}).then((csv) => {
       // download link
-      downloadCSVHelper.href = `data:text/csv;charset=utf-8,${csv}`;
-      (<any>downloadCSVHelper).download = `${uploadedFile.name}.csv`;
-      downloadCSVHelper.click();
+      downloadHelper.href = `data:text/csv;charset=utf-8,${csv}`;
+      (<any>downloadHelper).download = `${uploadedFile.name}.csv`;
+      downloadHelper.click();
     });
+  });
+  document.querySelector('#downloadJSON')!.addEventListener('click', (evt) => {
+    evt.preventDefault();
+    evt.stopPropagation();
+    const ranking = lineup.data.getRankings()[0];
+    const cols = ranking.flatColumns.filter((d) => !isSupportType(d));
+    const data = <LocalDataProvider>lineup.data;
+    const ordered = data.viewRawRows(ranking.getOrder());
+    const json = ordered.map((row) => {
+      const r: any = {};
+      cols.forEach((col) => {
+        r[col.label] = col.getValue(row);
+      });
+      return r;
+    });
+    // download link
+    downloadHelper.href = `data:application/json;charset=utf-8,${JSON.stringify(json)}`;
+    (<any>downloadHelper).download = `${uploadedFile.name}.json`;
+    downloadHelper.click();
   });
 }
 {
