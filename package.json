@@ -77,7 +77,7 @@
   "dependencies": {
     "@types/materialize-css": "^1.0.1",
     "@types/papaparse": "^4.1.33",
-    "lineupjs": "^3.0.1-beta.3",
+    "lineupjs": "sgratzl/lineupjs#develop",
     "materialize-css": "^0.100.2",
     "papaparse": "^4.3.7"
   }
