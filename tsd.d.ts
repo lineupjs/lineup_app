@@ -21,3 +21,4 @@ declare module "url-loader!*";
 declare module "imports-loader!*";
 
 declare module "materialize-css";
+declare module "jquery";

@@ -1,6 +1,7 @@
 import 'file-loader?name=index.html!./index.html';
 import './style.scss';
 import * as Materialize from 'materialize-css';
+import * as $ from 'jquery';
 import {parse, ParseResult} from 'papaparse';
 import {builder, LineUp, isSupportType, LocalDataProvider} from 'lineupjs';
 import 'lineupjs/build/LineUpJS.css';
@@ -9,6 +10,10 @@ import CODEPEN_CSS from 'raw-loader!../templates/style.tcss';
 import CODEPEN_JS from 'raw-loader!../templates/index.js';
 import GIST_HTML from 'raw-loader!../templates/index.html';
 
+// init carousel
+$(() => $('.carousel').carousel({
+  indicators: true
+}));
 
 let lineup: LineUp;
 let uploadedName: string;
@@ -175,7 +180,7 @@ function showFile(file: File) {
   file.addEventListener('change', () => {
     showFile(file.files![0]);
   });
-  (<HTMLElement>document.querySelector('#dropper a')).addEventListener('click', (evt) => {
+  (<HTMLElement>document.querySelector('#dropper a.btn')).addEventListener('click', (evt) => {
     evt.preventDefault();
     evt.stopPropagation();
     file.click();
