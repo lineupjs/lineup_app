@@ -22,3 +22,5 @@ declare module "imports-loader!*";
 
 declare module "materialize-css";
 declare module "jquery";
+
+declare const System: {import(module: string): Pormise<any>};

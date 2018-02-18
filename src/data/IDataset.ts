@@ -11,5 +11,5 @@ export interface IDataset {
 
   buildScript(rawVariable: string, domVariable: string): string;
 
-  build(node: HTMLElement): LineUp;
+  build(node: HTMLElement): Promise<LineUp> | LineUp;
 }

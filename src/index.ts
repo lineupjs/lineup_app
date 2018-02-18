@@ -18,19 +18,21 @@ function build(builder: Promise<IDataset>) {
   uploader.dataset.state = 'uploading';
   builder.then((d: IDataset) => {
     dataset = d;
-    lineup = d.build(<HTMLElement>document.querySelector('div.lu-c'));
-  }).then(() => new Promise<any>((resolve) => setTimeout(resolve, 500)))
-    .then(() => {
-      const next = `#${dataset!.id}`;
-      if (location.hash !== 'next') {
-        location.assign(next);
-      }
-      (<HTMLElement>document.querySelector('.brand-logo')).textContent = document.title = `LineUp ${dataset!.title}`;
-      Array.from(document.querySelectorAll('.nav-wrapper a.disabled')).forEach((d: HTMLElement) => {
-        d.classList.remove('disabled');
-      });
-      uploader.dataset.state = 'ready';
+    return d.build(<HTMLElement>document.querySelector('div.lu-c'));
+  }).then((l) => {
+    lineup = l;
+    return new Promise<any>((resolve) => setTimeout(resolve, 500));
+  }).then(() => {
+    const next = `#${dataset!.id}`;
+    if (location.hash !== 'next') {
+      location.assign(next);
+    }
+    (<HTMLElement>document.querySelector('.brand-logo')).textContent = document.title = `LineUp ${dataset!.title}`;
+    Array.from(document.querySelectorAll('.nav-wrapper a.disabled')).forEach((d: HTMLElement) => {
+      d.classList.remove('disabled');
     });
+    uploader.dataset.state = 'ready';
+  });
 }
 
 function reset() {
