@@ -2,10 +2,13 @@ import {IDataset} from '../IDataset';
 import {parse, ParseResult} from 'papaparse';
 import {builder, buildRanking, buildStringColumn, buildNumberColumn} from 'lineupjs';
 
+import image from './wur.png';
+import imageShanghai from './shanghai.png';
+
 export const wur: IDataset = {
   id: 'wur',
   title: 'Times Higher Education World University Ranking',
-  image: '',
+  image,
   link: 'https://www.kaggle.com/mylesoneill/world-university-rankings/version/3',
   description: `<p>
   Of all the universities in the world, which are the best?
@@ -69,7 +72,7 @@ and for undermining non-English-instructing institutions.
 export const shanghai: IDataset = {
   id: 'shanghai',
   title: 'Academic Ranking of World Universities',
-  image: '',
+  image: imageShanghai,
   link: 'https://www.kaggle.com/mylesoneill/world-university-rankings/version/3',
   description: `<p>
   Of all the universities in the world, which are the best?

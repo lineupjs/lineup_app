@@ -1,11 +1,12 @@
 import {IDataset} from '../IDataset';
 import {parse, ParseResult} from 'papaparse';
 import {builder, buildRanking, buildStringColumn, buildNumberColumn} from 'lineupjs';
+import image from './happiness.png';
 
 export const data: IDataset = {
   id: 'happiness',
   title: 'World Happiness Report',
-  image: '',
+  image,
   link: 'https://www.kaggle.com/unsdsn/world-happiness',
   description: `<p>The World Happiness Report is a landmark survey of the state of global happiness. The first report was published in 2012,
   the second in 2013, the third in 2015, and the fourth in the 2016 Update. The World Happiness 2017, which
@@ -51,6 +52,7 @@ export const data: IDataset = {
     }).then((parsed: ParseResult) => {
       // "Country","Happiness.Rank","Happiness.Score","Whisker.high","Whisker.low","Economy..GDP.per.Capita.","Family","Health..Life.Expectancy.","Freedom","Generosity","Trust..Government.Corruption.","Dystopia.Residual"
       return builder(parsed.data)
+        .rowHeight(22, 2)
         .column(buildStringColumn('Country'))
         .column(buildNumberColumn('Happiness.Score', [0, 10]))
         .column(buildNumberColumn('Economy..GDP.per.Capita.', [0, 10]))
