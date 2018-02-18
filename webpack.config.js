@@ -1,4 +1,3 @@
-
 const resolve = require('path').resolve;
 const pkg = require('./package.json');
 const webpack = require('webpack');
@@ -19,9 +18,14 @@ const banner = '/*! ' + (pkg.title || pkg.name) + ' - v' + pkg.version + ' - ' +
 
 
 //list of loaders and their mappings
-const webpackloaders = [
-  {test: /\.s?css$/, loader: 'style-loader!css-loader!sass-loader'},
-  {test: /\.tsx?$/, loader: 'awesome-typescript-loader'},
+const webpackloaders = [{
+    test: /\.s?css$/,
+    loader: 'style-loader!css-loader!sass-loader'
+  },
+  {
+    test: /\.tsx?$/,
+    loader: 'awesome-typescript-loader'
+  },
   {
     test: /\.(png|jpg)$/,
     loader: 'url-loader',
@@ -45,7 +49,10 @@ const webpackloaders = [
       mimetype: 'image/svg+xml'
     }
   },
-  {test: /\.(ttf|eot)(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: 'file-loader'}
+  {
+    test: /\.(ttf|eot)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+    loader: 'file-loader'
+  }
 ];
 
 /**
@@ -58,7 +65,7 @@ function generateWebpack(options) {
     },
     output: {
       path: resolve(__dirname, 'build'),
-      filename: `[name]${options.min && !options.nosuffix ? '.min' : ''}.js`,
+      filename: `[name].js`,
       chunkFilename: '[chunkhash].js',
       publicPath: '' //no public path = relative
     },
@@ -70,7 +77,7 @@ function generateWebpack(options) {
     plugins: [
       //define magic constants that are replaced
       new webpack.DefinePlugin({
-        'process.env.NODE_ENV': JSON.stringify(options.isProduction ? 'production': 'development'),
+        'process.env.NODE_ENV': JSON.stringify(options.isProduction ? 'production' : 'development'),
         __VERSION__: JSON.stringify(pkg.version),
         __LICENSE__: JSON.stringify(pkg.license),
         __BUILD_ID__: JSON.stringify(buildId),
@@ -90,25 +97,25 @@ function generateWebpack(options) {
       aggregateTimeout: 500,
       ignored: /node_modules/
     },
-    devServer: {
-    }
+    devServer: {}
   };
 
   if (options.isProduction) {
-      base.plugins.unshift(new webpack.BannerPlugin({
-        banner: banner,
-        raw: true
-      }));
+    base.plugins.unshift(new webpack.BannerPlugin({
+      banner: banner,
+      raw: true
+    }));
   }
 
   if (!options.isTest) {
     //extract the included css file to own file
     const p = new ExtractTextPlugin({
-      filename: `[name]${options.min && !options.nosuffix ? '.min' : ''}.css`,
-      allChunks: true // there seems to be a bug in dynamically loaded chunk styles are not loaded, workaround: extract all styles from all chunks
+      filename: `[name].css`
     });
     base.plugins.push(p);
-    base.module.loaders[0] = Object.assign({}, base.module.loaders[0], {loader: p.extract(['css-loader', 'sass-loader'])});
+    base.module.loaders[0] = Object.assign({}, base.module.loaders[0], {
+      loader: p.extract(['css-loader', 'sass-loader'])
+    });
   }
   if (options.min) {
     //use a minifier
@@ -148,14 +155,9 @@ function generateWebpackConfig(env) {
   if (isDev || isTest) {
     return generateWebpack(base);
   } else { //isProduction
-    return [
-      //plain
-      generateWebpack(base),
-      //minified
-      generateWebpack(Object.assign({}, base, {
-        min: true
-      }))
-    ];
+    return generateWebpack(Object.assign({}, base, {
+      min: true
+    }));
   }
 }
 
