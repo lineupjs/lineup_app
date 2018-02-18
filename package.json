@@ -34,7 +34,7 @@
     "release:patch": "npm version patch && npm run build && git push --follow-tags",
     "release:pre": "npm version prerelease && npm run build && git push --follow-tags",
     "start": "webpack-dev-server",
-    "predist": "npm run build && npm run docs",
+    "predist": "npm run build",
     "dist": "mkdirp dist && cd build && tar cvzf ../dist/lineup_app.tar.gz --exclude \"docs\" * && cd .."
   },
   "devDependencies": {
