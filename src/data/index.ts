@@ -1,5 +1,5 @@
 import {IDataset} from './IDataset';
-import wur from './wur';
+import {wur, shanghai} from './wur';
 import forbes from './forbes-top-2000-companies';
 import happiness from './world-happiness-report';
 
@@ -8,6 +8,7 @@ export {default as fromFile} from './fromFile';
 
 export const data: IDataset[] = [
   wur,
+  shanghai,
   forbes,
   happiness
 ];
