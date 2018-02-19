@@ -55,8 +55,8 @@ export default function initExport() {
       js: shared.dataset!.buildScript(`document.querySelector('#data').textContent`, 'document.body'),
       js_pre_processor: 'babel',
       js_modernizr: false,
-      css_external: 'https://sgratzl.github.io/lineupjs_docs/master/LineUpJS.min.css',
-      js_external: 'https://sgratzl.github.io/lineupjs_docs/master/LineUpJS.min.js;https://cdn.rawgit.com/mholt/PapaParse/master/papaparse.min.js'
+      css_external: 'https://unpkg.com/lineupjs/build/LineUpJS.min.css',
+      js_external: 'https://unpkg.com/lineupjs/build/LineUpJS.min.js;https://cdn.rawgit.com/mholt/PapaParse/master/papaparse.min.js'
     };
 
     const json = JSON.stringify(data)
