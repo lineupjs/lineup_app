@@ -24,17 +24,15 @@
     "noUnusedParameters": true,
     "strictNullChecks": true,
     "stripInternal": true,
+    "strictFunctionTypes": true,
+    "strictPropertyInitialization": true,
     "skipLibCheck": true,
-    "baseUrl": "../"
+    "esModuleInterop": true
   },
   "compileOnSave": false,
   "include": [
     "src/**/*.ts",
     "src/**/*.tsx",
-    "demo/**/*.ts",
-    "demo/**/*.tsx",
-    "tests/**/*.ts",
-    "index.ts",
     "tsd.d.ts"
   ]
 }
