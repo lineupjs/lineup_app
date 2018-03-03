@@ -40,7 +40,7 @@ export default function fromFile(file: File): Promise<IDataset> {
           .deriveColors()
           .rowHeight(22, 2)
           .defaultRanking()
-          .build(node);
+          .buildTaggle(node);
       }
     };
   });

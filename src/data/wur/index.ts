@@ -128,7 +128,7 @@ and for undermining humanities and quality of instruction.
         b.column(buildNumberColumn(`${year}_total_score`, [0, 100]).label(`total_score (${year})`));
       });
 
-      return b.deriveColors().build(node);
+      return b.deriveColors().buildTaggle(node);
     });
   }
 };

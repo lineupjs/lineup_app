@@ -37,7 +37,7 @@ export const data: IDataset = {
         .allColumns()
         .sortBy('Happiness.Score', 'desc')
       )
-      .build(${domVariable});
+      .buildTaggle(${domVariable});
     `;
   },
   build(node: HTMLElement) {
@@ -68,7 +68,7 @@ export const data: IDataset = {
           .allColumns()
           .sortBy('Happiness.Score', 'desc')
         )
-        .build(node);
+        .buildTaggle(node);
     });
   }
 };

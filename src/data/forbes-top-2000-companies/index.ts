@@ -37,7 +37,7 @@ export const data: IDataset = {
       .allColumns()
       .sortBy('Rank', 'asc')
     )
-    .build(${domVariable});
+    .buildTaggle(${domVariable});
   `;
   },
   build(node: HTMLElement) {
@@ -67,7 +67,7 @@ export const data: IDataset = {
           .allColumns()
           .sortBy('Forbes Rank', 'asc')
         )
-        .build(node);
+        .buildTaggle(node);
     });
   }
 };

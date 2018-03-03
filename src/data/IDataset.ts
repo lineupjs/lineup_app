@@ -1,4 +1,4 @@
-import LineUp from 'lineupjs';
+import {LineUp, Taggle} from 'lineupjs';
 
 export interface IDataset {
   id: string;
@@ -11,5 +11,5 @@ export interface IDataset {
 
   buildScript(rawVariable: string, domVariable: string): string;
 
-  build(node: HTMLElement): Promise<LineUp> | LineUp;
+  build(node: HTMLElement): Promise<LineUp | Taggle> | LineUp | Taggle;
 }
