@@ -41,7 +41,7 @@ export const data: IDataset = {
     `;
   },
   build(node: HTMLElement) {
-    return System.import('raw-loader!./2017.csv').then((content: any) => {
+    return import('raw-loader!./2017.csv').then((content: any) => {
       const csv: string = content.default ? content.default : content;
       this.rawData = csv;
       return parse(csv, {

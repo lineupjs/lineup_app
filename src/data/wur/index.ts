@@ -28,7 +28,7 @@ and for undermining non-English-instructing institutions.
     return `//TODO`;
   },
   build(node: HTMLElement) {
-    return System.import('raw-loader!./cwurData.csv').then((content: any) => {
+    return import('raw-loader!./cwurData.csv').then((content: any) => {
       const csv: string = content.default ? content.default : content;
       this.rawData = csv;
       return parse(csv, {
@@ -91,7 +91,7 @@ and for undermining humanities and quality of instruction.
     return `//TODO`;
   },
   build(node: HTMLElement) {
-    return System.import('raw-loader!./shanghaiData.csv').then((content: any) => {
+    return import('raw-loader!./shanghaiData.csv').then((content: any) => {
       const csv: string = content.default ? content.default : content;
       this.rawData = csv;
       return parse(csv, {
