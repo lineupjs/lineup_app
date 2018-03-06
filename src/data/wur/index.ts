@@ -64,7 +64,7 @@ and for undermining non-English-instructing institutions.
         b.column(buildNumberColumn(`${year}_score`).label(`score (${year})`));
       });
 
-      return b.deriveColors().build(node);
+      return b.deriveColors().buildTaggle(node);
     });
   }
 };

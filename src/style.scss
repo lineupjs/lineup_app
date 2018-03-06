@@ -96,3 +96,13 @@ nav .fixed-action-btn li {
   transition: opacity 0.5s ease;
   pointer-events: none;
 }
+
+.lu-rule-button-chooser.switch {
+  overflow: inherit;
+  display: flex;
+  justify-content: center;
+
+  span {
+    font-size: 1rem;
+  }
+}

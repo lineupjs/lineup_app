@@ -5,7 +5,14 @@ import 'lineupjs/build/LineUpJS.css';
 import initExport from './export';
 import shared from './shared';
 
-import data, {toCard, IDataset, fromFile} from './data';
+import data,
+{
+  toCard,
+  IDataset,
+  fromFile
+}
+
+  from './data';
 
 const uploader = <HTMLElement>document.querySelector('main');
 
@@ -14,20 +21,31 @@ function build(builder: Promise<IDataset>) {
   builder.then((d: IDataset) => {
     shared.dataset = d;
     return d.build(<HTMLElement>document.querySelector('div.lu-c'));
-  }).then((l) => {
+  }
+  ).then((l) => {
     shared.lineup = l;
     return new Promise<any>((resolve) => setTimeout(resolve, 500));
-  }).then(() => {
+  }
+  ).then(() => {
     const next = `#${shared.dataset!.id}`;
     if (location.hash !== 'next') {
       location.assign(next);
-    }
+    } // patch switch button
+    const side = <HTMLElement>document.querySelector('.lu-rule-button-chooser');
+    if (side) {
+      side.classList.add('switch');
+      const input = (<HTMLElement>side.querySelector('input'));
+      input.insertAdjacentHTML('afterend', `<span class="lever"></span>`);
+      input.insertAdjacentHTML('beforebegin', `<span>Item</span>`);
+    } //
     (<HTMLElement>document.querySelector('.brand-logo')).textContent = document.title = `LineUp ${shared.dataset!.title}`;
     Array.from(document.querySelectorAll('.nav-wrapper a.disabled')).forEach((d: Element) => {
       (<HTMLElement>d).classList.remove('disabled');
-    });
+    }
+    );
     uploader.dataset.state = 'ready';
-  });
+  }
+  );
 }
 
 function reset() {
@@ -39,7 +57,8 @@ function reset() {
   (<HTMLElement>document.querySelector('.brand-logo')).textContent = document.title = `LineUp`;
   Array.from(document.querySelectorAll('.nav-wrapper > a')).forEach((d: Element) => {
     (<HTMLElement>d).classList.add('disabled');
-  });
+  }
+  );
   uploader.dataset.state = 'initial';
 }
 
@@ -49,9 +68,7 @@ function rebuildCarousel() {
   delete base.dataset.namespace;
   base.classList.remove('initialized');
   base.innerHTML = '';
-  data.forEach((d) => base.insertAdjacentHTML('afterbegin', toCard(d)));
-
-  // init carousel
+  data.forEach((d) => base.insertAdjacentHTML('afterbegin', toCard(d))); // init carousel
   (<any>$)('.carousel').carousel();
 }
 
@@ -59,7 +76,8 @@ function showFile(file: File) {
   build(fromFile(file).then((r) => {
     data.unshift(r);
     return r;
-  }));
+  }
+  ));
 }
 
 initExport();
@@ -68,23 +86,27 @@ initExport();
   const file = (<HTMLInputElement>document.querySelector('input[type=file]'));
   file.addEventListener('change', () => {
     showFile(file.files![0]);
-  });
+  }
+  );
   (<HTMLElement>document.querySelector('#dropper a.btn')).addEventListener('click', (evt) => {
     evt.preventDefault();
     evt.stopPropagation();
     file.click();
-  });
+  }
+  );
   uploader.addEventListener('dragover', (evt) => {
     evt.preventDefault();
     evt.stopPropagation();
-  });
+  }
+  );
   uploader.addEventListener('drop', (evt) => {
     if (evt.dataTransfer.files.length !== 1) {
       return;
     }
     showFile(evt.dataTransfer.files[0]);
     evt.preventDefault();
-  });
+  }
+  );
 }
 
 rebuildCarousel();
@@ -104,7 +126,8 @@ rebuildCarousel();
     if (newDataset) {
       build(Promise.resolve(newDataset));
     }
-  });
+  }
+  );
 
   if (chosenDataset) {
     build(Promise.resolve(chosenDataset));
