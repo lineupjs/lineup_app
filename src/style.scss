@@ -106,3 +106,13 @@ nav .fixed-action-btn li {
     font-size: 1rem;
   }
 }
+
+.lu-summary .lu-checkbox {
+  bottom: -5em;
+
+  > label {
+    margin: 0;
+    font-size: 12px;
+    line-height: 100%;
+  }
+}
