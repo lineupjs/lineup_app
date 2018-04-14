@@ -1,9 +1,7 @@
-import * as Materialize from 'materialize-css';
 import {isSupportType, LocalDataProvider} from 'lineupjs';
 import shared from './shared';
 
 import CODEPEN_CSS from 'raw-loader!../templates/style.tcss';
-import GIST_HTML from 'raw-loader!../templates/index.html';
 
 
 export default function initExport() {
@@ -66,58 +64,5 @@ export default function initExport() {
 
     createCodepenHelper.querySelector('input')!.value = json;
     createCodepenHelper.submit();
-  });
-
-
-  const createGist = <HTMLLinkElement>document.querySelector('#createGist');
-  createGist.addEventListener('click', (evt) => {
-    evt.preventDefault();
-    evt.stopPropagation();
-
-    const data = {
-      description: document.title,
-      public: false,
-      files: {
-        'index.html': {
-          content: GIST_HTML.replace('DATADATA', shared.dataset!.rawData)
-        },
-        'index.js': {
-          content: shared.dataset!.buildScript(`document.querySelector('#data').textContent`, 'document.body'),
-        },
-        'style.css': {
-          content: CODEPEN_CSS
-        }
-      }
-    };
-
-    const loading = Materialize.toast((<HTMLElement>document.querySelector('#export-helper')).innerHTML, 100000);
-
-    fetch('https://api.github.com/gists', {
-      body: JSON.stringify(data),
-      cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-      credentials: 'same-origin', // include, *omit
-      headers: {
-        'content-type': 'application/json'
-      },
-      method: 'POST',
-      mode: 'cors',
-      redirect: 'follow',
-      referrer: 'no-referrer'
-    }).then((r) => r.json())
-      .then((r: any) => {
-        loading.remove();
-        Materialize.toast(`
-          <span>Successfully exported</span>
-          <a class="btn-flat toast-action" href="${r.html_url}" target="_blank">Open Gist</button>
-          <a class="btn-flat toast-action" href="https://bl.ocks.org/${r.id}" target="_blank">Open Bl.ocks</button>
-        `, 10000);
-      })
-      .catch((error) => {
-        loading.remove();
-        Materialize.toast(`
-          <span>Error during export</span>
-          <span>${error}</span>
-        `, 10000, 'red darken-1');
-      });
   });
 }
