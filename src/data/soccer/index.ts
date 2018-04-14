@@ -48,6 +48,13 @@ export const data: IDataset = {
         skipEmptyLines: true
       });
     }).then((parsed: ParseResult) => {
+      parsed.data.forEach((row) => {
+        const suffix = [12, 13, 14, 15, 16, 17];
+        const cols = ['games', 'goals', 'minutes', 'assists'];
+        cols.forEach((col) => {
+          row[col] = suffix.map((d) => !row[`${col}${d}`] && row[`${col}${d}`] !== 0 ? null : row[`${col}${d}`]);
+        });
+      });
       return builder(parsed.data)
         .rowHeight(22, 2)
         .column(buildStringColumn('player'))
@@ -58,6 +65,10 @@ export const data: IDataset = {
         .column(buildNumberColumn('height', [0, NaN]))
         .column(buildStringColumn('nationality'))
         .column(buildCategoricalColumn('position'))
+        .column(buildNumberColumn('games', [0, NaN]).asArray(4))
+        .column(buildNumberColumn('goals', [0, NaN]).asArray(4))
+        .column(buildNumberColumn('minutes', [0, NaN]).asArray(4))
+        .column(buildNumberColumn('assists', [0, NaN]).asArray(4))
         .deriveColors()
         .ranking(buildRanking()
           .supportTypes()
