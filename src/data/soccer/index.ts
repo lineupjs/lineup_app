@@ -20,16 +20,28 @@ export const data: IDataset = {
     skipEmptyLines: true
   });
 
+  parsed.data.forEach((row) => {
+    const suffix = [12, 13, 14, 15, 16, 17];
+    const cols = ['games', 'goals', 'minutes', 'assists'];
+    cols.forEach((col) => {
+      row[col] = suffix.map((d) => !row[col + d] && row[col + d] !== 0 ? null : row[col + d]);
+    });
+  });
+
   const lineup = LineUpJS.builder(parsed.data)
     .rowHeight(22, 2)
     .column(buildStringColumn('player'))
-    .column(buildNumberColumn('age'))
+    .column(buildNumberColumn('age', [0, NaN]))
     .column(buildStringColumn('current_club'))
     .column(buildCategoricalColumn('current_league'))
     .column(buildCategoricalColumn('foot'))
-    .column(buildNumberColumn('height'))
+    .column(buildNumberColumn('height', [0, NaN]))
     .column(buildStringColumn('nationality'))
     .column(buildCategoricalColumn('position'))
+    .column(buildNumberColumn('games', [0, NaN]).asArray(4))
+    .column(buildNumberColumn('goals', [0, NaN]).asArray(4))
+    .column(buildNumberColumn('minutes', [0, NaN]).asArray(4))
+    .column(buildNumberColumn('assists', [0, NaN]).asArray(4))
     .deriveColors()
     .ranking(buildRanking()
       .supportTypes()
@@ -80,8 +92,3 @@ export const data: IDataset = {
 };
 
 export default data;
-
-// games12,games13,games14,games15,games16,games17,
-// goals12,goals13,goals14,goals15,goals16,goals17,
-// minutes12,minutes13,minutes14,minues15,minutes16,minutes17,
-// assists12,assists13,assists14,assists15,assists16,assists17
