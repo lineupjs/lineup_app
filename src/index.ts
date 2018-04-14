@@ -80,6 +80,12 @@ function showFile(file: File) {
   ));
 }
 
+window.addEventListener('resize', () => {
+  if (shared.lineup) {
+    shared.lineup.update();
+  }
+});
+
 initExport();
 
 {
