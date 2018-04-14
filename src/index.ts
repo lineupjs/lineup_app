@@ -1,3 +1,4 @@
+import 'materialize-css';
 import 'file-loader?name=index.html!./index.html';
 import './style.scss';
 import * as $ from 'jquery';
