@@ -95,6 +95,7 @@ nav .fixed-action-btn li {
   opacity: 0;
   transition: opacity 0.5s ease;
   pointer-events: none;
+  line-height: 1;
 }
 
 .lu-rule-button-chooser.switch {
@@ -108,11 +109,19 @@ nav .fixed-action-btn li {
 }
 
 .lu-summary .lu-checkbox {
-  bottom: -5em;
+  bottom: -5em !important;
 
   > label {
     margin: 0;
     font-size: 12px;
     line-height: 100%;
   }
+}
+
+.lu-side-panel {
+  margin-top: 1.5em;
+}
+
+section.lu-header > .lu-label {
+  line-height: 1.5;
 }
