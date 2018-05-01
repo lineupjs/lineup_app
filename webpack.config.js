@@ -36,10 +36,6 @@ module.exports = (env, options) => {
       symlinks: false
     },
     plugins: [
-      new webpack.BannerPlugin({
-        banner: banner,
-        raw: true
-      }),
       //define magic constants that are replaced
       new webpack.DefinePlugin({
         __VERSION__: JSON.stringify(pkg.version),
@@ -51,6 +47,14 @@ module.exports = (env, options) => {
       }),
       new ForkTsCheckerWebpackPlugin({
         checkSyntacticErrors: true
+      })
+    ].concat(dev ? [
+      // dev plugins
+    ] : [
+      // production plugins
+      new webpack.BannerPlugin({
+        banner: banner,
+        raw: true
       }),
       new WorkboxPlugin.GenerateSW({
         // these options encourage the ServiceWorkers to get in there fast
@@ -59,7 +63,7 @@ module.exports = (env, options) => {
         skipWaiting: true,
         importsDirectory: 'sw'
       })
-    ],
+    ]),
     externals: {},
     module: {
       rules: [{
