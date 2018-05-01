@@ -1,5 +1,6 @@
 import 'materialize-css';
-import 'file-loader?name=index.html!./index.html';
+import 'file-loader?name=index.html!extract-loader!html-loader?interpolate!./index.html';
+import './assets/favicon/favicon';
 import './style.scss';
 import * as $ from 'jquery';
 import 'lineupjs/build/LineUpJS.css';
