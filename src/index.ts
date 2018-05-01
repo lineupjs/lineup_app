@@ -2,6 +2,7 @@ import 'materialize-css';
 import 'file-loader?name=index.html!extract-loader!html-loader?interpolate!./index.html';
 import './assets/favicon/favicon';
 import './style.scss';
+import 'font-awesome/css/font-awesome.css';
 import * as $ from 'jquery';
 import 'lineupjs/build/LineUpJS.css';
 import initExport from './export';
@@ -140,4 +141,18 @@ rebuildCarousel();
   if (chosenDataset) {
     build(Promise.resolve(chosenDataset));
   }
+}
+
+
+declare const __DEBUG__: boolean;
+
+// register service worker
+if (!__DEBUG__ && 'serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./service-worker.js').then((registration) => {
+    console.log('SW registered: ', registration);
+  }).catch((registrationError) => {
+    console.warn('SW registration failed: ', registrationError);
+    });
+  });
 }

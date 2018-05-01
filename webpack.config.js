@@ -3,6 +3,7 @@ const pkg = require('./package.json');
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
+const WorkboxPlugin = require('workbox-webpack-plugin');
 
 const now = new Date();
 const prefix = (n) => n < 10 ? ('0' + n) : n.toString();
@@ -50,6 +51,13 @@ module.exports = (env, options) => {
       }),
       new ForkTsCheckerWebpackPlugin({
         checkSyntacticErrors: true
+      }),
+      new WorkboxPlugin.GenerateSW({
+        // these options encourage the ServiceWorkers to get in there fast
+        // and not allow any straggling "old" SWs to hang around
+        clientsClaim: true,
+        skipWaiting: true,
+        importsDirectory: 'sw'
       })
     ],
     externals: {},
