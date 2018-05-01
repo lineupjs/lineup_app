@@ -24,8 +24,36 @@ university measures. Founded in the United Kingdom in 2010, it has been criticiz
 and for undermining non-English-instructing institutions.
 </p>`,
   rawData: '',
-  buildScript(_rawVariable: string, _domVariable: string) {
-    return `//TODO`;
+  buildScript(rawVariable: string, domVariable: string) {
+    const yearArray = (<any>this).yearArray;
+    return `// per year:
+      const yearArray = ${JSON.stringify(yearArray)};
+      const rows = JSON.parse(${rawVariable});
+
+      const perYear = 'score,national_rank,quality_of_education,alumni_employment,quality_of_faculty,publications,influence,citations,broad_impact,patents'.split(',');
+      const b = builder(rows)
+        .rowHeight(22, 2)
+        .column(buildStringColumn('institution'))
+        .column(buildStringColumn('country'));
+
+      yearArray.slice(0, 2).forEach((year) => {
+        const bb = buildRanking()
+          .supportTypes()
+          .column('institution')
+          .column('country')
+          .sortBy(year + '_score', 'desc');
+        perYear.forEach((k) => {
+          b.column(buildNumberColumn(year + '_' + k).label(k + '(' + year + ')'));
+          bb.column(year + '_' + k);
+        });
+        b.ranking(bb);
+      });
+
+      yearArray.slice(2).forEach((year) => {
+        b.column(buildNumberColumn(year + '_score').label('score (' + year + ')'));
+      });
+
+      return b.deriveColors().buildTaggle(${domVariable});`;
   },
   build(node: HTMLElement) {
     return import('raw-loader!./cwurData.csv').then((content: any) => {
@@ -38,6 +66,9 @@ and for undermining non-English-instructing institutions.
       });
     }).then((parsed: ParseResult) => {
       const {rows, yearArray} = reGroup(parsed.data, 'institution');
+      this.rawData = JSON.stringify(rows);
+      (<any>this).yearArray = yearArray;
+
       // world_rank,institution,country,national_rank,quality_of_education,alumni_employment,quality_of_faculty,publications,influence,citations,broad_impact,patents,year
       // multiple years
       // per year:
@@ -87,13 +118,41 @@ is an equally influential ranking. It was founded in China in 2003 and has been 
 and for undermining humanities and quality of instruction.
 </p>`,
   rawData: '',
-  buildScript(_rawVariable: string, _domVariable: string) {
-    return `//TODO`;
+  buildScript(rawVariable: string, domVariable: string) {
+    const yearArray = (<any>this).yearArray;
+    return `// per year:
+      const yearArray = ${JSON.stringify(yearArray)};
+      const rows = JSON.parse(${rawVariable});
+
+      const perYear = 'total_score,alumni,award,hici,ns,pub,pcp'.split(',');
+      const b = builder(rows)
+        .rowHeight(22, 2)
+        .column(buildStringColumn('university_name'));
+
+      yearArray.slice(0, 2).forEach((year) => {
+        const bb = buildRanking()
+          .supportTypes()
+          .column('university_name')
+          .column(year + '_national_rank')
+          .sortBy(year + '_total_score', 'desc');
+
+        b.column(buildNumberColumn(year + '_national_rank').label('national_rank'));
+        perYear.forEach((k) => {
+          b.column(buildNumberColumn(year + '_' + k, [0, 100]).label(k + '(' + year + ')'));
+          bb.column(year + '_' + k);
+        });
+        b.ranking(bb);
+      });
+
+      yearArray.slice(2).forEach((year) => {
+        b.column(buildNumberColumn(year + '_total_score', [0, 100]).label('total_score (' + year + ')'));
+      });
+
+      return b.deriveColors().buildTaggle(${domVariable});`;
   },
   build(node: HTMLElement) {
     return import('raw-loader!./shanghaiData.csv').then((content: any) => {
       const csv: string = content.default ? content.default : content;
-      this.rawData = csv;
       return parse(csv, {
         dynamicTyping: true,
         header: true,
@@ -101,6 +160,9 @@ and for undermining humanities and quality of instruction.
       });
     }).then((parsed: ParseResult) => {
       const {rows, yearArray} = reGroup(parsed.data, 'university_name');
+
+      this.rawData = JSON.stringify(rows);
+      (<any>this).yearArray = yearArray;
       // world_rank,university_name,national_rank,total_score,alumni,award,hici,ns,pub,pcp,year
       // multiple years
       // per year:
