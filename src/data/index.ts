@@ -38,7 +38,7 @@ export function toCard(d: IDataset) {
         </span>
         ${d.description}
         ${d.link ? `<p>
-          <a href="${d.link}" target="_blank">Kaggle Link</a>
+          <a href="${d.link}" target="_blank" rel="noopener">Kaggle Link</a>
         </p>` : ''}
       </div>
     </div>`;

@@ -18,7 +18,7 @@ export const wur: IDataset = {
   international university ranking systems, many of which disagree with each other. This dataset contains
   three global university rankings from very different places.
 </p><p>
-The <a href="https://www.timeshighereducation.com/world-university-rankings" target="_blank">Times Higher
+The <a href="https://www.timeshighereducation.com/world-university-rankings" target="_blank" rel="noopener">Times Higher
 Education World University Ranking</a> is widely regarded as one of the most influential and widely observed
 university measures. Founded in the United Kingdom in 2010, it has been criticized for its commercialization
 and for undermining non-English-instructing institutions.
@@ -82,7 +82,7 @@ export const shanghai: IDataset = {
   international university ranking systems, many of which disagree with each other. This dataset contains
   three global university rankings from very different places.
 </p><p>
-The <a href="http://www.shanghairanking.com/" target="_blank">Academic Ranking of World Universities</a>, also known as the Shanghai Ranking,
+The <a href="http://www.shanghairanking.com/" target="_blank" rel="noopener">Academic Ranking of World Universities</a>, also known as the Shanghai Ranking,
 is an equally influential ranking. It was founded in China in 2003 and has been criticized for focusing on raw research power
 and for undermining humanities and quality of instruction.
 </p>`,
