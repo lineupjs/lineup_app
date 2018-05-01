@@ -147,7 +147,7 @@ rebuildCarousel();
 declare const __DEBUG__: boolean;
 
 // register service worker
-if ('serviceWorker' in navigator) {
+if (!__DEBUG__ && 'serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('./service-worker.js').then((registration) => {
     console.log('SW registered: ', registration);
