@@ -1,12 +1,12 @@
 import {IDataset} from '../IDataset';
 import {parse, ParseResult} from 'papaparse';
 import {builder, buildRanking, buildStringColumn, buildCategoricalColumn, buildNumberColumn} from 'lineupjs';
-import image from './soccer.png';
+import '!file-loader?name=preview.png!./soccer.png';
 
 export const data: IDataset = {
   id: 'soccer',
   title: 'Soccer Stats',
-  image,
+  image: './preview.png',
   link: 'https://www.kaggle.com/gimunu/football-striker-performance',
   description: `<p>
   The aim of this dataset is to offer in a relatively small number of columns (~30) data to compare the performance of some football players, or to compare the efficiency of strikers in-between different European leagues.
