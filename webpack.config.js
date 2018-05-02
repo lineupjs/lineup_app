@@ -127,7 +127,7 @@ module.exports = (env, options) => {
       ]
     },
     watchOptions: {
-      ignored: /node_modules/
+      // ignored: /node_modules/
     },
     devServer: {
       contentBase: 'demo'
