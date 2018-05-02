@@ -51,7 +51,6 @@ export const data: IDataset = {
       });
     }).then((parsed: ParseResult) => {
       return builder(parsed.data)
-        .rowHeight(22, 2)
         .column(buildStringColumn('Company'))
         .column(buildStringColumn('Country'))
         .column(buildNumberColumn('Rank').label('Forbes Rank'))

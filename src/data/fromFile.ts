@@ -38,7 +38,6 @@ export default function fromFile(file: File): Promise<IDataset> {
         return builder(parsed.data)
           .deriveColumns(...parsed.meta.fields)
           .deriveColors()
-          .rowHeight(22, 2)
           .defaultRanking()
           .buildTaggle(node);
       }

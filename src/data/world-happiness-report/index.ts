@@ -52,7 +52,6 @@ export const data: IDataset = {
     }).then((parsed: ParseResult) => {
       // "Country","Happiness.Rank","Happiness.Score","Whisker.high","Whisker.low","Economy..GDP.per.Capita.","Family","Health..Life.Expectancy.","Freedom","Generosity","Trust..Government.Corruption.","Dystopia.Residual"
       return builder(parsed.data)
-        .rowHeight(22, 2)
         .column(buildStringColumn('Country'))
         .column(buildNumberColumn('Happiness.Score', [0, 10]))
         .column(buildNumberColumn('Economy..GDP.per.Capita.', [0, 10]))

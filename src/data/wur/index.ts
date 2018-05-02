@@ -32,7 +32,6 @@ and for undermining non-English-instructing institutions.
 
       const perYear = 'score,national_rank,quality_of_education,alumni_employment,quality_of_faculty,publications,influence,citations,broad_impact,patents'.split(',');
       const b = builder(rows)
-        .rowHeight(22, 2)
         .column(buildStringColumn('institution'))
         .column(buildStringColumn('country'));
 
@@ -74,7 +73,6 @@ and for undermining non-English-instructing institutions.
       // per year:
       const perYear = `score,national_rank,quality_of_education,alumni_employment,quality_of_faculty,publications,influence,citations,broad_impact,patents`.split(',');
       const b = builder(rows)
-        .rowHeight(22, 2)
         .column(buildStringColumn('institution'))
         .column(buildStringColumn('country'));
 
@@ -126,7 +124,6 @@ and for undermining humanities and quality of instruction.
 
       const perYear = 'total_score,alumni,award,hici,ns,pub,pcp'.split(',');
       const b = builder(rows)
-        .rowHeight(22, 2)
         .column(buildStringColumn('university_name'));
 
       yearArray.slice(0, 2).forEach((year) => {
@@ -168,7 +165,6 @@ and for undermining humanities and quality of instruction.
       // per year:
       const perYear = `total_score,alumni,award,hici,ns,pub,pcp`.split(',');
       const b = builder(rows)
-        .rowHeight(22, 2)
         .column(buildStringColumn('university_name'));
 
       yearArray.slice(0, 2).forEach((year) => {

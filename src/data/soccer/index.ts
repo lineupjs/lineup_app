@@ -29,7 +29,6 @@ export const data: IDataset = {
   });
 
   const lineup = LineUpJS.builder(parsed.data)
-    .rowHeight(22, 2)
     .column(buildStringColumn('player'))
     .column(buildNumberColumn('age', [0, NaN]))
     .column(buildStringColumn('current_club'))
@@ -68,7 +67,6 @@ export const data: IDataset = {
         });
       });
       return builder(parsed.data)
-        .rowHeight(22, 2)
         .column(buildStringColumn('player'))
         .column(buildNumberColumn('age', [0, NaN]))
         .column(buildStringColumn('current_club'))
