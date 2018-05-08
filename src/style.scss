@@ -127,6 +127,10 @@ nav .fixed-action-btn li {
 
 .lu-side-panel {
   padding-top: 2em;
+
+  &.lu-collapsed {
+   transform: unset;
+  }
 }
 
 section.lu-header > .lu-label {
