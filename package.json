@@ -1,6 +1,6 @@
 {
   "name": "lineup_app",
-  "homepage": "https://github.com/sgratzl/lineup_app",
+  "homepage": "https://github.com/datavisyn/lineup_app",
   "version": "1.0.0-beta.1",
   "author": {
     "name": "Samuel Gratzl",
@@ -8,11 +8,11 @@
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/sgratzl/lineup_app/issues"
+    "url": "https://github.com/datavisyn/lineup_app/issues"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/sgratzl/lineup_app.git"
+    "url": "https://github.com/datavisyn/lineup_app.git"
   },
   "private": true,
   "scripts": {
