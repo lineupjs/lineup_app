@@ -6,11 +6,10 @@ $primary-color: color("blue", "lighten-1");
 $secondary-color: color("deep-purple", "lighten-1");
 
 @import '~materialize-css/sass/materialize';
+@import './material-icons';
 
 $fa-font-path: '~font-awesome/fonts';
 @import '~font-awesome/scss/font-awesome';
-
-@import './material-icons';
 
 body {
   display: flex;
