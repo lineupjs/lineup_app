@@ -24,7 +24,6 @@ body {
 
     > div {
       flex: 1 1 auto;
-      z-index: 100;
       opacity: 1;
       transition: opacity 0.5s ease;
     }
@@ -127,7 +126,7 @@ nav .fixed-action-btn li {
 }
 
 .lu-side-panel {
-  margin-top: 1.5em;
+  padding-top: 2em;
 }
 
 section.lu-header > .lu-label {
