@@ -145,4 +145,8 @@ section.lu-header > .lu-label {
 
 .page-footer {
   padding-top: 0;
+
+  .footer-copyright {
+    min-height: 40px;
+  }
 }
