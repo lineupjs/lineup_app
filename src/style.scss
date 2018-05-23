@@ -58,8 +58,14 @@ body {
   }
 }
 
-.brand-logo {
-  margin-left: 1em;
+nav {
+  height: 40px;
+  line-height: 40px;
+
+  .brand-logo {
+    margin-left: 1em;
+    font-size: 1.2em;
+  }
 }
 
 nav .fixed-action-btn li {
@@ -135,4 +141,8 @@ nav .fixed-action-btn li {
 
 section.lu-header > .lu-label {
   line-height: 1.5;
+}
+
+.page-footer {
+  padding-top: 0;
 }
