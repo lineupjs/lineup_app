@@ -2,14 +2,27 @@ $roboto-font-path: '~materialize-css/dist/fonts/roboto/';
 
 @import '~materialize-css/sass/components/color';
 
-$primary-color: color("blue", "lighten-1");
-$secondary-color: color("deep-purple", "lighten-1");
+$primary-color: color("grey", "lighten-3");
+$secondary-color: color("grey", "darken-3");
+
+$navbar-height: 40px;
+$navbar-font-color: color("grey", "darken-2");
+$navbar-brand-font-size: 1.2em;
+
+$footer-font-color: color("grey", "darken-4");
+$footer-copyright-font-color: $footer-font-color;
+
+$input-height: 2.4rem;
 
 @import '~materialize-css/sass/materialize';
 @import './material-icons';
 
 $fa-font-path: '~font-awesome/fonts';
 @import '~font-awesome/scss/font-awesome';
+
+html {
+  font-size: 14px;
+}
 
 body {
   display: flex;
@@ -58,14 +71,8 @@ body {
   }
 }
 
-nav {
-  height: 40px;
-  line-height: 40px;
-
-  .brand-logo {
-    margin-left: 1em;
-    font-size: 1.2em;
-  }
+nav .brand-logo {
+  margin-left: 1em;
 }
 
 nav .fixed-action-btn li {
@@ -119,6 +126,10 @@ nav .fixed-action-btn li {
 
 .lu-search > input[type=search] {
   margin-bottom: 0;
+  border: 1px solid $secondary-color;
+  border-radius: 3px;
+  padding: 3px 5px;
+  box-sizing: border-box;
 }
 
 .lu-summary .lu-checkbox {
@@ -134,6 +145,7 @@ nav .fixed-action-btn li {
 .lu-side-panel {
   padding-top: 2em;
 
+
   &.lu-collapsed {
     transform: unset;
   }
@@ -147,6 +159,28 @@ section.lu-header > .lu-label {
   padding-top: 0;
 
   .footer-copyright {
-    min-height: 40px;
+    min-height: 30px;
+    padding: 0;
+  }
+}
+
+// modify checkbox style
+[type="checkbox"] {
+  + label {
+    padding-left: 25px;
+  }
+
+  + label:before,
+  &:not(.filled-in) + label:after {
+    border: 1px solid color("grey", "darken-1");
+  }
+
+  &:not(:checked):disabled + label {
+    cursor: not-allowed;
+  }
+
+  &:not(:checked):disabled + label:before {
+    border: 1px solid color("grey", "lighten-1");
+    background: color("grey", "lighten-2");
   }
 }
