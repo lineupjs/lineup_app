@@ -1,6 +1,6 @@
-import {IDataset} from '../IDataset';
-import {parse, ParseResult} from 'papaparse';
-import {builder, buildRanking, buildStringColumn, buildCategoricalColumn, buildNumberColumn} from 'lineupjs';
+import { IDataset } from '../IDataset';
+import { parse, ParseResult } from 'papaparse';
+import { builder, buildRanking, buildStringColumn, buildCategoricalColumn, buildNumberColumn } from 'lineupjs';
 import '!file-loader?name=preview.png!./soccer.png';
 
 export const data: IDataset = {
@@ -69,8 +69,8 @@ export const data: IDataset = {
       return builder(parsed.data)
         .column(buildStringColumn('player').width(150))
         .column(buildNumberColumn('age', [0, NaN]))
-        .column(buildStringColumn('current_club').width(100))
-        .column(buildCategoricalColumn('current_league'))
+        .column(buildStringColumn('current_club').width(100).label('Current Club'))
+        .column(buildCategoricalColumn('current_league').label('Current League'))
         .column(buildCategoricalColumn('foot'))
         .column(buildNumberColumn('height', [0, NaN]))
         .column(buildStringColumn('nationality'))
