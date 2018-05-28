@@ -14,6 +14,10 @@ $footer-copyright-font-color: $footer-font-color;
 
 $input-height: 2.4rem;
 
+$radio-fill-color: color("grey", "base") !default;
+$radio-empty-color: #5a5a5a !default;
+$radio-border: 2px solid $secondary-color !default;
+
 @import '~materialize-css/sass/materialize';
 @import './material-icons';
 
