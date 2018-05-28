@@ -76,7 +76,6 @@ body {
 }
 
 nav {
-
   .brand-logo {
     margin-left: 1em;
   }
@@ -85,7 +84,7 @@ nav {
     bottom: -11px;
   }
 
-  .fixed-action-btn.horizontal ul  li {
+  .fixed-action-btn.horizontal ul li {
     float: unset;
     text-align: right;
     margin-top: 11px;
@@ -93,6 +92,31 @@ nav {
     > a {
       margin: 0;
     }
+  }
+}
+
+label {
+  color: color("grey", "darken-3");
+}
+
+// modify checkbox style
+[type="checkbox"] {
+  + label {
+    padding-left: 25px;
+  }
+
+  + label::before,
+  &:not(.filled-in) + label::after {
+    border: 1px solid color("grey", "darken-1");
+  }
+
+  &:not(:checked):disabled + label {
+    cursor: not-allowed;
+  }
+
+  &:not(:checked):disabled + label::before {
+    border: 1px solid color("grey", "lighten-1");
+    background: color("grey", "lighten-2");
   }
 }
 
@@ -153,7 +177,6 @@ nav {
 .lu-side-panel {
   padding-top: 2em;
 
-
   &.lu-collapsed {
     transform: unset;
   }
@@ -170,29 +193,4 @@ section.lu-header > .lu-label {
     min-height: 30px;
     padding: 0;
   }
-}
-
-// modify checkbox style
-[type="checkbox"] {
-  + label {
-    padding-left: 25px;
-  }
-
-  + label:before,
-  &:not(.filled-in) + label:after {
-    border: 1px solid color("grey", "darken-1");
-  }
-
-  &:not(:checked):disabled + label {
-    cursor: not-allowed;
-  }
-
-  &:not(:checked):disabled + label:before {
-    border: 1px solid color("grey", "lighten-1");
-    background: color("grey", "lighten-2");
-  }
-}
-
-label {
-  color: color("grey", "darken-3");
 }
