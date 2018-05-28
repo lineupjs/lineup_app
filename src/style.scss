@@ -71,16 +71,24 @@ body {
   }
 }
 
-nav .brand-logo {
-  margin-left: 1em;
-}
+nav {
 
-nav .fixed-action-btn li {
-  float: unset;
-  text-align: right;
+  .brand-logo {
+    margin-left: 1em;
+  }
 
-  > a {
-    margin: 0;
+  .btn-floating.halfway-fab {
+    bottom: -11px;
+  }
+
+  .fixed-action-btn.horizontal ul  li {
+    float: unset;
+    text-align: right;
+    margin-top: 11px;
+
+    > a {
+      margin: 0;
+    }
   }
 }
 
