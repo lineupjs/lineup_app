@@ -140,14 +140,10 @@ nav {
   box-sizing: border-box;
 }
 
-.lu-summary .lu-checkbox {
-  bottom: -5em !important;
-
-  > label {
-    margin: 0;
-    font-size: 12px;
-    line-height: 100%;
-  }
+.lu-summary .lu-checkbox > label {
+  margin: 0;
+  font-size: 12px;
+  line-height: 100%;
 }
 
 .lu-side-panel {
