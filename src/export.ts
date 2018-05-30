@@ -11,7 +11,7 @@ export default function initExport() {
     evt.stopPropagation();
     shared.lineup!.data.exportTable(shared.lineup!.data.getRankings()[0], {}).then((csv: any) => {
       // download link
-      downloadHelper.href = `data:text/csv;charset=utf-8;base64,${btoa(csv)}`;
+      downloadHelper.href = `data:text/csv;charset=utf-8;base64,${btoa(unescape(encodeURIComponent(csv)))}`;
       (<any>downloadHelper).download = `${shared.dataset!.title}.csv`;
       downloadHelper.click();
     });
@@ -31,7 +31,7 @@ export default function initExport() {
       return r;
     });
     // download link
-    downloadHelper.href = `data:application/json;charset=utf-8;base64,${btoa(JSON.stringify(json))}`;
+    downloadHelper.href = `data:application/json;charset=utf-8;base64,${btoa(unescape(encodeURIComponent(JSON.stringify(json))))}`;
     (<any>downloadHelper).download = `${shared.dataset!.title}.json`;
     downloadHelper.click();
   });
