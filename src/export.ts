@@ -31,7 +31,7 @@ export default function initExport() {
       return r;
     });
     // download link
-    downloadHelper.href = `data:application/json;charset=utf-8;base64,${btoa(JSON.stringify(unescape(encodeURIComponent(json))))}`;
+    downloadHelper.href = `data:application/json;charset=utf-8;base64,${btoa(unescape(encodeURIComponent(JSON.stringify(json))))}`;
     (<any>downloadHelper).download = `${shared.dataset!.title}.json`;
     downloadHelper.click();
   });
