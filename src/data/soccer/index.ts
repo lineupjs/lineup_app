@@ -1,6 +1,6 @@
-import {IDataset} from '../IDataset';
-import {parse, ParseResult} from 'papaparse';
-import {builder, buildRanking, buildStringColumn, buildCategoricalColumn, buildNumberColumn} from 'lineupjs';
+import { IDataset } from '../IDataset';
+import { parse, ParseResult } from 'papaparse';
+import { builder, buildRanking, buildStringColumn, buildCategoricalColumn, buildNumberColumn } from 'lineupjs';
 import '!file-loader?name=preview.png!./soccer.png';
 
 export const data: IDataset = {
@@ -67,22 +67,31 @@ export const data: IDataset = {
         });
       });
       return builder(parsed.data)
-        .column(buildStringColumn('player'))
+        .column(buildStringColumn('player').width(150))
         .column(buildNumberColumn('age', [0, NaN]))
-        .column(buildStringColumn('current_club'))
-        .column(buildCategoricalColumn('current_league'))
+        .column(buildStringColumn('current_club').width(100).label('Current Club'))
+        .column(buildCategoricalColumn('current_league').label('Current League'))
         .column(buildCategoricalColumn('foot'))
         .column(buildNumberColumn('height', [0, NaN]))
         .column(buildStringColumn('nationality'))
         .column(buildCategoricalColumn('position'))
-        .column(buildNumberColumn('games', [0, NaN]).asArray(4))
-        .column(buildNumberColumn('goals', [0, NaN]).asArray(4))
+        .column(buildNumberColumn('games', [0, NaN]).asArray(4).width(300))
+        .column(buildNumberColumn('goals', [0, NaN]).asArray(4).width(300))
         .column(buildNumberColumn('minutes', [0, NaN]).asArray(4))
         .column(buildNumberColumn('assists', [0, NaN]).asArray(4))
         .deriveColors()
         .ranking(buildRanking()
           .supportTypes()
-          .allColumns()
+          .column('player')
+          .column('current_league')
+          .column('current_club')
+          .column('position')
+          .column('foot')
+          .column('age')
+          .column('height')
+          .column('goals')
+          .column('games')
+          //.allColumns()
         )
         .buildTaggle(node);
     });
