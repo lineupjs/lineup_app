@@ -168,7 +168,7 @@ label {
   box-sizing: border-box;
 }
 
-.lu-summary .lu-checkbox > label {
+.lu-summary .lu-checkbox > [type="checkbox"] + label {
   margin: 0;
   font-size: 12px;
   line-height: 100%;
