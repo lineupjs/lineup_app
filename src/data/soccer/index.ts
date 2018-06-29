@@ -1,6 +1,6 @@
 import { IDataset } from '../IDataset';
 import { parse, ParseResult } from 'papaparse';
-import { builder, buildRanking, buildStringColumn, buildCategoricalColumn, buildNumberColumn, renderers } from 'lineupjs';
+import { builder, buildRanking, buildStringColumn, buildCategoricalColumn, buildNumberColumn } from 'lineupjs';
 import '!file-loader?name=preview.png!./soccer.png';
 import { SplitMatrixRenderer, IStratification } from '../../SplitMatrixRenderer';
 

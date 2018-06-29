@@ -1,4 +1,4 @@
-import { ICellRendererFactory, NumbersColumn, Column, isNumbersColumn, IStatistics, ICategoricalStatistics, ICategory, IRenderContext, renderers, NestedColumn, createNestedDesc, IGroupCellRenderer, ICellRenderer } from 'lineupjs';
+import { ICellRendererFactory, NumbersColumn, Column, IStatistics, ICategoricalStatistics, ICategory, IRenderContext, renderers, NestedColumn, createNestedDesc, IGroupCellRenderer, ICellRenderer } from 'lineupjs';
 
 
 /**
