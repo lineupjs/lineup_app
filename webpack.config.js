@@ -22,7 +22,19 @@ const banner = '/*! ' + (pkg.title || pkg.name) + ' - v' + pkg.version + ' - ' +
 module.exports = (env, options) => {
   const dev = options.mode.startsWith('d');
   return {
-    node: false, // no polyfills
+    node: {
+      fs: false,
+      global: true,
+      Buffer: false,
+      crypto: false,
+      stream: 'empty',
+      tls: false,
+      net: false,
+      process: true,
+      module: false,
+      clearImmediate: false,
+      setImmediate: false
+    },
     entry: {
       app: './src/index.ts'
     },
