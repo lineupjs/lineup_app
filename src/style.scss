@@ -174,6 +174,16 @@ label {
   line-height: 100%;
 }
 
+article.lu-side-panel-entry .lu-summary[data-renderer="histogram"][data-summary="stratify"] {
+  margin-bottom: 8em;
+
+  select {
+    display: block;
+    position: absolute;
+    bottom: -7em;
+  }
+}
+
 .lu-side-panel {
   padding-top: 2em;
 
