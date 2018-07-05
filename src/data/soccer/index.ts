@@ -2,6 +2,34 @@ import { IDataset } from '../IDataset';
 import { parse, ParseResult } from 'papaparse';
 import { builder, buildRanking, buildStringColumn, buildCategoricalColumn, buildNumberColumn } from 'lineupjs';
 import '!file-loader?name=preview.png!./soccer.png';
+import { SplitMatrixRenderer, IStratification } from '../../SplitMatrixRenderer';
+
+
+function stratifications(): IStratification[] {
+  const descs = [
+    {
+      name: 'season',
+      value: {
+        categories: [
+          '12/13',
+          '13/14',
+          '14/15',
+          '15/16',
+          '16/17',
+          '17/18',
+        ]
+      }
+    }
+  ];
+
+  return descs.map((d) => {
+    return {
+      name: d.name,
+      categories: d.value.categories,
+      data: d.value.categories
+    };
+  });
+}
 
 export const data: IDataset = {
   id: 'soccer',
@@ -37,10 +65,10 @@ export const data: IDataset = {
     .column(buildNumberColumn('height', [0, NaN]))
     .column(buildStringColumn('nationality'))
     .column(buildCategoricalColumn('position'))
-    .column(buildNumberColumn('games', [0, NaN]).asArray(4))
-    .column(buildNumberColumn('goals', [0, NaN]).asArray(4))
-    .column(buildNumberColumn('minutes', [0, NaN]).asArray(4))
-    .column(buildNumberColumn('assists', [0, NaN]).asArray(4))
+    .column(buildNumberColumn('games', [0, NaN]).asArray(6))
+    .column(buildNumberColumn('goals', [0, NaN]).asArray(6))
+    .column(buildNumberColumn('minutes', [0, NaN]).asArray(6)))
+    .column(buildNumberColumn('assists', [0, NaN]).asArray(6))
     .deriveColors()
     .ranking(buildRanking()
       .supportTypes()
@@ -66,7 +94,9 @@ export const data: IDataset = {
           row[col] = suffix.map((d) => !row[`${col}${d}`] && row[`${col}${d}`] !== 0 ? null : row[`${col}${d}`]);
         });
       });
+
       return builder(parsed.data)
+        .registerRenderer('splitmatrix', new SplitMatrixRenderer(stratifications()))
         .column(buildStringColumn('player').width(150))
         .column(buildNumberColumn('age', [0, NaN]))
         .column(buildStringColumn('current_club').width(100).label('Current Club'))
@@ -75,10 +105,10 @@ export const data: IDataset = {
         .column(buildNumberColumn('height', [0, NaN]))
         .column(buildStringColumn('nationality'))
         .column(buildCategoricalColumn('position'))
-        .column(buildNumberColumn('games', [0, NaN]).asArray(4).width(300))
-        .column(buildNumberColumn('goals', [0, NaN]).asArray(4).width(300))
-        .column(buildNumberColumn('minutes', [0, NaN]).asArray(4))
-        .column(buildNumberColumn('assists', [0, NaN]).asArray(4))
+        .column(buildNumberColumn('games', [0, NaN]).asArray(6).width(300).renderer(undefined, undefined, 'splitmatrix'))
+        .column(buildNumberColumn('goals', [0, NaN]).asArray(6).width(300).renderer(undefined, undefined, 'splitmatrix'))
+        .column(buildNumberColumn('minutes', [0, NaN]).asArray(6).renderer(undefined, undefined, 'splitmatrix'))
+        .column(buildNumberColumn('assists', [0, NaN]).asArray(6).renderer(undefined, undefined, 'splitmatrix'))
         .deriveColors()
         .ranking(buildRanking()
           .supportTypes()
