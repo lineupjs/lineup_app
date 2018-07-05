@@ -1,4 +1,4 @@
-import { ICellRendererFactory, NumbersColumn, Column, IStatistics, ICategoricalStatistics, ICategory, IRenderContext, renderers, NestedColumn, createNestedDesc, IGroupCellRenderer, ICellRenderer } from 'lineupjs';
+import { ICellRendererFactory, NumbersColumn, Column, IStatistics, ICategoricalStatistics, ICategory, IRenderContext, renderers, NestedColumn, createNestedDesc, IGroupCellRenderer, ICellRenderer, IImposer } from 'lineupjs';
 
 
 /**
@@ -28,15 +28,15 @@ export class SplitMatrixRenderer implements ICellRendererFactory {
     return this.histogramRenderer.canRender(col, mode);
   }
 
-  create(col: Column, context: IRenderContext, hist: IStatistics | ICategoricalStatistics | null, imposer?: any/*IImposer*/): ICellRenderer {
+  create(col: Column, context: IRenderContext, hist: IStatistics | ICategoricalStatistics | null, imposer?: IImposer): ICellRenderer {
     return this.histogramRenderer.create(col, context, hist, imposer);
   }
 
-  createGroup(col: Column, context: IRenderContext, hist: IStatistics | ICategoricalStatistics | null, imposer?: any/*IImposer*/): IGroupCellRenderer {
+  createGroup(col: Column, context: IRenderContext, hist: IStatistics | ICategoricalStatistics | null, imposer?: IImposer): IGroupCellRenderer {
     return this.histogramRenderer.createGroup(col, context, hist, imposer);
   }
 
-  createSummary(col: NumbersColumn, context: IRenderContext, interactive: boolean, imposer?: any/*IImposer*/) {
+  createSummary(col: NumbersColumn, context: IRenderContext, interactive: boolean, imposer?: IImposer) {
     const histogramRenderer = this.histogramRenderer.createSummary(col, context, interactive, imposer);
     if (!interactive) {
       return {
