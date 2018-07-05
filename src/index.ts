@@ -7,15 +7,7 @@ import * as $ from 'jquery';
 import 'lineupjs/build/LineUpJS.css';
 import initExport from './export';
 import shared from './shared';
-
-import data,
-{
-  toCard,
-  IDataset,
-  fromFile
-}
-
-  from './data';
+import data, {toCard, IDataset, fromFile} from './data';
 
 const uploader = <HTMLElement>document.querySelector('main');
 
@@ -27,6 +19,7 @@ function build(builder: Promise<IDataset>) {
   }
   ).then((l) => {
     shared.lineup = l;
+    disableBubbling(<HTMLElement>document.querySelector('div.lu-c > main > main'), 'mousemove', 'mouseout', 'mouseover');
     return new Promise<any>((resolve) => setTimeout(resolve, 500));
   }
   ).then(() => {
@@ -49,6 +42,12 @@ function build(builder: Promise<IDataset>) {
     uploader.dataset.state = 'ready';
   }
   );
+}
+
+function disableBubbling(node: HTMLElement, ...events: string[]) {
+  for (const event of events) {
+    node.addEventListener(event, (evt) => evt.stopPropagation());
+  }
 }
 
 function reset() {
