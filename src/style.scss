@@ -136,3 +136,7 @@ nav .fixed-action-btn li {
 section.lu-header > .lu-label {
   line-height: 1.5;
 }
+
+.lu-filter-table [type="checkbox"] + label {
+  display: inline-flex;
+}
