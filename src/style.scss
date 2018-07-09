@@ -45,7 +45,7 @@ body {
       transition: opacity 0.5s ease;
     }
 
-    &[data-state=initial] {t
+    &[data-state=initial] {
       #uploader {
         display: none;
       }
@@ -213,6 +213,6 @@ section.lu-header > .lu-label {
   padding: 1.5em 0.2em;
 }
 
-.lu-filter-table [type="checkbox"] + label {
+.lu-filter-table .lu-checkbox > [type="checkbox"] + label {
   display: inline-flex;
 }
