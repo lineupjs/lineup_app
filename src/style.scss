@@ -24,6 +24,8 @@ $radio-border: 2px solid $secondary-color !default;
 $fa-font-path: '~font-awesome/fonts';
 @import '~font-awesome/scss/font-awesome';
 
+@import './model/style';
+
 html {
   font-size: 14px;
 }

@@ -2,7 +2,7 @@ import { IDataset } from '../IDataset';
 import { parse, ParseResult } from 'papaparse';
 import { builder, buildRanking, buildStringColumn, buildCategoricalColumn, buildNumberColumn } from 'lineupjs';
 import '!file-loader?name=preview.png!./soccer.png';
-import { SplitMatrixRenderer, IStratification } from '../../SplitMatrixRenderer';
+import { splitMatrix, MatrixColumn, IStratification } from '../../model';
 
 
 function stratifications(): IStratification[] {
@@ -108,7 +108,8 @@ export const data: IDataset = {
       });
 
       return builder(parsed.data)
-        .registerRenderer('splitmatrix', new SplitMatrixRenderer(stratifications()))
+        .registerColumnType('matrix', MatrixColumn)
+        .registerToolbarAction('splitMatrix', splitMatrix)
         .column(buildStringColumn('player').width(150))
         .column(buildNumberColumn('age', [0, NaN]))
         .column(buildStringColumn('current_club').width(150).label('Current Club'))
@@ -117,10 +118,10 @@ export const data: IDataset = {
         .column(buildNumberColumn('height', [0, NaN]))
         .column(buildStringColumn('nationality'))
         .column(buildCategoricalColumn('position'))
-        .column(buildNumberColumn('games', [0, NaN]).asArray(6).width(300).renderer(undefined, undefined, 'splitmatrix'))
-        .column(buildNumberColumn('goals', [0, NaN]).asArray(6).width(300).renderer(undefined, undefined, 'splitmatrix'))
-        .column(buildNumberColumn('minutes', [0, NaN]).asArray(6).width(300).renderer(undefined, undefined, 'splitmatrix'))
-        .column(buildNumberColumn('assists', [0, NaN]).asArray(6).width(300).renderer(undefined, undefined, 'splitmatrix'))
+        .column(buildNumberColumn('games', [0, NaN]).asArray(6).width(300).custom('type', 'matrix').custom('stratificatins', stratifications))
+        .column(buildNumberColumn('goals', [0, NaN]).asArray(6).width(300).custom('type', 'matrix').custom('stratificatins', stratifications))
+        .column(buildNumberColumn('minutes', [0, NaN]).asArray(6).width(300).custom('type', 'matrix').custom('stratificatins', stratifications))
+        .column(buildNumberColumn('assists', [0, NaN]).asArray(6).width(300).custom('type', 'matrix').custom('stratificatins', stratifications))
         .deriveColors()
         .ranking(buildRanking()
           .aggregate()
