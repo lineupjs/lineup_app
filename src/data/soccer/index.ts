@@ -107,6 +107,8 @@ export const data: IDataset = {
         });
       });
 
+      const strats = stratifications();
+
       return builder(parsed.data)
         .registerColumnType('matrix', MatrixColumn)
         .registerToolbarAction('splitMatrix', splitMatrix)
@@ -118,10 +120,10 @@ export const data: IDataset = {
         .column(buildNumberColumn('height', [0, NaN]))
         .column(buildStringColumn('nationality'))
         .column(buildCategoricalColumn('position'))
-        .column(buildNumberColumn('games', [0, NaN]).asArray(6).width(300).custom('type', 'matrix').custom('stratificatins', stratifications))
-        .column(buildNumberColumn('goals', [0, NaN]).asArray(6).width(300).custom('type', 'matrix').custom('stratificatins', stratifications))
-        .column(buildNumberColumn('minutes', [0, NaN]).asArray(6).width(300).custom('type', 'matrix').custom('stratificatins', stratifications))
-        .column(buildNumberColumn('assists', [0, NaN]).asArray(6).width(300).custom('type', 'matrix').custom('stratificatins', stratifications))
+        .column(buildNumberColumn('games', [0, NaN]).asArray(6).width(300).custom('type', 'matrix').custom('stratifications', strats))
+        .column(buildNumberColumn('goals', [0, NaN]).asArray(6).width(300).custom('type', 'matrix').custom('stratifications', strats))
+        .column(buildNumberColumn('minutes', [0, NaN]).asArray(6).width(300).custom('type', 'matrix').custom('stratifications', strats))
+        .column(buildNumberColumn('assists', [0, NaN]).asArray(6).width(300).custom('type', 'matrix').custom('stratifications', strats))
         .deriveColors()
         .ranking(buildRanking()
           .aggregate()
