@@ -163,9 +163,30 @@ label {
   }
 }
 
-.lu-hierarchy .lu-search input {
-  margin: 0;
-  height: 2em;
+.lu-active .lu-hierarchy {
+  > section {
+    margin-bottom: 1em;
+
+    > .lu-toolbar,
+    > footer {
+      align-items: center;
+      padding: 6px 0.5em 0.5em 0.5em;
+    }
+
+    > footer {
+      &::before {
+        color: #cecece;
+      }
+
+      .lu-search input {
+        margin: 0;
+        height: 2em;
+        border-color: #dedede;
+        font-size: small;
+        font-weight: normal;
+      }
+    }
+  }
 }
 
 .lu-search > input[type=search] {
