@@ -80,7 +80,7 @@
   "dependencies": {
     "@types/materialize-css": "^1.0.3",
     "@types/papaparse": "^4.5.0",
-    "lineupjs": "^3.0.1-beta.12",
+    "lineupjs": "^3.1.0",
     "materialize-css": "^0.100.2",
     "papaparse": "^4.5.0",
     "font-awesome": "^4.7.0",

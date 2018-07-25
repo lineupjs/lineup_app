@@ -156,10 +156,16 @@ label {
   overflow: inherit;
   display: flex;
   justify-content: center;
+  margin-bottom: 0.5em;
 
   span {
     font-size: 1rem;
   }
+}
+
+.lu-hierarchy .lu-search input {
+  margin: 0;
+  height: 2em;
 }
 
 .lu-search > input[type=search] {
