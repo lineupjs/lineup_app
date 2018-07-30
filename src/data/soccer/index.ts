@@ -1,8 +1,8 @@
-import { IDataset } from '../IDataset';
-import { parse, ParseResult } from 'papaparse';
-import { builder, buildRanking, buildStringColumn, buildCategoricalColumn, buildNumberColumn } from 'lineupjs';
+import {IDataset} from '../IDataset';
+import {parse, ParseResult} from 'papaparse';
+import {builder, buildRanking, buildStringColumn, buildCategoricalColumn, buildNumberColumn} from 'lineupjs';
 import '!file-loader?name=preview.png!./soccer.png';
-import { splitMatrix, MatrixColumn, IStratification } from '../../model';
+import {splitMatrix, MatrixColumn, IStratification} from '../../model';
 
 
 function stratifications(): IStratification[] {
