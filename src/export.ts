@@ -9,7 +9,7 @@ export default function initExport() {
   document.querySelector('#downloadCSV')!.addEventListener('click', (evt) => {
     evt.preventDefault();
     evt.stopPropagation();
-    shared.lineup!.data.exportTable(shared.lineup!.data.getRankings()[0], {}).then((csv: any) => {
+    shared.lineup!.data.exportTable(shared.lineup!.data.getRankings()[0], {}).then((csv) => {
       // download link
       downloadHelper.href = `data:text/csv;charset=utf-8;base64,${btoa(unescape(encodeURIComponent(csv)))}`;
       (<any>downloadHelper).download = `${shared.dataset!.title}.csv`;
@@ -20,12 +20,12 @@ export default function initExport() {
     evt.preventDefault();
     evt.stopPropagation();
     const ranking = shared.lineup!.data.getRankings()[0];
-    const cols = ranking.flatColumns.filter((d: any) => !isSupportType(d));
+    const cols = ranking.flatColumns.filter((d) => !isSupportType(d));
     const data = <LocalDataProvider>shared.lineup!.data;
     const ordered = data.viewRawRows(ranking.getOrder());
-    const json = ordered.map((row: any) => {
+    const json = ordered.map((row) => {
       const r: any = {};
-      cols.forEach((col: any) => {
+      cols.forEach((col) => {
         r[col.label] = col.getValue(row);
       });
       return r;
