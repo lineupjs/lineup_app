@@ -3,7 +3,7 @@ import {wur, shanghai} from './wur';
 import forbes from './forbes-top-2000-companies';
 import happiness from './world-happiness-report';
 import soccer from './soccer';
-import {ieeeyears} from './ieee-programming';
+import {ieeeheat, ieeebars} from './ieee-programming';
 export {IDataset} from './IDataset';
 export {default as fromFile} from './fromFile';
 
@@ -13,7 +13,8 @@ export const data: IDataset[] = [
   forbes,
   happiness,
   soccer,
-  ieeeyears
+  ieeebars,
+  ieeeheat
 ];
 
 export default data;
