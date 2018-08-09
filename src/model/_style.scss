@@ -1,0 +1,5 @@
+$lu_icon_window_restore: '\f2d2';
+
+i[title^="Split By"]::before {
+  content: $lu_icon_window_restore;
+}
