@@ -45,7 +45,7 @@ export const ieeebars: IDataset = {
 
   // source matrices
   sources.forEach((source) => {
-    dataBuilder = dataBuilder.column(buildNumberColumn(source).asArray(years.length));
+    dataBuilder = dataBuilder.column(buildNumberColumn(source).asArray(years.map((y) => ''+y));
   });
 
   // rankings per year, begin with 2018
@@ -104,7 +104,7 @@ export const ieeebars: IDataset = {
 
       // source matrices
       sources.forEach((source) => {
-        dataBuilder = dataBuilder.column(buildNumberColumn(source).asArray(years.length));
+        dataBuilder = dataBuilder.column(buildNumberColumn(source).asArray(years.map((y) => `${y}`)));
       });
 
       // rankings per year, begin with 2018
@@ -115,7 +115,7 @@ export const ieeebars: IDataset = {
           const colName = `${source} ${year}`;
           dataBuilder = dataBuilder.column(buildNumberColumn(colName)); //Create a column to use it for the ranking
           if (parsed.data[0] && parsed.data[0][colName]) { // avoid NaN columns (e.g. Google Trends 2018)
-            columnNamesAndWeights.push(...[colName, spectrumWeights[source]]); // all columns have weight 1
+            columnNamesAndWeights.push(...[colName, spectrumWeights[source]]);
           }
         });
 
@@ -178,12 +178,12 @@ export const ieeeheat: IDataset = {
 
   // source matrices
   sources.forEach((source) => {
-    dataBuilder = dataBuilder.column(buildNumberColumn(source, [0, NaN]).asArray(years.length));
+    dataBuilder = dataBuilder.column(buildNumberColumn(source, [0, NaN]).asArray(years.map((y) => ''+y)));
   });
 
   // year matrices
   years.forEach((year) => {
-    dataBuilder = dataBuilder.column(buildNumberColumn('' + year, [0, NaN]).asArray(sources.length));
+    dataBuilder = dataBuilder.column(buildNumberColumn('' + year, [0, NaN]).asArray(sources));
   });
 
   dataBuilder = dataBuilder.ranking(
@@ -242,12 +242,12 @@ export const ieeeheat: IDataset = {
 
       // source matrices
       sources.forEach((source) => {
-        dataBuilder = dataBuilder.column(buildNumberColumn(source, [0, NaN]).asArray(years.length));
+        dataBuilder = dataBuilder.column(buildNumberColumn(source, [0, NaN]).asArray(years.map((y) => `${y}`)));
       });
 
       // year matrices
       years.forEach((year) => {
-        dataBuilder = dataBuilder.column(buildNumberColumn(`${year}`, [0, NaN]).asArray(sources.length));
+        dataBuilder = dataBuilder.column(buildNumberColumn(`${year}`, [0, NaN]).asArray(sources));
       });
 
       dataBuilder = dataBuilder.ranking(
