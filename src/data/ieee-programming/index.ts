@@ -25,12 +25,11 @@ export const ieeebars: IDataset = {
 
   const years = [2014, 2015, 2016, 2017, 2018]; // 5 years
   const sources = ['Career Builder', 'Dice', 'Github (active)', 'Github (created)', 'Google Search', 'Google Trends', 'Hacker News', 'IEEE Xplore', 'Reddit (posts)', 'Stack Overflow (?s)', 'Stack Overflow (views)', 'Twitter']; // 12 sources
-  const spectrumWeights: { [s: string]: number; }  = {'Career Builder': 5, 'Dice': 5, 'Github (active)': 50, 'Github (created)': 30, 'Google Search': 50, 'Google Trends': 50, 'Hacker News': 20, 'IEEE Xplore': 100, 'Reddit (posts)': 20, 'Stack Overflow (?s)': 30, 'Stack Overflow (views)': 30, 'Twitter': 20};
-
+  const spectrumWeights = [5, 5, 50, 30, 50, 50, 20, 100, 20, 30, 30, 20];
   // //Merge data of multiple years for each source
   parsed.data.forEach((row) => {
     sources.forEach((source) => {
-      row[source] = years.map((y) => !row[source + ' ' + year] && row[source + ' ' + year] !== 0 ? null : row[source + ' ' + year]);
+      row[source] = years.map((y) => !row[source + ' ' + y] && row[source + ' ' + y] !== 0 ? null : row[source + ' ' + y]);
     });
   });
 
@@ -45,24 +44,28 @@ export const ieeebars: IDataset = {
 
   // source matrices
   sources.forEach((source) => {
-    dataBuilder = dataBuilder.column(buildNumberColumn(source).asArray(years.map((y) => ''+y));
+    dataBuilder = dataBuilder.column(buildNumberColumn(source).asArray(years.map((y) => ''+y)));
   });
 
   // rankings per year, begin with 2018
   years.reverse().forEach((year) => {
-    const columnNamesAndWeights: (string | number)[] = [];
+    const columnNames: string[] = [];
+    const colSpectrumWeights = spectrumWeights.slice(); //duplicate array
 
-    sources.forEach((source) => {
-      const colName = source + ' ' + year;
-      dataBuilder = dataBuilder.column(buildNumberColumn(colName)); //Create a column to use it for the ranking
-      if (parsed.data[0] && parsed.data[0][colName]) { // avoid NaN columns (e.g. Google Trends 2018)
-        columnNamesAndWeights.push(...[colName, spectrumWeights[source]]); // all columns have weight 1
+    sources.forEach((source, i) => {
+      const colName = source + ' ' + y;
+      if(colName === 'Google Trends 2018') {
+        // not available in dataset
+        colSpectrumWeights.splice(i, 1); //remove weight
+      } else {
+        dataBuilder = dataBuilder.column(buildNumberColumn(colName)); //Create a column to use it for the ranking
+        columnNames.push(colName);
       }
     });
 
     dataBuilder = dataBuilder.ranking(
       buildRanking()
-        .weightedSum(''+year, <string>columnNamesAndWeights[0], <number>columnNamesAndWeights[1], <string>columnNamesAndWeights[2], <number>columnNamesAndWeights[3], ...columnNamesAndWeights.slice(4))
+        .column({ type: 'weightedSum', columns: columnNames, weights: colSpectrumWeights, label: ''+year})
         .supportTypes()
         .column('name')
         .sortBy(''+year, 'desc')
@@ -84,8 +87,7 @@ export const ieeebars: IDataset = {
     }).then((parsed: ParseResult) => {
       const years = [2014, 2015, 2016, 2017, 2018]; // 5 years
       const sources = ['Career Builder', 'Dice', 'Github (active)', 'Github (created)', 'Google Search', 'Google Trends', 'Hacker News', 'IEEE Xplore', 'Reddit (posts)', 'Stack Overflow (?s)', 'Stack Overflow (views)', 'Twitter']; // 12 sources
-      const spectrumWeights: { [s: string]: number; }  = {'Career Builder': 5, 'Dice': 5, 'Github (active)': 50, 'Github (created)': 30, 'Google Search': 50, 'Google Trends': 50, 'Hacker News': 20, 'IEEE Xplore': 100, 'Reddit (posts)': 20, 'Stack Overflow (?s)': 30, 'Stack Overflow (views)': 30, 'Twitter': 20};
-
+      const spectrumWeights = [5, 5, 50, 30, 50, 50, 20, 100, 20, 30, 30, 20];
       // //Merge data of multiple years for each source
       parsed.data.forEach((row) => {
         sources.forEach((source) => {
@@ -109,19 +111,23 @@ export const ieeebars: IDataset = {
 
       // rankings per year, begin with 2018
       years.reverse().forEach((year) => {
-        const columnNamesAndWeights: (string | number)[] = [];
+        const columnNames: string[] = [];
+        const colSpectrumWeights = spectrumWeights.slice(); //duplicate array
 
-        sources.forEach((source) => {
+        sources.forEach((source, i) => {
           const colName = `${source} ${year}`;
-          dataBuilder = dataBuilder.column(buildNumberColumn(colName)); //Create a column to use it for the ranking
-          if (parsed.data[0] && parsed.data[0][colName]) { // avoid NaN columns (e.g. Google Trends 2018)
-            columnNamesAndWeights.push(...[colName, spectrumWeights[source]]);
+          if(colName === 'Google Trends 2018') {
+            // not available in dataset
+            colSpectrumWeights.splice(i, 1); //remove weight
+          } else {
+            dataBuilder = dataBuilder.column(buildNumberColumn(colName)); //Create a column to use it for the ranking
+            columnNames.push(colName);
           }
         });
 
         dataBuilder = dataBuilder.ranking(
           buildRanking()
-            .weightedSum(`${year}`, <string>columnNamesAndWeights[0], <number>columnNamesAndWeights[1], <string>columnNamesAndWeights[2], <number>columnNamesAndWeights[3], ...columnNamesAndWeights.slice(4))
+            .column({ type: 'weightedSum', columns: columnNames, weights: colSpectrumWeights, label: `${year}`})
             .supportTypes()
             .column('name')
             .sortBy(`${year}`, 'desc')
