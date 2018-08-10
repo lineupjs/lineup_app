@@ -4,7 +4,7 @@ import {builder, buildRanking, buildStringColumn, buildCategoricalColumn, buildN
 import { isNullOrUndefined } from 'util';
 
 import imageBars from './ieee_bars.png';
-import imageHeat from './ieee_bars.png';
+import imageHeat from './ieee_heat.png';
 
 export const ieeebars: IDataset = {
   id: 'ieee_bars',
@@ -12,7 +12,7 @@ export const ieeebars: IDataset = {
   image: imageBars,
   description: `<p>
   55 programming languages are compared by 11 metrics from 2014 to 2018.
-  For each year, the languages are ranked by their total popularity accross all metrics.
+  For each year, the languages are ranked with stacked bars by their total popularity accross all metrics.
 </p>
   <p>Source: <a href="https://spectrum.ieee.org/static/ieee-top-programming-languages-2018-methods">IEEE Spectrum</a></p>`,
   rawData: '',
@@ -137,7 +137,7 @@ export const ieeeheat: IDataset = {
   image: imageHeat,
   description: `<p>
   55 programming languages are compared by 11 metrics from 2014 to 2018.
-  For each year, the languages are ranked by their total popularity accross all metrics.
+  For each year, the languages are ranked by their total popularity accross all metrics, collected in a heatmap.
 </p>
   <p>Source: <a href="https://spectrum.ieee.org/static/ieee-top-programming-languages-2018-methods">IEEE Spectrum</a></p>`,
   rawData: '',
@@ -237,17 +237,25 @@ export const ieeeheat: IDataset = {
       });
 
       // year matrices
-      years.reverse().forEach((year) => {
+      years.forEach((year) => {
         dataBuilder = dataBuilder.column(buildNumberColumn(''+year, [0, NaN]).asArray(sources.length));
+      });
 
-        dataBuilder = dataBuilder.ranking(
-          buildRanking()
+      dataBuilder = dataBuilder.ranking(
+      buildRanking()
+          .supportTypes()
+          .column('name')
+          .column('2018')
+          .sortBy('2018', 'desc')
+        );
+
+      dataBuilder = dataBuilder.ranking(
+        buildRanking()
             .supportTypes()
             .column('name')
-            .column(''+year)
-            .sortBy('' + year, 'desc')
+            .column('2017').column('2016').column('2015').column('2014')
+            .sortBy('2017', 'desc')
           );
-      });
       return dataBuilder.deriveColors().buildTaggle(node);
     });
   }
