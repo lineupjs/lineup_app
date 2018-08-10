@@ -12,9 +12,9 @@ export const data: IDataset[] = [
   shanghai,
   forbes,
   happiness,
-  soccer,
   ieeebars,
-  ieeeheat
+  ieeeheat,
+  soccer
 ];
 
 export default data;
