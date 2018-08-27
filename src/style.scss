@@ -2,14 +2,31 @@ $roboto-font-path: '~materialize-css/dist/fonts/roboto/';
 
 @import '~materialize-css/sass/components/color';
 
-$primary-color: color("blue", "lighten-1");
-$secondary-color: color("deep-purple", "lighten-1");
+$primary-color: color("grey", "lighten-3");
+$secondary-color: color("grey", "darken-3");
+
+$navbar-height: 40px;
+$navbar-font-color: color("grey", "darken-2");
+$navbar-brand-font-size: 1.2em;
+
+$footer-font-color: color("grey", "darken-4");
+$footer-copyright-font-color: $footer-font-color;
+
+$input-height: 2.4rem;
+
+$radio-fill-color: color("grey", "base") !default;
+$radio-empty-color: #5a5a5a !default;
+$radio-border: 2px solid $secondary-color !default;
 
 @import '~materialize-css/sass/materialize';
 @import './material-icons';
 
 $fa-font-path: '~font-awesome/fonts';
 @import '~font-awesome/scss/font-awesome';
+
+html {
+  font-size: 14px;
+}
 
 body {
   display: flex;
@@ -58,16 +75,48 @@ body {
   }
 }
 
-.brand-logo {
-  margin-left: 1em;
+nav {
+  .brand-logo {
+    margin-left: 1em;
+  }
+
+  .btn-floating.halfway-fab {
+    bottom: -11px;
+  }
+
+  .fixed-action-btn.horizontal ul li {
+    float: unset;
+    text-align: right;
+    margin-top: 11px;
+
+    > a {
+      margin: 0;
+    }
+  }
 }
 
-nav .fixed-action-btn li {
-  float: unset;
-  text-align: right;
+label {
+  color: color("grey", "darken-3");
+}
 
-  > a {
-    margin: 0;
+// modify checkbox style
+[type="checkbox"] {
+  + label {
+    padding-left: 25px;
+  }
+
+  + label::before,
+  &:not(.filled-in) + label::after {
+    border: 1px solid color("grey", "darken-1");
+  }
+
+  &:not(:checked):disabled + label {
+    cursor: not-allowed;
+  }
+
+  &:not(:checked):disabled + label::before {
+    border: 1px solid color("grey", "lighten-1");
+    background: color("grey", "lighten-2");
   }
 }
 
@@ -112,22 +161,57 @@ nav .fixed-action-btn li {
   }
 }
 
-.lu-hierarchy .lu-search input {
-  margin: 0;
-  height: 2em;
+.lu-active .lu-hierarchy {
+  > section {
+    margin-bottom: 1em;
+
+    > .lu-toolbar,
+    > footer {
+      align-items: center;
+      padding: 6px 0.5em 0.5em 0.5em;
+    }
+
+    > footer {
+      &::before {
+        color: #cecece;
+      }
+
+      .lu-search input {
+        margin: 0;
+        height: 2em;
+        border-color: #dedede;
+        font-size: small;
+        font-weight: normal;
+      }
+    }
+  }
 }
 
 .lu-search > input[type=search] {
   margin-bottom: 0;
+  border: 1px solid $secondary-color;
+  border-radius: 3px;
+  padding: 3px 5px;
+  box-sizing: border-box;
 }
 
-.lu-summary .lu-checkbox {
-  bottom: -5em !important;
+.lu-summary .lu-checkbox > [type="checkbox"] + label {
+  margin: 0;
+  font-size: 12px;
+  line-height: 100%;
+}
 
-  > label {
-    margin: 0;
-    font-size: 12px;
-    line-height: 100%;
+article.lu-side-panel-entry {
+  margin-bottom: 0.8em;
+
+  .lu-summary[data-renderer="histogram"][data-summary="stratify"] {
+    margin-bottom: 8em;
+
+    select {
+      display: block;
+      position: absolute;
+      bottom: -7em;
+    }
   }
 }
 
@@ -143,6 +227,19 @@ section.lu-header > .lu-label {
   line-height: 1.5;
 }
 
-.lu-filter-table [type="checkbox"] + label {
+.page-footer {
+  padding-top: 0;
+
+  .footer-copyright {
+    min-height: 30px;
+    padding: 0 1em;
+  }
+}
+
+.lu-side-panel .lu-collapser {
+  padding: 1.5em 0.2em;
+}
+
+.lu-filter-table .lu-checkbox > [type="checkbox"] + label {
   display: inline-flex;
 }
