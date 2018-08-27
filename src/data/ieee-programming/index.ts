@@ -44,7 +44,7 @@ export const ieeebars: IDataset = {
 
   // source matrices
   sources.forEach((source) => {
-    dataBuilder = dataBuilder.column(buildNumberColumn(source).asArray(years.map((y) => ''+y)));
+    dataBuilder = dataBuilder.column(buildNumberColumn(source).asArray(years.map(String)));
   });
 
   // rankings per year, begin with 2018
@@ -65,10 +65,10 @@ export const ieeebars: IDataset = {
 
     dataBuilder = dataBuilder.ranking(
       buildRanking()
-        .column({ type: 'weightedSum', columns: columnNames, weights: colSpectrumWeights, label: ''+year})
+        .column({ type: 'weightedSum', columns: columnNames, weights: colSpectrumWeights, label: year.toString()})
         .supportTypes()
         .column('name')
-        .sortBy(''+year, 'desc')
+        .sortBy(year.toString(), 'desc')
     );
   });
 
@@ -106,7 +106,7 @@ export const ieeebars: IDataset = {
 
       // source matrices
       sources.forEach((source) => {
-        dataBuilder = dataBuilder.column(buildNumberColumn(source).asArray(years.map((y) => `${y}`)));
+        dataBuilder = dataBuilder.column(buildNumberColumn(source).asArray(years.map(String)));
       });
 
       // rankings per year, begin with 2018
@@ -127,10 +127,10 @@ export const ieeebars: IDataset = {
 
         dataBuilder = dataBuilder.ranking(
           buildRanking()
-            .column({ type: 'weightedSum', columns: columnNames, weights: colSpectrumWeights, label: `${year}`})
+            .column({ type: 'weightedSum', columns: columnNames, weights: colSpectrumWeights, label: year.toString()})
             .supportTypes()
             .column('name')
-            .sortBy(`${year}`, 'desc')
+            .sortBy(year.toString(), 'desc')
         );
       });
 
@@ -163,12 +163,12 @@ export const ieeeheat: IDataset = {
   parsed.data.forEach((row) => {
     // //Merge data of multiple years for each source
     sources.forEach((source) => {
-      row[source] = years.map((y) => row[source + ' ' + year]);
+      row[source] = years.map((y) => row[source + ' ' + y]);
     });
 
     // Merge data of multiple sources for each year
     years.forEach((y) => {
-      row[y] = sources.map((source) => row[source + ' ' + year]);
+      row[y] = sources.map((source) => row[source + ' ' + y]);
     });
   });
 
@@ -184,12 +184,12 @@ export const ieeeheat: IDataset = {
 
   // source matrices
   sources.forEach((source) => {
-    dataBuilder = dataBuilder.column(buildNumberColumn(source, [0, NaN]).asArray(years.map((y) => ''+y)));
+    dataBuilder = dataBuilder.column(buildNumberColumn(source, [0, NaN]).asArray(years.map(String));
   });
 
   // year matrices
   years.forEach((year) => {
-    dataBuilder = dataBuilder.column(buildNumberColumn('' + year, [0, NaN]).asArray(sources));
+    dataBuilder = dataBuilder.column(buildNumberColumn(year.toString(), [0, NaN]).asArray(sources));
   });
 
   dataBuilder = dataBuilder.ranking(
@@ -248,12 +248,12 @@ export const ieeeheat: IDataset = {
 
       // source matrices
       sources.forEach((source) => {
-        dataBuilder = dataBuilder.column(buildNumberColumn(source, [0, NaN]).asArray(years.map((y) => `${y}`)));
+        dataBuilder = dataBuilder.column(buildNumberColumn(source, [0, NaN]).asArray(years.map(String)));
       });
 
       // year matrices
       years.forEach((year) => {
-        dataBuilder = dataBuilder.column(buildNumberColumn(`${year}`, [0, NaN]).asArray(sources));
+        dataBuilder = dataBuilder.column(buildNumberColumn(year.toString(), [0, NaN]).asArray(sources));
       });
 
       dataBuilder = dataBuilder.ranking(
