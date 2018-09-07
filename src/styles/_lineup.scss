@@ -29,6 +29,14 @@
   align-self: stretch;
 }
 
+input[type=search].lu-search-input {
+  margin-bottom: 0;
+  border: 1px solid $secondary-color;
+  border-radius: 3px;
+  padding: 3px 5px;
+  box-sizing: border-box;
+}
+
 .lu-hierarchy-adder {
   &::before {
     color: #cecece;
@@ -41,14 +49,6 @@
     font-size: small;
     font-weight: normal;
   }
-}
-
-input[type=search].lu-search-input {
-  margin-bottom: 0;
-  border: 1px solid $secondary-color;
-  border-radius: 3px;
-  padding: 3px 5px;
-  box-sizing: border-box;
 }
 
 .lu-summary .lu-checkbox > [type=checkbox] + label {
