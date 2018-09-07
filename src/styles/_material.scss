@@ -1,0 +1,22 @@
+@import './vars';
+
+// modify checkbox style
+[type="checkbox"] {
+  + label {
+    padding-left: 25px;
+  }
+
+  + label::before,
+  &:not(.filled-in) + label::after {
+    border: 1px solid color("grey", "darken-1");
+  }
+
+  &:not(:checked):disabled + label {
+    cursor: not-allowed;
+  }
+
+  &:not(:checked):disabled + label::before {
+    border: 1px solid color("grey", "lighten-1");
+    background: color("grey", "lighten-2");
+  }
+}

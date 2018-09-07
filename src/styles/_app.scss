@@ -1,0 +1,106 @@
+@import './vars';
+
+html {
+  font-size: 14px;
+}
+
+body {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+
+  > main {
+    flex: 1 0 auto;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+
+    > div {
+      flex: 1 1 auto;
+      opacity: 1;
+      transition: opacity 0.5s ease;
+    }
+
+    &[data-state=initial] {
+      #uploader {
+        display: none;
+      }
+    }
+
+    &[data-state=uploading] {
+      #dropper {
+        display: none;
+      }
+
+      .lu {
+        visibility: visible;
+      }
+    }
+
+    &[data-state=ready] {
+      > *:not(.lu) {
+        display: none;
+      }
+
+      .lu {
+        visibility: visible;
+        pointer-events: all;
+        opacity: 1;
+      }
+    }
+  }
+}
+
+nav {
+  .brand-logo {
+    margin-left: 1em;
+  }
+
+  .btn-floating.halfway-fab {
+    bottom: -11px;
+  }
+
+  .fixed-action-btn.horizontal ul li {
+    float: unset;
+    text-align: right;
+    margin-top: 11px;
+
+    > a {
+      margin: 0;
+    }
+  }
+}
+
+label {
+  color: color("grey", "darken-3");
+}
+
+.carousel {
+  height: 600px;
+
+  .card-image {
+    height: 250px;
+  }
+
+  .carousel-item {
+    width: 500px;
+    height: 400px;
+  }
+
+  .card-reveal p {
+    text-align: justify;
+  }
+}
+
+.lu-c {
+  position: absolute !important;
+  left: 5px;
+  right: 5px;
+  top: 5px;
+  bottom: 5px;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  pointer-events: none;
+  line-height: 1;
+}

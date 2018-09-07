@@ -1,0 +1,24 @@
+@import './vars';
+
+@import '~font-awesome/scss/variables';
+@import '~font-awesome/scss/path';
+@import '~font-awesome/scss/mixins';
+@import '~font-awesome/scss/variables';
+
+.fa-codepen::before,
+.fa-file-code-o::before,
+.fa-file-excel-o::before {
+  @include fa-icon();
+}
+
+.fa-codepen::before {
+  content: $fa-var-codepen;
+}
+
+.fa-file-code-o::before {
+  content: $fa-var-file-code-o;
+}
+
+.fa-file-excel-o::before {
+  content: $fa-var-file-excel-o;
+}

@@ -1,0 +1,95 @@
+@import './vars';
+
+.lu-rule-button-chooser.switch {
+  overflow: inherit;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 0.5em;
+
+  span {
+    font-size: 1rem;
+  }
+}
+
+.lu-active .lu-hierarchy {
+  > section {
+    margin-bottom: 1em;
+
+    > .lu-toolbar,
+    > footer {
+      align-items: center;
+      padding: 6px 0.5em 0.5em 0.5em;
+    }
+
+    > footer {
+      &::before {
+        color: #cecece;
+      }
+
+      .lu-search input {
+        margin: 0;
+        height: 2em;
+        border-color: #dedede;
+        font-size: small;
+        font-weight: normal;
+      }
+    }
+  }
+}
+
+.lu-search > input[type=search] {
+  margin-bottom: 0;
+  border: 1px solid $secondary-color;
+  border-radius: 3px;
+  padding: 3px 5px;
+  box-sizing: border-box;
+}
+
+.lu-summary .lu-checkbox > [type="checkbox"] + label {
+  margin: 0;
+  font-size: 12px;
+  line-height: 100%;
+}
+
+article.lu-side-panel-entry {
+  margin-bottom: 0.8em;
+
+  .lu-summary[data-renderer="histogram"][data-summary="stratify"] {
+    margin-bottom: 8em;
+
+    select {
+      display: block;
+      position: absolute;
+      bottom: -7em;
+    }
+  }
+}
+
+.lu-side-panel {
+  padding-top: 2em;
+
+  &.lu-collapsed {
+    transform: unset;
+  }
+}
+
+section.lu-header > .lu-label {
+  line-height: 1.5;
+}
+
+.page-footer {
+  padding-top: 0;
+
+  .footer-copyright {
+    min-height: 30px;
+    padding: 0 1em;
+  }
+}
+
+.lu-side-panel .lu-collapser {
+  padding: 1.5em 0.2em;
+}
+
+.lu-filter-table .lu-checkbox > [type="checkbox"] + label {
+  display: inline-flex;
+}
