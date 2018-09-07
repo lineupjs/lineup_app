@@ -83,9 +83,13 @@ function showFile(file: File) {
 }
 
 window.addEventListener('resize', () => {
-  if (shared.lineup) {
-    shared.lineup.update();
-  }
+  setTimeout(() => {
+    if (shared.lineup) {
+      shared.lineup.update();
+    }
+  }, 100);
+}, {
+  passive: false
 });
 
 initExport();
