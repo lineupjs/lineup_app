@@ -23,15 +23,19 @@ jobs:
       - run: #update build doc and readme
           name: update api
           command: |
-            if [ "${CIRCLE_BRANCH}" == "master" ] ; then
+            if [ "${CIRCLE_BRANCH}" == "master" ] || [ "${CIRCLE_BRANCH}" == "develop" ] ; then
                 git clone git@github.com:datavisyn/lineup.js.org.git
                 cd lineup.js.org
-                rm -rf "app/"
-                mv ../build "app"
+                appdir=app
+                if [ "${CIRCLE_BRANCH}" == "develop" ] ; then
+                  appdir=app_develop
+                fi
+                rm -rf "${appdir}/"
+                mv ../build "${appdir}"
                 git config user.email "samuel_gratzl@gmx.at"
                 git config user.name "Samuel Gratzl"
                 git add -A
-                git commit -m "auto updating app" -m "trigger: ${CIRCLE_BUILD_URL}"
+                git commit -m "auto updating ${appdir}" -m "trigger: ${CIRCLE_BUILD_URL}"
                 git push origin master
             fi
 
