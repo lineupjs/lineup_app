@@ -3,7 +3,6 @@ import 'file-loader?name=index.html!extract-loader!html-loader?interpolate!./ind
 import './assets/favicon/favicon';
 import './style.scss';
 import * as $ from 'jquery';
-import 'lineupjs/build/LineUpJS.css';
 import initExport from './export';
 import shared from './shared';
 import data, {toCard, IDataset, fromFile} from './data';

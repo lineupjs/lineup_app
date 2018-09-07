@@ -1,5 +1,7 @@
 @import './vars';
 
+@import '~lineupjs/build/LineUpJS.css';
+
 .lu-rule-button-chooser.switch {
   overflow: inherit;
   display: flex;
@@ -32,7 +34,7 @@
     color: #cecece;
   }
 
-  .lu-search-input {
+  input[type=search].lu-search-input {
     margin: 0;
     height: 2em;
     border-color: #dedede;
@@ -41,7 +43,7 @@
   }
 }
 
-.lu-search-input {
+input[type=search].lu-search-input {
   margin-bottom: 0;
   border: 1px solid $secondary-color;
   border-radius: 3px;
