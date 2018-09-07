@@ -2,9 +2,9 @@ $roboto-font-path: '~materialize-css/dist/fonts/roboto/';
 
 @import '~materialize-css/sass/components/color';
 
+@import './styles/materialize';
 
 @import './styles/app';
 @import './styles/icons';
 @import './styles/lineup';
 @import './styles/material-icons';
-@import './styles/materialize';

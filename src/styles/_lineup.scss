@@ -11,33 +11,37 @@
   }
 }
 
-.lu-active .lu-hierarchy {
-  > section {
-    margin-bottom: 1em;
+.lu-group-hierarchy,
+.lu-sort-hierarchy,
+.lu-sort-groups-hierarchy {
+  margin-bottom: 1em;
+}
 
-    > .lu-toolbar,
-    > footer {
-      align-items: center;
-      padding: 6px 0.5em 0.5em 0.5em;
-    }
+.lu-hierarchy-entry,
+.lu-hierarchy-adder {
+  align-items: center;
+  padding: 6px 0.5em 0.5em 0.5em;
+}
 
-    > footer {
-      &::before {
-        color: #cecece;
-      }
+.lu-hierarchy-entry > .lu-label {
+  align-self: stretch;
+}
 
-      .lu-search input {
-        margin: 0;
-        height: 2em;
-        border-color: #dedede;
-        font-size: small;
-        font-weight: normal;
-      }
-    }
+.lu-hierarchy-adder {
+  &::before {
+    color: #cecece;
+  }
+
+  .lu-search-input {
+    margin: 0;
+    height: 2em;
+    border-color: #dedede;
+    font-size: small;
+    font-weight: normal;
   }
 }
 
-.lu-search > input[type=search] {
+.lu-search-input {
   margin-bottom: 0;
   border: 1px solid $secondary-color;
   border-radius: 3px;
@@ -45,24 +49,14 @@
   box-sizing: border-box;
 }
 
-.lu-summary .lu-checkbox > [type="checkbox"] + label {
+.lu-summary .lu-checkbox > [type=checkbox] + label {
   margin: 0;
   font-size: 12px;
   line-height: 100%;
 }
 
-article.lu-side-panel-entry {
+.lu-side-panel-entry {
   margin-bottom: 0.8em;
-
-  .lu-summary[data-renderer="histogram"][data-summary="stratify"] {
-    margin-bottom: 8em;
-
-    select {
-      display: block;
-      position: absolute;
-      bottom: -7em;
-    }
-  }
 }
 
 .lu-side-panel {
@@ -73,23 +67,14 @@ article.lu-side-panel-entry {
   }
 }
 
-section.lu-header > .lu-label {
+.lu-header > .lu-label {
   line-height: 1.5;
 }
 
-.page-footer {
-  padding-top: 0;
-
-  .footer-copyright {
-    min-height: 30px;
-    padding: 0 1em;
-  }
-}
-
-.lu-side-panel .lu-collapser {
+.lu-collapser {
   padding: 1.5em 0.2em;
 }
 
-.lu-filter-table .lu-checkbox > [type="checkbox"] + label {
+.lu-dialog-table > .lu-checkbox > [type="checkbox"] + label {
   display: inline-flex;
 }

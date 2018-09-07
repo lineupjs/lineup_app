@@ -51,23 +51,21 @@ body {
   }
 }
 
-nav {
-  .brand-logo {
-    margin-left: 1em;
-  }
+.brand-logo {
+  margin-left: 1em;
+}
 
-  .btn-floating.halfway-fab {
-    bottom: -11px;
-  }
+.btn-floating.halfway-fab {
+  bottom: -11px;
+}
 
-  .fixed-action-btn.horizontal ul li {
-    float: unset;
-    text-align: right;
-    margin-top: 11px;
+.export-option {
+  float: unset;
+  text-align: right;
+  margin-top: 11px;
 
-    > a {
-      margin: 0;
-    }
+  > a {
+    margin: 0;
   }
 }
 
@@ -77,19 +75,19 @@ label {
 
 .carousel {
   height: 600px;
+}
 
-  .card-image {
+.carousel > .carousel-item {
+  width: 500px;
+  height: 400px;
+
+  > .card-image {
     height: 250px;
   }
+}
 
-  .carousel-item {
-    width: 500px;
-    height: 400px;
-  }
-
-  .card-reveal p {
-    text-align: justify;
-  }
+.card-reveal > p {
+  text-align: justify;
 }
 
 .lu-c {
@@ -103,4 +101,14 @@ label {
   transition: opacity 0.5s ease;
   pointer-events: none;
   line-height: 1;
+}
+
+
+.page-footer {
+  padding-top: 0;
+
+  .footer-copyright {
+    min-height: 30px;
+    padding: 0 1em;
+  }
 }
