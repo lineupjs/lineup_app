@@ -1,6 +1,5 @@
-$roboto-font-path: '~materialize-css/dist/fonts/roboto/';
-
-@import '~materialize-css/sass/components/color';
+@import '~materialize-css/sass/components/color-variables';
+@import '~materialize-css/sass/components/color-classes';
 
 @import './styles/materialize';
 

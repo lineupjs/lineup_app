@@ -41,25 +41,25 @@
     <div class="nav-wrapper">
       <a href="#" class="brand-logo" onclick="window.location.reload()">
         LineUp</a>
-      <div class="fixed-action-btn horizontal" style="position: initial">
+      <div class="fixed-action-btn horizontal" style="position: initial;">
         <a class="btn-floating grey lighten-1 halfway-fab disabled">
           <i class="material-icons">file_download</i>
         </a>
         <ul>
           <li class="export-option">
-            <a href="#" id="createCodePen" class="btn-floating black waves-effect waves-light tooltipped" data-position="bottom" data-delay="50"
+            <a href="#" id="createCodePen" class="btn-floating btn-small black waves-effect waves-light tooltipped" data-position="bottom" data-delay="50"
               data-tooltip="Export to CodePen.io">
               <i class="material-icons fa fa-codepen"></i>
             </a>
           </li>
           <li class="export-option">
-            <a href="#" id="downloadJSON" class="btn-floating black waves-effect waves-light tooltipped" data-position="bottom" data-delay="50"
+            <a href="#" id="downloadJSON" class="btn-floating btn-small black waves-effect waves-light tooltipped" data-position="bottom" data-delay="50"
               data-tooltip="Download JSON">
               <i class="material-icons fa fa-file-code-o"></i>
             </a>
           </li>
           <li class="export-option">
-            <a href="#" id="downloadCSV" class="btn-floating black waves-effect waves-light tooltipped" data-position="bottom" data-delay="50"
+            <a href="#" id="downloadCSV" class="btn-floating btn-small black waves-effect waves-light tooltipped" data-position="bottom" data-delay="50"
               data-tooltip="Download CSV">
               <i class="material-icons fa fa-file-excel-o"></i>
             </a>
@@ -72,7 +72,7 @@
   <main data-state="initial">
     <div class="lu-c"></div>
     <div class="container valign-wrapper">
-      <div class="row" style="flex: 1 1 auto">
+      <div class="row" style="flex: 1 1 auto;">
         <div class="center-align col s12" id="dropper">
           <div class="carousel">
           </div>
@@ -104,7 +104,7 @@
     </div>
   </footer>
 
-  <div style="position: absolute; left: -10000px">
+  <div style="position: absolute; left: -10000px;">
     <a href="#" id="downloadHelper" target="_blank" rel="noopener"></a>
     <form id="createCodePenHelper" method="post" action="https://codepen.io/pen/define" target="_blank" rel="noopener">
       <input type="hidden" name="data">
@@ -113,7 +113,7 @@
     <input type="file">
   </div>
 
-  <div style="display: none" id="export-helper">
+  <div style="display: none;" id="export-helper">
     <span>Exporting &hellip;</span>
     <div class="preloader-wrapper active">
       <div class="spinner-layer spinner-blue">

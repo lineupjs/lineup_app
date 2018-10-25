@@ -1,8 +1,8 @@
-import * as M from 'materialize-css';
+import {Tooltip, Carousel, FloatingActionButton, toast} from 'materialize-css';
 import 'file-loader?name=index.html!extract-loader!html-loader?interpolate!./index.html';
 import './assets/favicon/favicon';
 import './style.scss';
-import * as $ from 'jquery';
+import 'typeface-roboto/index.css';
 import initExport from './export';
 import shared from './shared';
 import data, {toCard, IDataset, fromFile} from './data';
@@ -38,7 +38,7 @@ function build(builder: Promise<IDataset>) {
     uploader.dataset.state = 'ready';
   }).catch((error) => {
     uploader.dataset.state = 'initial';
-    M.toast(`<pre>${error}</pre>`, 5000);
+    toast({html: `<pre>${error}</pre>`, displayLength: 5000});
   });
 }
 
@@ -64,12 +64,15 @@ function reset() {
 
 function rebuildCarousel() {
   const base = <HTMLElement>document.querySelector('.carousel');
-  (<any>$)('.carousel').carousel('destroy');
+  const instance = Carousel.getInstance(base);
+  if (instance) {
+    instance.destroy();
+  }
   delete base.dataset.namespace;
   base.classList.remove('initialized');
   base.innerHTML = '';
   data.forEach((d) => base.insertAdjacentHTML('afterbegin', toCard(d))); // init carousel
-  (<any>$)('.carousel').carousel();
+  Carousel.init(base);
 }
 
 function showFile(file: File) {
@@ -120,6 +123,11 @@ initExport();
 }
 
 rebuildCarousel();
+
+FloatingActionButton.init(document.querySelectorAll('.fixed-action-btn'), {
+  direction: 'left'
+});
+Tooltip.init(document.querySelectorAll('.tooltipped'));
 
 {
   const h = location.hash.slice(1);
