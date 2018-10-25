@@ -29,10 +29,24 @@
   align-self: stretch;
 }
 
+.lu-search::before {
+  line-height: 1.15;
+  font-size: 16px;
+  padding: 3px 5px;
+  border: 1px solid $secondary-color;
+  border-right: none;
+  border-radius: 3px 0 0 3px;
+}
+
+.lu-search-list {
+  top: 2.4rem;
+  left: calc(1.2em + 2px);
+}
+
 input[type=search].lu-search-input {
   margin-bottom: 0;
   border: 1px solid $secondary-color;
-  border-radius: 3px;
+  border-radius: 0 3px 3px 0;
   padding: 3px 5px;
   box-sizing: border-box;
 }
@@ -42,12 +56,22 @@ input[type=search].lu-search-input {
     color: #cecece;
   }
 
+  .lu-search::before {
+    font-size: small;
+    border-color: #dedede;
+  }
+
   input[type=search].lu-search-input {
     margin: 0;
     height: 2em;
     border-color: #dedede;
     font-size: small;
     font-weight: normal;
+  }
+
+  .lu-search-list {
+    top: calc(2em - 3px);
+    left: calc(1.2em - 1px);
   }
 }
 

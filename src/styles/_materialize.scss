@@ -28,3 +28,73 @@
 @import '~materialize-css/sass/components/slider';
 @import '~materialize-css/sass/components/carousel';
 @import '~materialize-css/sass/components/pulse';
+
+// Checkbox Styles
+[type="checkbox"] {
+
+  // Text Label Style
+  + label:not(.lever) {
+    position: relative;
+    padding-left: 35px;
+    cursor: pointer;
+    display: inline-block;
+    height: 25px;
+    line-height: 25px;
+    font-size: 1rem;
+    user-select: none;
+  }
+
+  /* checkbox aspect */
+  + label:not(.lever)::before,
+  &:not(.filled-in) + label:not(.lever)::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 18px;
+    height: 18px;
+    z-index: 0;
+    border: 2px solid $radio-empty-color;
+    border-radius: 1px;
+    margin-top: 3px;
+    transition: 0.2s;
+  }
+
+  &:not(.filled-in) + label:not(.lever)::after {
+    border: 0;
+    transform: scale(0);
+  }
+
+  &:checked + label:not(.lever)::before {
+    top: -4px;
+    left: -5px;
+    width: 12px;
+    height: 22px;
+    border-top: 2px solid transparent;
+    border-left: 2px solid transparent;
+    border-right: $radio-border;
+    border-bottom: $radio-border;
+    transform: rotate(40deg);
+    backface-visibility: hidden;
+    transform-origin: 100% 100%;
+  }
+
+  &:checked &:disabled + label::before {
+    border-right: 2px solid $input-disabled-color;
+    border-bottom: 2px solid $input-disabled-color;
+  }
+
+  &:not(:checked):disabled + label:not(.lever)::before {
+    border: none;
+    background-color: $input-disabled-color;
+  }
+
+  // Focused styles
+  &.tabbed:focus + label:not(.lever)::after {
+    transform: scale(1);
+    border: 0;
+    border-radius: 50%;
+    box-shadow: 0 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+}
