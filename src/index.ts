@@ -110,10 +110,10 @@ initExport();
   }
   );
   uploader.addEventListener('drop', (evt) => {
-    if (evt.dataTransfer.files.length !== 1) {
+    if (evt.dataTransfer!.files.length !== 1) {
       return;
     }
-    showFile(evt.dataTransfer.files[0]);
+    showFile(evt.dataTransfer!.files[0]);
     evt.preventDefault();
   }
   );
