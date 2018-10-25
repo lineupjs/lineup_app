@@ -1,4 +1,4 @@
-import 'materialize-css';
+import * as M from 'materialize-css';
 import 'file-loader?name=index.html!extract-loader!html-loader?interpolate!./index.html';
 import './assets/favicon/favicon';
 import './style.scss';
@@ -14,13 +14,11 @@ function build(builder: Promise<IDataset>) {
   builder.then((d: IDataset) => {
     shared.dataset = d;
     return d.build(<HTMLElement>document.querySelector('div.lu-c'));
-  }
-  ).then((l) => {
+  }).then((l) => {
     shared.lineup = l;
     disableBubbling(<HTMLElement>document.querySelector('div.lu-c > main > main'), 'mousemove', 'mouseout', 'mouseover');
     return new Promise<any>((resolve) => setTimeout(resolve, 500));
-  }
-  ).then(() => {
+  }).then(() => {
     const next = `#${shared.dataset!.id}`;
     if (location.hash !== 'next') {
       location.assign(next);
@@ -38,8 +36,10 @@ function build(builder: Promise<IDataset>) {
     }
     );
     uploader.dataset.state = 'ready';
-  }
-  );
+  }).catch((error) => {
+    uploader.dataset.state = 'initial';
+    M.toast(`<pre>${error}</pre>`, 5000);
+  });
 }
 
 function disableBubbling(node: HTMLElement, ...events: string[]) {
@@ -73,11 +73,11 @@ function rebuildCarousel() {
 }
 
 function showFile(file: File) {
-  build(fromFile(file).then((r) => {
+  const f = fromFile(file).then((r) => {
     data.unshift(r);
     return r;
-  }
-  ));
+  });
+  build(f);
 }
 
 window.addEventListener('resize', () => {
