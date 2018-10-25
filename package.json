@@ -1,7 +1,7 @@
 {
   "name": "lineup_app",
   "homepage": "https://github.com/datavisyn/lineup_app",
-  "version": "1.0.0-beta.1",
+  "version": "1.0.0-beta.2",
   "author": {
     "name": "Samuel Gratzl",
     "email": "samuel_gratzl@gmx.at"
@@ -70,7 +70,7 @@
   "dependencies": {
     "@types/materialize-css": "^1.0.3",
     "@types/papaparse": "^4.5.0",
-    "lineupjs": "^4.0.0-alpha.3",
+    "lineupjs": "^4.0.0-alpha.4",
     "materialize-css": "^0.100.2",
     "papaparse": "^4.5.0",
     "font-awesome": "^4.7.0",
