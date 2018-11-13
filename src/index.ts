@@ -75,6 +75,7 @@ function rebuildCarousel() {
 }
 
 function showFile(file: File) {
+  reset();
   const f = fromFile(file).then((r) => {
     data.unshift(r);
     return r;
