@@ -7,6 +7,7 @@ import initExport from './export';
 import shared from './shared';
 import data, {toCard, IDataset, fromFile} from './data';
 import {version, buildId} from 'lineupjs';
+import {storeDataset} from './data/db';
 
 const uploader = <HTMLElement>document.querySelector('main');
 
@@ -79,7 +80,7 @@ function rebuildCarousel() {
 function showFile(file: File) {
   const f = fromFile(file).then((r) => {
     data.unshift(r);
-    return r;
+    return storeDataset(r).then(() => r);
   });
   build(f);
 }

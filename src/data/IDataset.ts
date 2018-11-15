@@ -13,3 +13,15 @@ export interface IDataset {
 
   build(node: HTMLElement): Promise<LineUp | Taggle> | LineUp | Taggle;
 }
+
+export interface ILocalDataset extends IDataset {
+  type: 'json' | 'csv';
+}
+
+export interface IDataLoader {
+  type: string;
+  supports(file: File): boolean;
+  loadFile(file: File): Promise<ILocalDataset>;
+
+  complete(db: Partial<ILocalDataset>): ILocalDataset;
+}

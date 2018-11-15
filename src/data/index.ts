@@ -5,7 +5,7 @@ import happiness from './world-happiness-report';
 import soccer from './soccer';
 import {ieeeheat, ieeebars} from './ieee-programming';
 export {IDataset} from './IDataset';
-export {default as fromFile} from './fromFile';
+export {fromFile} from './loaders';
 
 export const data: IDataset[] = [
   wur,
