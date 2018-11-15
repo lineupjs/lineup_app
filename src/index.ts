@@ -86,6 +86,7 @@ function rebuildCarousel(data: IDataset[]) {
       deleteDataset(data[datasetIndex]).then(() => {
         const old = data.splice(datasetIndex, 1)[0]!;
         toast({html: `Dataset "${old.title}" deleted`, displayLength: 5000});
+        rebuildCarousel(data);
       }).catch((error) => {
         toast({html: `Error while deleting dataset: <pre>${error}</pre>`, displayLength: 5000});
       });
