@@ -41,6 +41,7 @@ export function toCard(d: IDataset) {
           <i class="material-icons right">close</i>
         </span>
         ${d.description}
+        ${d.type !== 'preloaded' ? `<p><a class="waves-effect waves-light btn" data-id="${d.id}" data-action="delete">Delete</a></p>` : ''}
         ${d.link ? `<p>
           <a href="${d.link}" target="_blank" rel="noopener">Kaggle Link</a>
         </p>` : ''}

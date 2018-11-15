@@ -7,7 +7,7 @@ import initExport from './export';
 import shared from './shared';
 import {toCard, IDataset, fromFile, allDatasets} from './data';
 import {version, buildId} from 'lineupjs';
-import {storeDataset} from './data/db';;
+import {storeDataset, deleteDataset} from './data/db';;
 
 const uploader = <HTMLElement>document.querySelector('main');
 
@@ -75,6 +75,22 @@ function rebuildCarousel(data: IDataset[]) {
   base.innerHTML = '';
   data.forEach((d) => base.insertAdjacentHTML('afterbegin', toCard(d))); // init carousel
   Carousel.init(base);
+
+  // init buttons
+  Array.from(base.querySelectorAll<HTMLElement>('[data-action=delete]')).forEach((elem: HTMLElement) => {
+    elem.onclick = (evt) => {
+      evt.preventDefault();
+      evt.stopPropagation();
+      const id = elem.dataset.id;
+      const datasetIndex = data.findIndex((d) => d.id === id);
+      deleteDataset(data[datasetIndex]).then(() => {
+        const old = data.splice(datasetIndex, 1)[0]!;
+        toast({html: `Dataset "${old.title}" deleted`, displayLength: 5000});
+      }).catch((error) => {
+        toast({html: `Error while deleting dataset: <pre>${error}</pre>`, displayLength: 5000});
+      });
+    };
+  });
 }
 
 function showFile(file: File, datasets: IDataset[]) {
