@@ -5,9 +5,9 @@ import './style.scss';
 import 'typeface-roboto/index.css';
 import initExport from './export';
 import shared from './shared';
-import data, {toCard, IDataset, fromFile} from './data';
+import {toCard, IDataset, fromFile, allDatasets} from './data';
 import {version, buildId} from 'lineupjs';
-import {storeDataset} from './data/db';
+import {storeDataset} from './data/db';;
 
 const uploader = <HTMLElement>document.querySelector('main');
 
@@ -64,7 +64,7 @@ function reset() {
   uploader.dataset.state = 'initial';
 }
 
-function rebuildCarousel() {
+function rebuildCarousel(data: IDataset[]) {
   const base = <HTMLElement>document.querySelector('.carousel');
   const instance = Carousel.getInstance(base);
   if (instance) {
@@ -77,9 +77,9 @@ function rebuildCarousel() {
   Carousel.init(base);
 }
 
-function showFile(file: File) {
+function showFile(file: File, datasets: IDataset[]) {
   const f = fromFile(file).then((r) => {
-    data.unshift(r);
+    datasets.unshift(r);
     return storeDataset(r).then(() => r);
   });
   build(f);
@@ -97,34 +97,6 @@ window.addEventListener('resize', () => {
 
 initExport();
 
-{
-  const file = (<HTMLInputElement>document.querySelector('input[type=file]'));
-  file.addEventListener('change', () => {
-    showFile(file.files![0]);
-  }
-  );
-  (<HTMLElement>document.querySelector('#dropper a.btn')).addEventListener('click', (evt) => {
-    evt.preventDefault();
-    evt.stopPropagation();
-    file.click();
-  }
-  );
-  uploader.addEventListener('dragover', (evt) => {
-    evt.preventDefault();
-    evt.stopPropagation();
-  }
-  );
-  uploader.addEventListener('drop', (evt) => {
-    if (evt.dataTransfer!.files.length !== 1) {
-      return;
-    }
-    showFile(evt.dataTransfer!.files[0]);
-    evt.preventDefault();
-  }
-  );
-}
-
-rebuildCarousel();
 
 FloatingActionButton.init(document.querySelectorAll('.fixed-action-btn'), {
   direction: 'left'
@@ -136,29 +108,60 @@ Tooltip.init(document.querySelectorAll('.tooltipped'));
   document.querySelector<HTMLElement>('.version-info')!.innerHTML = `LineUp.js v${version} (${buildId})`;
 }
 
-{
-  const h = location.hash.slice(1);
-  const chosenDataset = data.find((d) => d.id === h);
+allDatasets().then((data) => {
+  {
+    const file = (<HTMLInputElement>document.querySelector('input[type=file]'));
+    file.addEventListener('change', () => {
+      showFile(file.files![0], data);
+    }
+    );
+    (<HTMLElement>document.querySelector('#dropper a.btn')).addEventListener('click', (evt) => {
+      evt.preventDefault();
+      evt.stopPropagation();
+      file.click();
+    }
+    );
+    uploader.addEventListener('dragover', (evt) => {
+      evt.preventDefault();
+      evt.stopPropagation();
+    }
+    );
+    uploader.addEventListener('drop', (evt) => {
+      if (evt.dataTransfer!.files.length !== 1) {
+        return;
+      }
+      showFile(evt.dataTransfer!.files[0], data);
+      evt.preventDefault();
+    }
+    );
+  }
 
-  window.addEventListener('hashchange', () => {
+  rebuildCarousel(data);
+
+
+  {
     const h = location.hash.slice(1);
-    const newDataset = data.find((d) => d.id === h);
-    if (newDataset === shared.dataset) {
-      return;
+    const chosenDataset = data.find((d) => d.id === h);
+
+    window.addEventListener('hashchange', () => {
+      const h = location.hash.slice(1);
+      const newDataset = data.find((d) => d.id === h);
+      if (newDataset === shared.dataset) {
+        return;
+      }
+      reset();
+      rebuildCarousel(data);
+      if (newDataset) {
+        build(Promise.resolve(newDataset));
+      }
     }
-    reset();
-    rebuildCarousel();
-    if (newDataset) {
-      build(Promise.resolve(newDataset));
+    );
+
+    if (chosenDataset) {
+      build(Promise.resolve(chosenDataset));
     }
   }
-  );
-
-  if (chosenDataset) {
-    build(Promise.resolve(chosenDataset));
-  }
-}
-
+});
 
 declare const __DEBUG__: boolean;
 

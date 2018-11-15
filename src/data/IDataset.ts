@@ -1,27 +1,27 @@
 import {LineUp, Taggle} from 'lineupjs';
 
-export interface IDataset {
+export interface IDatasetMeta {
   id: string;
+  type: string;
+  creationDate: Date;
   title: string;
   image?: string;
   link?: string;
   description: string;
 
   rawData: string;
+}
 
+export interface IDataset extends IDatasetMeta {
   buildScript(rawVariable: string, domVariable: string): string;
 
   build(node: HTMLElement): Promise<LineUp | Taggle> | LineUp | Taggle;
 }
 
-export interface ILocalDataset extends IDataset {
-  type: 'json' | 'csv';
-}
-
 export interface IDataLoader {
   type: string;
   supports(file: File): boolean;
-  loadFile(file: File): Promise<ILocalDataset>;
+  loadFile(file: File): Promise<IDataset>;
 
-  complete(db: Partial<ILocalDataset>): ILocalDataset;
+  complete(db: IDatasetMeta): IDataset;
 }

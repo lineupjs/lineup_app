@@ -5,6 +5,8 @@ import image from './forbes.png';
 
 export const data: IDataset = {
   id: 'forbes',
+  type: 'preloaded',
+  creationDate: new Date(),
   title: 'Forbes Top 2000',
   image,
   link: 'https://www.kaggle.com/ash316/forbes-top-2000-companies',

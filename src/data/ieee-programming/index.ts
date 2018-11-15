@@ -7,6 +7,8 @@ import imageHeat from './ieee_heat.png';
 
 export const ieeebars: IDataset = {
   id: 'ieee_bars',
+  type: 'preloaded',
+  creationDate: new Date(),
   title: 'IEEE Programming Languages Bars',
   image: imageBars,
   description: `<p>
@@ -141,6 +143,8 @@ export const ieeebars: IDataset = {
 
 export const ieeeheat: IDataset = {
   id: 'ieee-heatmap',
+  type: 'preloaded',
+  creationDate: new Date(),
   title: 'IEEE Programming Languages Heatmap',
   image: imageHeat,
   description: `<p>

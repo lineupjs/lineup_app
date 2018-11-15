@@ -5,6 +5,8 @@ import image from './happiness.png';
 
 export const data: IDataset = {
   id: 'happiness',
+  type: 'preloaded',
+  creationDate: new Date(),
   title: 'World Happiness Report',
   image,
   link: 'https://www.kaggle.com/unsdsn/world-happiness',

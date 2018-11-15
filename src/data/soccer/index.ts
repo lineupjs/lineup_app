@@ -5,6 +5,8 @@ import '!file-loader?name=preview.png!./soccer.png';
 
 export const data: IDataset = {
   id: 'soccer',
+  type: 'preloaded',
+  creationDate: new Date(),
   title: 'Soccer Stats',
   image: './preview.png',
   link: 'https://www.kaggle.com/gimunu/football-striker-performance',

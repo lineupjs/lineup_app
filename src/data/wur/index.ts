@@ -7,6 +7,8 @@ import imageShanghai from './shanghai.png';
 
 export const wur: IDataset = {
   id: 'wur',
+  type: 'preloaded',
+  creationDate: new Date(),
   title: 'Times Higher Education World University Ranking',
   image,
   link: 'https://www.kaggle.com/mylesoneill/world-university-rankings/version/3',
@@ -100,6 +102,8 @@ and for undermining non-English-instructing institutions.
 
 export const shanghai: IDataset = {
   id: 'shanghai',
+  type: 'preloaded',
+  creationDate: new Date(),
   title: 'Academic Ranking of World Universities',
   image: imageShanghai,
   link: 'https://www.kaggle.com/mylesoneill/world-university-rankings/version/3',

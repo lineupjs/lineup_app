@@ -1,5 +1,6 @@
-import {IDataLoader, ILocalDataset} from './IDataset';
+import {IDataLoader, IDataset, IDatasetMeta} from './IDataset';
 import {builder} from 'lineupjs';
+import {randomChars} from './ùtils';
 
 function buildScript(rawVariable: string, domVariable: string) {
   return `
@@ -24,9 +25,10 @@ export const JSON_LOADER: IDataLoader = {
     }).then(({raw, parsed}) => {
       const title = file.name.split('.').slice(0, -1).join('.');
       return {
-        id: title.toLowerCase().replace(/\s+/g, '-'),
+        id: `${title.toLowerCase().replace(/\s+/g, '-')}-${randomChars(3)}`,
         type: <'json'>'json',
         title,
+        creationDate: new Date(),
         description: `Imported from "${file.name}" on ${new Date()}`,
         rawData: raw,
         buildScript,
@@ -41,8 +43,9 @@ export const JSON_LOADER: IDataLoader = {
     });
   },
 
-  complete: (db: Partial<ILocalDataset>): ILocalDataset => {
-    return <ILocalDataset>Object.assign(db, {
+  complete: (db: IDatasetMeta): IDataset => {
+    return <IDataset>Object.assign(db, {
+      type: 'json',
       buildScript,
       build: (node: HTMLElement) => {
         const parsed = JSON.parse(db.rawData!);

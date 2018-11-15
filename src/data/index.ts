@@ -4,6 +4,8 @@ import forbes from './forbes-top-2000-companies';
 import happiness from './world-happiness-report';
 import soccer from './soccer';
 import {ieeeheat, ieeebars} from './ieee-programming';
+import {listDatasets} from './db';
+import {complete} from './loaders';
 export {IDataset} from './IDataset';
 export {fromFile} from './loaders';
 
@@ -44,4 +46,13 @@ export function toCard(d: IDataset) {
         </p>` : ''}
       </div>
     </div>`;
+}
+
+
+export function allDatasets() {
+  return listDatasets().then((ds) => {
+    const full = <IDataset[]>ds.map(complete).filter((d) => d != null);
+    data.push(...full);
+    return data;
+  });
 }

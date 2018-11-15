@@ -1,22 +1,12 @@
 import Dexie from 'dexie';
-import {ILocalDataset} from './IDataset';
+import {IDatasetMeta, IDataset} from './IDataset';
 
 const SCHEMA_VERSION = 1;
 
-interface IDBDataset {
-  uid?: number;
-  id: string;
-  creationDate: Date;
-  title: string;
-  description: string;
-  rawData: string;
-  type: string;
-}
-
 interface IDBSession {
   uid?: number; // auto increment;
-  dataset: number; // <-> IDBDataset.id
-  date: Date;
+  dataset: string; // <-> IDBDataset.id
+  creationDate: Date;
   dump: any;
 }
 
@@ -24,14 +14,14 @@ interface IDBSession {
 // Declare Database
 //
 class LineUpDB extends Dexie {
-  datasets: Dexie.Table<IDBDataset, string>;
+  datasets: Dexie.Table<IDatasetMeta, number>;
   sessions: Dexie.Table<IDBSession, number>;
 
   constructor() {
     super('LineUp App DB');
     this.version(SCHEMA_VERSION).stores({
-      datasets: '++uid,id,title',
-      sessions: '++uid,dataset,date'
+      datasets: '++uid,id,title,creationDate',
+      sessions: '++uid,dataset,creationDate'
     });
     // hack for linting
     this.datasets = (<any>this).datasets || <any>undefined;
@@ -41,22 +31,41 @@ class LineUpDB extends Dexie {
 
 const db = new LineUpDB();
 
-export function storeDataset(dataset: ILocalDataset): Promise<IDBDataset> {
-  const row: IDBDataset = {
-    id: dataset.id,
-    creationDate: new Date(),
-    title: dataset.title,
-    description: dataset.description,
-    rawData: dataset.rawData,
-    type: dataset.type
-  };
-  return db.datasets!.add(row).then(() => row);
+export function storeDataset(dataset: IDataset): Promise<any> {
+  const copy = Object.assign({}, dataset);
+  delete copy.build;
+  delete copy.buildScript;
+  return db.datasets.add(copy);
 }
 
-export function listDatasets(): Promise<IDBDataset[]> {
-  function parse(d: IDBDataset) {
+export function listDatasets(): Promise<IDatasetMeta[]> {
+  return db.datasets.orderBy('creationDate').toArray();
+}
+
+export function deleteDataset(dataset: IDatasetMeta): Promise<any> {
+  return db.transaction('rw', db.datasets, db.sessions, () => Promise.all([
+    db.sessions.where('dataset').equals(dataset.id).delete(),
+    db.datasets.where('id').equals(dataset.id).delete()
+  ]));
+}
+
+export function storeSession(dataset: IDatasetMeta, dump: any) {
+  const row: IDBSession = {
+    dataset: dataset.id,
+    creationDate: new Date(),
+    dump
+  };
+  return db.sessions.add(row).then(() => row);
+}
+
+export function listSessions(dataset: IDatasetMeta): Promise<IDBSession[]> {
+  function parse(d: IDBSession) {
     d.creationDate = new Date(d.creationDate);
     return d;
   }
-  return db.datasets!.orderBy('creationDate').toArray((r) => r.map(parse));
+  return db.sessions.where('dataset').equals(dataset.id).toArray((r) => r.map(parse));
+}
+
+export function deleteSession(session: IDBSession): Promise<any> {
+  return db.sessions.delete(session.uid!);
 }
