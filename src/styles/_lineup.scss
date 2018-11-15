@@ -104,3 +104,7 @@ input[type=search].lu-search-input {
 .lu-dialog-table > .lu-checkbox > [type="checkbox"] + label {
   display: inline-flex;
 }
+
+.lu-dialog-weights-table-entry > input[type=number] {
+  width: unset;
+}
