@@ -6,6 +6,7 @@ import 'typeface-roboto/index.css';
 import initExport from './export';
 import shared from './shared';
 import data, {toCard, IDataset, fromFile} from './data';
+import {version, buildId} from 'lineupjs';
 
 const uploader = <HTMLElement>document.querySelector('main');
 
@@ -128,6 +129,11 @@ FloatingActionButton.init(document.querySelectorAll('.fixed-action-btn'), {
   direction: 'left'
 });
 Tooltip.init(document.querySelectorAll('.tooltipped'));
+
+{
+  // update version info
+  document.querySelector<HTMLElement>('.version-info')!.innerHTML = `LineUp.js v${version} (${buildId})`;
+}
 
 {
   const h = location.hash.slice(1);
