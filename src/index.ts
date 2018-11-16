@@ -32,10 +32,9 @@ function build(builder: Promise<IDataset>, session?: ISession | null) {
       input.insertAdjacentHTML('beforebegin', `<span>Item</span>`);
     } //
     (<HTMLElement>document.querySelector('.brand-logo')).textContent = document.title = `LineUp ${shared.dataset!.title}`;
-    Array.from(document.querySelectorAll('.nav-wrapper a.disabled')).forEach((d: Element) => {
-      (<HTMLElement>d).classList.remove('disabled');
-    }
-    );
+    Array.from(document.querySelectorAll<HTMLElement>('.nav-wrapper a.disabled')).forEach((d) => {
+      d.classList.remove('disabled');
+    });
   }).then(() => {
     let next: string;
     if (session) {
@@ -79,10 +78,9 @@ function reset() {
   shared.dataset = null;
   shared.session = null;
   (<HTMLElement>document.querySelector('.brand-logo')).textContent = document.title = `LineUp`;
-  Array.from(document.querySelectorAll('.nav-wrapper > a')).forEach((d: Element) => {
-    (<HTMLElement>d).classList.add('disabled');
-  }
-  );
+  Array.from(document.querySelectorAll<HTMLElement>('.nav-wrapper > a')).forEach((d) => {
+    d.classList.add('disabled');
+  });
   uploader.dataset.state = 'initial';
 }
 
@@ -121,9 +119,14 @@ async function saveSession(name: string = 'Auto Save') {
     return;
   }
   try {
-    const session = await storeSession(shared.dataset, name, shared.lineup.dump());
+    // dump and parse to get rid of not cloneable things
+    const dump = JSON.parse(JSON.stringify(shared.lineup.dump()));
+    console.log(dump);
+    const session = await storeSession(shared.dataset, name, dump);
     toast({html: `Session "${session.name}" of dataset "${shared.dataset.title}" saved`, displayLength: 5000});
     shared.dataset.sessions!.push(session);
+    shared.session = session;
+    location.replace(`#${shared.dataset!.id}@${session.uid}`);
   } catch (error) {
     toast({html: `Error while saving session: <pre>${error}</pre>`, displayLength: 5000});
   }
@@ -151,6 +154,13 @@ Tooltip.init(document.querySelectorAll('.tooltipped'));
   // update version info
   document.querySelector<HTMLElement>('.version-info')!.innerHTML = `LineUp.js v${version} (${buildId})`;
 }
+
+document.querySelector<HTMLElement>('.save-session')!.onclick = (evt) => {
+  evt.preventDefault();
+  evt.stopPropagation();
+  saveSession();
+};
+
 
 allDatasets().then((data) => {
   shared.datasets = data;

@@ -1,20 +1,9 @@
-import {IDataset, PRELOADED_TYPE, ISession} from './IDataset';
+import {IDataset, PRELOADED_TYPE} from './IDataset';
 import {toast} from 'materialize-css';
 import {deleteDataset, deleteSession} from './db';
 import {areyousure, fromNow} from '../ui';
 
 function sessions(dataset: IDataset, card: HTMLElement) {
-
-  const session: ISession = {
-    name: 'test',
-    uid: 1,
-    creationDate: new Date(),
-    dump: {},
-    dataset: dataset.id
-  };
-
-  dataset.sessions = [session, session];
-
   if (!dataset.sessions || dataset.sessions.length === 0) {
     return;
   }

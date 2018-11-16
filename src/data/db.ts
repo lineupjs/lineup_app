@@ -32,8 +32,12 @@ export function storeDataset(dataset: IDataset): Promise<IDataset> {
   return db.datasets.add(copy).then((uid) => Object.assign(copy, {uid}));
 }
 
+function byCreationDate<T extends {creationDate: Date}>(arr: T[]) {
+  return arr.sort((a, b) => b.creationDate.getTime() - a.creationDate.getTime());
+}
+
 export function listDatasets(): Promise<IDatasetMeta[]> {
-  return db.datasets.orderBy('creationDate').toArray();
+  return db.datasets.toArray().then(byCreationDate);
 }
 
 export function deleteDataset(dataset: IDatasetMeta): Promise<any> {
@@ -55,9 +59,9 @@ export function storeSession(dataset: IDatasetMeta, name: string, dump: any) {
 
 export function listSessions(dataset?: IDatasetMeta): Promise<ISession[]> {
   if (!dataset) {
-    return db.sessions.toArray();
+    return db.sessions.toArray().then(byCreationDate);
   }
-  return db.sessions.where('dataset').equals(dataset.id).toArray();
+  return db.sessions.where('dataset').equals(dataset.id).toArray().then(byCreationDate);
 }
 
 export function deleteSession(session: ISession): Promise<any> {

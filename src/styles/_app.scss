@@ -57,6 +57,17 @@ body {
 
 .btn-floating.halfway-fab {
   bottom: -11px;
+  right: 70px;
+}
+
+.fixed-action-btn.direction-left ul {
+  right: 64px - 24px + 70px;
+}
+
+.btn-floating.save-session {
+  position: absolute;
+  right: 24px;
+  bottom: -11px;
 }
 
 .export-option {
