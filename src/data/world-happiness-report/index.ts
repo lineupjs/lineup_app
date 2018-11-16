@@ -2,7 +2,7 @@ import {IDataset, PRELOADED_TYPE} from '../IDataset';
 import {parse, ParseResult} from 'papaparse';
 import {builder, buildRanking, buildStringColumn, buildNumberColumn} from 'lineupjs';
 import image from './happiness.png';
-import {normalize, fixHeaders} from '../ùtils';
+import {fixHeaders} from '../ùtils';
 
 export const data: IDataset = {
   id: 'happiness',
