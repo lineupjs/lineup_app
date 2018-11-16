@@ -2,6 +2,7 @@ import {IDataset, PRELOADED_TYPE} from '../IDataset';
 import {parse, ParseResult} from 'papaparse';
 import {builder, buildRanking, buildStringColumn, buildNumberColumn} from 'lineupjs';
 import image from './happiness.png';
+import {normalize} from '../ùtils';
 
 export const data: IDataset = {
   id: 'happiness',
@@ -46,28 +47,29 @@ export const data: IDataset = {
     return import('raw-loader!./2017.csv').then((content: any) => {
       const csv: string = content.default ? content.default : content;
       this.rawData = csv;
-      return parse(csv, {
+      return parse(csv, <any>{
         dynamicTyping: true,
         header: true,
-        skipEmptyLines: true
+        skipEmptyLines: true,
+        transformHeader: normalize
       });
     }).then((parsed: ParseResult) => {
       // "Country","Happiness.Rank","Happiness.Score","Whisker.high","Whisker.low","Economy..GDP.per.Capita.","Family","Health..Life.Expectancy.","Freedom","Generosity","Trust..Government.Corruption.","Dystopia.Residual"
       return builder(parsed.data)
-        .column(buildStringColumn('Country'))
-        .column(buildNumberColumn('Happiness.Score', [0, 10]))
-        .column(buildNumberColumn('Economy..GDP.per.Capita.', [0, 10]))
-        .column(buildNumberColumn('Family', [0, 10]))
-        .column(buildNumberColumn('Health..Life.Expectancy.', [0, 10]))
-        .column(buildNumberColumn('Freedom', [0, 10]))
-        .column(buildNumberColumn('Generosity', [0, 10]))
-        .column(buildNumberColumn('Trust..Government.Corruption.', [0, 10]))
-        .column(buildNumberColumn('Dystopia.Residual', [0, 10]))
+        .column(buildStringColumn('country'))
+        .column(buildNumberColumn('happiness_score', [0, 10]))
+        .column(buildNumberColumn('economy_gdp_per_capita.', [0, 10]))
+        .column(buildNumberColumn('family', [0, 10]))
+        .column(buildNumberColumn('health_life_expectancy', [0, 10]))
+        .column(buildNumberColumn('freedom', [0, 10]))
+        .column(buildNumberColumn('generosity', [0, 10]))
+        .column(buildNumberColumn('trust_government_corruption', [0, 10]))
+        .column(buildNumberColumn('dystopia_residual', [0, 10]))
         .deriveColors()
         .ranking(buildRanking()
           .supportTypes()
           .allColumns()
-          .sortBy('Happiness.Score', 'desc')
+          .sortBy('happiness_score', 'desc')
         )
         .buildTaggle(node);
     });
