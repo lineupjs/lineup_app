@@ -86,8 +86,22 @@ label {
   }
 }
 
-.card-reveal > p {
+.card-reveal p {
   text-align: justify;
+}
+
+.card-reveal .card-sessions {
+  display: none;
+}
+
+.card-reveal.sessions {
+  .card-sessions {
+    display: block;
+  }
+
+  .card-desc {
+    display: none;
+  }
 }
 
 .lu-c {

@@ -7,18 +7,37 @@ function sessions(d: IDataset, card: HTMLElement) {
   // if (!d.sessions) {
   //   return;
   // }
-  card.insertAdjacentHTML('beforeend',
-  `<ul class="collection">
-    <li class="collection-item">
-      <div>
-      <span class="title">NAME</span>
-      <p>DATE</p>
-      <a href="#!" class="secondary-content"><i class="material-icons">play_arrow</i></a>
-      <a href="#!" class="secondary-content"><i class="material-icons">delete</i></a>
-      </div>
-    </li>
-  </ul>`);
-  // TODO
+
+  const content = card.querySelector<HTMLElement>('.card-reveal')!;
+  content.insertAdjacentHTML('beforeend', `
+  <div class="card-sessions">
+    <span class="card-title grey-text text-darken-4">Saved Sessions
+      <i class="material-icons right">close</i>
+    </span>
+    <ul class="collection">
+      <li class="collection-item">
+        <div>
+        <span class="title">NAME</span>
+        <p>DATE</p>
+        <a href="#!" class="secondary-content"><i class="material-icons">play_arrow</i></a>
+        <a href="#!" class="secondary-content"><i class="material-icons">delete</i></a>
+        </div>
+      </li>
+    </ul>
+  </div>`);
+  content.querySelector<HTMLElement>('.card-sessions .card-title')!.onclick = () => {
+    content.classList.remove('sessions');
+  };
+
+  const sessions = document.createElement('a');
+  sessions.href = '#';
+  sessions.classList.add('activator');
+  sessions.innerHTML = `Sessions`;
+  card.querySelector<HTMLElement>('.card-action')!.appendChild(sessions);
+  sessions.onclick = async (evt) => {
+    evt.preventDefault();
+    content.classList.add('sessions'); // show sessions part
+  };
 }
 
 export function createCard(d: IDataset, onDelete: () => void) {
@@ -37,15 +56,15 @@ export function createCard(d: IDataset, onDelete: () => void) {
     <a href="#${d.id}">Select</a>
   </div>
   <div class="card-reveal">
-    <span class="card-title grey-text text-darken-4">${d.title}
-      <i class="material-icons right">close</i>
-    </span>
-    ${d.description}
-    ${d.link ? `<p>
-    <a href="${d.link}" target="_blank" rel="noopener">Kaggle Link</a>
-  </p>` : ''}
+    <div class="card-desc">
+      <span class="card-title grey-text text-darken-4">${d.title}
+        <i class="material-icons right">close</i>
+      </span>
+      ${d.description}
+      ${d.link ? `<p><a href="${d.link}" target="_blank" rel="noopener">Kaggle Link</a></p>` : ''}
+    </div>
   </div>`;
-  sessions(d, <HTMLElement>card.lastElementChild!);
+  sessions(d, <HTMLElement>card);
 
   if (d.type === PRELOADED_TYPE) {
     // no further actions
