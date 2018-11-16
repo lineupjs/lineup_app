@@ -89,6 +89,10 @@ function refreshCarousel(focus?: number) {
   const newInstance = Carousel.init(base);
   if (focus != null) {
     newInstance.set(focus);
+  } else if (base.dataset.focus) {
+    const id = parseInt(base.dataset.focus, 10);
+    delete base.dataset.focus;
+    newInstance.set(id);
   }
 }
 
@@ -98,6 +102,16 @@ function ensureCarousel() {
   if (!instance) {
     refreshCarousel();
   }
+}
+
+function markCarouselForRefresh(tohighlight: number) {
+  // destroy such that it has to be recreated when visible
+  const base = <HTMLElement>document.querySelector('.carousel');
+  const instance = Carousel.getInstance(base);
+  if (instance) {
+    instance.destroy();
+  }
+  base.dataset.focus = tohighlight.toString();
 }
 
 function reset() {
@@ -169,6 +183,16 @@ function addToCarousel(dataset: IDataset) {
   base.appendChild(node);
 }
 
+function recreateCard(dataset: IDataset) {
+  const base = <HTMLElement>document.querySelector('.carousel');
+  const card = document.querySelector<HTMLElement>(`.card[data-id="${dataset.id}"]`)!;
+  const node = createCard(dataset, deleteDatasetFromUI, editDatasetInUI);
+  node.dataset.id = dataset.id;
+  base.insertBefore(node, card);
+  card.remove();
+  markCarouselForRefresh(shared.datasets!.indexOf(dataset));
+}
+
 function showFile(file: File) {
   reset();
   const f = fromFile(file).then((r) => {
@@ -190,9 +214,10 @@ async function saveSession() {
     const desc = await saveDialog('Save Session as &hellip;', 'Auto Save');
     const session = await storeSession(shared.dataset, desc.name, dump);
     toast({html: `Session "${session.name}" of dataset "${shared.dataset.name}" saved`, displayLength: 5000});
-    shared.dataset.sessions!.push(session);
+    shared.dataset.sessions!.unshift(session); // since newest
     shared.session = session;
     location.replace(`#${shared.dataset!.id}@${session.uid}`);
+    recreateCard(shared.dataset);
   } catch (error) {
     toast({html: `Error while saving session: <pre>${error}</pre>`, displayLength: 5000});
   }
