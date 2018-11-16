@@ -18,7 +18,7 @@ export function fixHeaders(csv: string) {
     return csv;
   }
   // don't include ; as common separator and no quote chars
-  const headers = csv.slice(0, line).replace(/[\s@./\\:_+~#!$§%&()[\]{}?`´]+/g, '_');
+  const headers = csv.slice(0, line).replace(/[ @./\\:_+~#!$§%&()[\]{}?`´]+/g, '_');
 
   return `${headers}${csv.slice(line)}`;
 }
