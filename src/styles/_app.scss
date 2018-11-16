@@ -12,6 +12,13 @@ body {
 
 .nav-wrapper {
   z-index: 200;
+  display: flex;
+
+  > .brand-logo {
+    margin-left: 1em;
+    position: unset;
+    margin-right: 1em;
+  }
 }
 
 .main-wrapper {
@@ -74,10 +81,6 @@ body {
       opacity: 1;
     }
   }
-}
-
-.brand-logo {
-  margin-left: 1em;
 }
 
 .btn-floating.halfway-fab {

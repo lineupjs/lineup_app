@@ -30,7 +30,7 @@ export function storeDataset(dataset: IDataset): Promise<IDataset> {
   delete copy.buildScript;
   const sessions = copy.sessions;
   delete copy.sessions;
-  const add = db.datasets.add(copy).then((uid) => Object.assign(copy, {uid}));
+  const add = db.datasets.add(copy).then((uid) => Object.assign(dataset, {uid}));
 
   if (!sessions || sessions.length === 0) {
     return add;

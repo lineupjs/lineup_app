@@ -39,9 +39,20 @@
 <body>
   <nav>
     <div class="nav-wrapper">
-      <a href="#" class="brand-logo">
-        LineUp</a>
-      <a class="btn-floating waves-effect waves-light grey lighten-1 disabled save-session tooltipped" data-position="bottom" data-delay="50" data-tooltip="Save Session">
+      <a href="#" class="brand-logo">LineUp</a>
+      <ul class="hide-on-med-and-down dataset-menu" style="display: none;">
+        <li>
+          <a href="#" class="edit-dataset tooltipped" data-position="bottom" data-delay="50" data-tooltip="Edit Dataset">
+            <i class="material-icons">edit</i>
+          </a>
+        </li>
+        <li><a href="#" class="delete-dataset tooltipped" data-position="bottom" data-delay="50" data-tooltip="Delete Dataset">
+            <i class="material-icons">delete</i>
+          </a>
+        </li>
+      </ul>
+
+      <a href="#" class="btn-floating waves-effect waves-light grey lighten-1 disabled save-session tooltipped" data-position="bottom" data-delay="50" data-tooltip="Save Session">
           <i class="material-icons">save</i>
       </a>
       <div class="fixed-action-btn horizontal" style="position: initial;">

@@ -1,7 +1,7 @@
 import {IDataset, PRELOADED_TYPE} from './IDataset';
 import {toast} from 'materialize-css';
-import {deleteSession, editDataset} from './db';
-import {areyousure, fromNow, saveDialog} from '../ui';
+import {deleteSession} from './db';
+import {areyousure, fromNow} from '../ui';
 
 function sessions(dataset: IDataset, card: HTMLElement) {
   if (!dataset.sessions || dataset.sessions.length === 0) {

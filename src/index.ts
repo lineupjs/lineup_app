@@ -9,7 +9,7 @@ import {IDataset, fromFile, allDatasets} from './data';
 import {version, buildId} from 'lineupjs';
 import {storeDataset, storeSession, deleteDataset, editDataset} from './data/db';
 import {createCard} from './data/ui';
-import {ISession} from './data/IDataset';
+import {ISession, PRELOADED_TYPE} from './data/IDataset';
 import {saveDialog, areyousure} from './ui';
 
 const uploader = <HTMLElement>document.querySelector('main');
@@ -36,6 +36,7 @@ function build(builder: Promise<IDataset>, session?: ISession | null) {
     Array.from(document.querySelectorAll<HTMLElement>('.nav-wrapper a.disabled')).forEach((d) => {
       d.classList.remove('disabled');
     });
+    document.querySelector<HTMLElement>('.dataset-menu')!.style.display = shared.dataset!.type === PRELOADED_TYPE ? 'none' : null;
   }).then(() => {
     let next: string;
     if (session) {
@@ -57,6 +58,7 @@ function build(builder: Promise<IDataset>, session?: ISession | null) {
   }).then(() => {
     uploader.dataset.state = 'ready';
   }).catch((error) => {
+    console.error(error);
     uploader.dataset.state = 'initial';
     toast({html: `<pre>${error}</pre>`, displayLength: 5000});
   });
@@ -98,6 +100,22 @@ function ensureCarousel() {
   }
 }
 
+function reset() {
+  if (shared.lineup) {
+    shared.lineup.destroy();
+    shared.lineup = null;
+  }
+  shared.dataset = null;
+  shared.session = null;
+  (<HTMLElement>document.querySelector('.brand-logo')).textContent = document.title = `LineUp`;
+  Array.from(document.querySelectorAll<HTMLElement>('.nav-wrapper > a')).forEach((d) => {
+    d.classList.add('disabled');
+  });
+  document.querySelector<HTMLElement>('.dataset-menu')!.style.display = 'none';
+  uploader.dataset.state = 'initial';
+  ensureCarousel();
+}
+
 async function deleteDatasetFromUI(dataset: IDataset) {
   try {
     await areyousure(`to delete dataset "${dataset.name}"`);
@@ -111,7 +129,13 @@ async function deleteDatasetFromUI(dataset: IDataset) {
       card.remove();
       refreshCarousel(index % shared.datasets!.length);
     }
+
+    if (shared.dataset === dataset) {
+      // delete active one
+      reset();
+    }
   } catch (error) {
+    console.error(error);
     toast({html: `Error while deleting dataset: <pre>${error}</pre>`, displayLength: 5000});
   }
 }
@@ -133,6 +157,7 @@ async function editDatasetInUI(dataset: IDataset) {
 
     toast({html: `Dataset "${dataset.name}" edited`, displayLength: 5000});
   } catch (error) {
+    console.error(error);
     toast({html: `Error while editing dataset: <pre>${error}</pre>`, displayLength: 5000});
   }
 }
@@ -144,25 +169,10 @@ function addToCarousel(dataset: IDataset) {
   base.appendChild(node);
 }
 
-function reset() {
-  if (shared.lineup) {
-    shared.lineup.destroy();
-    shared.lineup = null;
-  }
-  shared.dataset = null;
-  shared.session = null;
-  (<HTMLElement>document.querySelector('.brand-logo')).textContent = document.title = `LineUp`;
-  Array.from(document.querySelectorAll<HTMLElement>('.nav-wrapper > a')).forEach((d) => {
-    d.classList.add('disabled');
-  });
-  uploader.dataset.state = 'initial';
-  ensureCarousel();
-}
-
 function showFile(file: File) {
   reset();
   const f = fromFile(file).then((r) => {
-    shared.datasets.unshift(r);
+    shared.datasets.push(r);
     addToCarousel(r);
     refreshCarousel();
     return storeDataset(r).then(() => r);
@@ -215,6 +225,22 @@ document.querySelector<HTMLElement>('.save-session')!.onclick = (evt) => {
   evt.preventDefault();
   evt.stopPropagation();
   saveSession();
+};
+
+document.querySelector<HTMLElement>('.edit-dataset')!.onclick = (evt) => {
+  evt.preventDefault();
+  evt.stopPropagation();
+  if (shared.dataset) {
+    editDatasetInUI(shared.dataset);
+  }
+};
+
+document.querySelector<HTMLElement>('.delete-dataset')!.onclick = (evt) => {
+  evt.preventDefault();
+  evt.stopPropagation();
+  if (shared.dataset) {
+    deleteDatasetFromUI(shared.dataset);
+  }
 };
 
 
