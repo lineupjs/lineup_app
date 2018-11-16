@@ -1,6 +1,7 @@
 import {IDataset, PRELOADED_TYPE} from './IDataset';
 import {toast} from 'materialize-css';
 import {deleteDataset} from './db';
+import {areyousure} from '../ui';
 
 function sessions(d: IDataset, card: HTMLElement) {
   // if (!d.sessions) {
@@ -57,15 +58,17 @@ export function createCard(d: IDataset, onDelete: () => void) {
   deleteButton.href = '#';
   deleteButton.innerHTML = `Delete`;
   card.querySelector<HTMLElement>('.card-action')!.appendChild(deleteButton);
-  deleteButton.onclick = (evt) => {
+  deleteButton.onclick = async (evt) => {
     evt.preventDefault();
     evt.stopPropagation();
-    deleteDataset(d).then(() => {
+    try {
+      await areyousure(`to delete dataset "${d.title}"`);
+      await deleteDataset(d);
       toast({html: `Dataset "${d.title}" deleted`, displayLength: 5000});
       onDelete();
-    }).catch((error) => {
+    } catch (error) {
       toast({html: `Error while deleting dataset: <pre>${error}</pre>`, displayLength: 5000});
-    });
+    }
   };
 
   return card;
