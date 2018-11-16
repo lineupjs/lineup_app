@@ -10,6 +10,10 @@ body {
   flex-direction: column;
 }
 
+.nav-wrapper {
+  z-index: 200;
+}
+
 .main-wrapper {
   flex: 1 0 auto;
   position: relative;
@@ -19,7 +23,23 @@ body {
   > div {
     flex: 1 1 auto;
     opacity: 1;
-    transition: opacity 0.5s ease;
+    transition: opacity 0.5s ease, background 0.5s ease;
+  }
+
+  .lu-blocker {
+    opacity: 0;
+    z-index: 100;
+    visibility: hidden;
+    background: rgba(255, 255, 255, 0.9);
+    position: absolute;
+    top: 3px;
+    left: 0;
+    right: 0;
+    bottom: 3px;
+  }
+
+  .chooser {
+    z-index: 101;
   }
 
   &[data-state=initial] {
@@ -35,6 +55,11 @@ body {
 
     .lu {
       visibility: visible;
+    }
+
+    .lu-blocker {
+      visibility: visible;
+      opacity: 1;
     }
   }
 

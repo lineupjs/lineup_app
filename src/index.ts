@@ -53,6 +53,8 @@ function build(builder: Promise<IDataset>, session?: ISession | null) {
     if (location.hash !== next) {
       location.assign(next);
     }
+    return new Promise<any>((resolve) => setTimeout(resolve, 1000));
+  }).then(() => {
     uploader.dataset.state = 'ready';
   }).catch((error) => {
     uploader.dataset.state = 'initial';
