@@ -1,7 +1,7 @@
 import {parse, ParseResult} from 'papaparse';
 import {IDataLoader, IDatasetMeta, IDataset} from './IDataset';
 import {builder, Taggle, LineUp} from 'lineupjs';
-import {cleanName} from './ùtils';
+import {cleanName, fixHeaders} from './ùtils';
 import {niceDate} from '../ui';
 
 function buildScript(rawVariable: string, domVariable: string) {
@@ -28,7 +28,7 @@ export const CSV_LOADER: IDataLoader = {
     return new Promise<{raw: string, parsed: ParseResult}>((resolve) => {
       const reader = new FileReader();
       reader.onload = () => {
-        const raw = String(reader.result);
+        const raw = fixHeaders(String(reader.result));
         const parsed = parse(raw, {
           dynamicTyping: true,
           header: true,
