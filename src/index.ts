@@ -78,6 +78,33 @@ function disableBubbling(node: HTMLElement, ...events: string[]) {
   }
 }
 
+function refreshCarousel() {
+  const base = <HTMLElement>document.querySelector('.carousel');
+  const instance = Carousel.getInstance(base);
+  if (instance) {
+    instance.destroy();
+  }
+  delete base.dataset.namespace;
+  base.classList.remove('initialized');
+  Carousel.init(base);
+}
+
+function ensureCarousel() {
+  const base = <HTMLElement>document.querySelector('.carousel');
+  if (!base.classList.contains('initialized')) {
+    refreshCarousel();
+  }
+}
+
+function addToCarousel(d: IDataset) {
+  const base = <HTMLElement>document.querySelector('.carousel');
+  const node = createCard(d, () => {
+    node.remove();
+    refreshCarousel();
+  });
+  base.appendChild(node);
+}
+
 function reset() {
   if (shared.lineup) {
     shared.lineup.destroy();
@@ -90,26 +117,7 @@ function reset() {
     d.classList.add('disabled');
   });
   uploader.dataset.state = 'initial';
-}
-
-function refreshCarousel() {
-  const base = <HTMLElement>document.querySelector('.carousel');
-  const instance = Carousel.getInstance(base);
-  if (instance) {
-    instance.destroy();
-  }
-  delete base.dataset.namespace;
-  base.classList.remove('initialized');
-  Carousel.init(base);
-}
-
-function addToCarousel(d: IDataset) {
-  const base = <HTMLElement>document.querySelector('.carousel');
-  const node = createCard(d, () => {
-    node.remove();
-    refreshCarousel();
-  });
-  base.appendChild(node);
+  ensureCarousel();
 }
 
 function showFile(file: File) {
