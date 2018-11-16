@@ -1,6 +1,7 @@
 import {IDataLoader, IDataset, IDatasetMeta} from './IDataset';
 import {builder} from 'lineupjs';
 import {randomChars} from './ùtils';
+import {niceDate} from '../ui';
 
 function buildScript(rawVariable: string, domVariable: string) {
   return `
@@ -29,7 +30,7 @@ export const JSON_LOADER: IDataLoader = {
         type: <'json'>'json',
         title,
         creationDate: new Date(),
-        description: `Imported from "${file.name}" on ${new Date()}`,
+        description: `Imported from "${file.name}" on ${niceDate(new Date())}`,
         rawData: raw,
         buildScript,
         build: (node: HTMLElement) => {

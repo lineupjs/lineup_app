@@ -1,7 +1,7 @@
 import {IDataset, PRELOADED_TYPE} from './IDataset';
 import {toast} from 'materialize-css';
-import {deleteDataset, deleteSession} from './db';
-import {areyousure, fromNow} from '../ui';
+import {deleteDataset, deleteSession, storeDataset} from './db';
+import {areyousure, fromNow, saveDialog} from '../ui';
 
 function sessions(dataset: IDataset, card: HTMLElement) {
   if (!dataset.sessions || dataset.sessions.length === 0) {
@@ -59,38 +59,64 @@ function sessions(dataset: IDataset, card: HTMLElement) {
   };
 }
 
-export function createCard(d: IDataset, onDelete: () => void) {
+export function createCard(dataset: IDataset, onDelete: () => void) {
   const card = document.createElement('div');
 
   card.classList.add('carousel-item', 'card', 'sticky-action');
   card.innerHTML = `<div class="card-image waves-effect waves-block waves-light sticky-action">
-    ${d.image ? `<img class="activator" src="${d.image}" alt="No Preview Available">`: `<span class="material-icons grey-text local-image activator">photo</span>`}
+    ${dataset.image ? `<img class="activator" src="${dataset.image}" alt="No Preview Available">`: `<span class="material-icons grey-text local-image activator">photo</span>`}
   </div>
   <div class="card-content">
-    <span class="card-title activator grey-text text-darken-4">${d.title}
+    <span class="card-title activator grey-text text-darken-4"><span class="dd-title">${dataset.title}</span>
       <i class="material-icons right">more_vert</i>
     </span>
   </div>
   <div class="card-action">
-    <a href="#${d.id}">Select</a>
+    <a href="#${dataset.id}">Select</a>
   </div>
   <div class="card-reveal">
     <div class="card-desc">
-      <span class="card-title grey-text text-darken-4">${d.title}
+      <span class="card-title grey-text text-darken-4"><span class="dd-title">${dataset.title}</span>
         <i class="material-icons right">close</i>
       </span>
-      ${d.description}
-      ${d.link ? `<p><a href="${d.link}" target="_blank" rel="noopener">Kaggle Link</a></p>` : ''}
+      <div class="dd-desc">
+        ${dataset.description}
+      </div>
+      ${dataset.link ? `<p><a href="${dataset.link}" target="_blank" rel="noopener">Kaggle Link</a></p>` : ''}
     </div>
   </div>`;
-  sessions(d, <HTMLElement>card);
+  sessions(dataset, <HTMLElement>card);
 
-  if (d.type === PRELOADED_TYPE) {
+  if (dataset.type === PRELOADED_TYPE) {
     // no further actions
     return card;
   }
 
   card.querySelector<HTMLElement>('.card-image')!.innerHTML = `<span class="material-icons grey-text local-image activator">computer</span>`;
+
+
+  const editButton = document.createElement('a');
+  editButton.href = '#';
+  editButton.innerHTML = `Edit`;
+  card.querySelector<HTMLElement>('.card-action')!.appendChild(editButton);
+  editButton.onclick = async (evt) => {
+    evt.preventDefault();
+    evt.stopPropagation();
+    try {
+      const desc = await saveDialog(`Edit dataset "${dataset.title}"`, dataset.title, dataset.description);
+      dataset.title = desc.name;
+      dataset.description = desc.description;
+      await storeDataset(dataset);
+
+      Array.from(card.querySelectorAll<HTMLElement>('.dd-title')).forEach((d) => d.innerHTML = dataset.title);
+      Array.from(card.querySelectorAll<HTMLElement>('.dd-desc')).forEach((d) => d.innerHTML = dataset.description);
+
+      toast({html: `Dataset "${dataset.title}" edited`, displayLength: 5000});
+      onDelete();
+    } catch (error) {
+      toast({html: `Error while editing dataset: <pre>${error}</pre>`, displayLength: 5000});
+    }
+  };
 
   const deleteButton = document.createElement('a');
   deleteButton.href = '#';
@@ -100,9 +126,9 @@ export function createCard(d: IDataset, onDelete: () => void) {
     evt.preventDefault();
     evt.stopPropagation();
     try {
-      await areyousure(`to delete dataset "${d.title}"`);
-      await deleteDataset(d);
-      toast({html: `Dataset "${d.title}" deleted`, displayLength: 5000});
+      await areyousure(`to delete dataset "${dataset.title}"`);
+      await deleteDataset(dataset);
+      toast({html: `Dataset "${dataset.title}" deleted`, displayLength: 5000});
       onDelete();
     } catch (error) {
       toast({html: `Error while deleting dataset: <pre>${error}</pre>`, displayLength: 5000});

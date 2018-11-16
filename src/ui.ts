@@ -1,4 +1,4 @@
-import {Modal, updateTextFields} from 'materialize-css';
+import {Modal, updateTextFields, textareaAutoResize} from 'materialize-css';
 
 
 const areYouSureModal = Modal.init(document.getElementById('modalAreYouSure')!);
@@ -33,8 +33,10 @@ export function saveDialog(title: string, name: string, description?: string): P
       });
     };
     saveModal.open();
+    textareaAutoResize(area);
   });
 }
+
 
 const MIN = 60;
 const HOUR = MIN * 60;
@@ -70,4 +72,12 @@ export function fromNow(date: Date | number) {
     return typeof formatter === 'string' ? formatter : formatter(deltaInSeconds);
   }
   return 'far far away';
+}
+
+export function niceDate(date: Date) {
+  const formatter = new Intl.DateTimeFormat(undefined, {
+    year: 'numeric', month: 'numeric', day: 'numeric',
+    hour: 'numeric', minute: 'numeric'
+  });
+  return formatter.format(date);
 }

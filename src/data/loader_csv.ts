@@ -2,6 +2,7 @@ import {parse, ParseResult} from 'papaparse';
 import {IDataLoader, IDatasetMeta, IDataset} from './IDataset';
 import {builder} from 'lineupjs';
 import {randomChars} from './ùtils';
+import {niceDate} from '../ui';
 
 function buildScript(rawVariable: string, domVariable: string) {
   return `
@@ -38,7 +39,7 @@ export const CSV_LOADER: IDataLoader = {
         type: <'csv'>'csv',
         title,
         creationDate: new Date(),
-        description: `Imported from "${file.name}" on ${new Date()}`,
+        description: `Imported from "${file.name}" on ${niceDate(new Date())}`,
         rawData: raw,
         buildScript,
         build: (node: HTMLElement) => {
