@@ -9,12 +9,13 @@ import {IDataset, fromFile, allDatasets} from './data';
 import {version, buildId} from 'lineupjs';
 import {storeDataset} from './data/db';
 import {createCard} from './data/ui';
+import {ISession} from './data/IDataset';
 
 const uploader = <HTMLElement>document.querySelector('main');
 
-function build(builder: Promise<IDataset>) {
+function build(builder: Promise<IDataset>, session?: ISession | null) {
   uploader.dataset.state = 'uploading';
-  builder.then((d: IDataset) => {
+  return builder.then((d: IDataset) => {
     shared.dataset = d;
     return d.build(<HTMLElement>document.querySelector('div.lu-c'));
   }).then((l) => {
@@ -22,10 +23,7 @@ function build(builder: Promise<IDataset>) {
     disableBubbling(<HTMLElement>document.querySelector('div.lu-c > main > main'), 'mousemove', 'mouseout', 'mouseover');
     return new Promise<any>((resolve) => setTimeout(resolve, 500));
   }).then(() => {
-    const next = `#${shared.dataset!.id}`;
-    if (location.hash !== 'next') {
-      location.assign(next);
-    } // patch switch button
+    // patch switch button
     const side = <HTMLElement>document.querySelector('.lu-rule-button-chooser');
     if (side) {
       side.classList.add('switch');
@@ -38,11 +36,33 @@ function build(builder: Promise<IDataset>) {
       (<HTMLElement>d).classList.remove('disabled');
     }
     );
+  }).then(() => {
+    let next: string;
+    if (session) {
+      shared.session = session;
+      next = `#${shared.dataset!.id}@${session.uid}`;
+      shared.lineup!.data.restore(session.dump);
+    } else {
+      shared.session = null;
+      next = `#${shared.dataset!.id}`;
+    }
+    if (location.hash !== next) {
+      location.assign(next);
+    }
     uploader.dataset.state = 'ready';
   }).catch((error) => {
     uploader.dataset.state = 'initial';
     toast({html: `<pre>${error}</pre>`, displayLength: 5000});
   });
+}
+
+function loadSession(session?: ISession) {
+  if (!session || !shared.lineup) {
+    shared.session = null;
+    return;
+  }
+  shared.session = session;
+  shared.lineup.data.restore(session.dump);
 }
 
 function disableBubbling(node: HTMLElement, ...events: string[]) {
@@ -152,28 +172,35 @@ allDatasets().then((data) => {
   }
   refreshCarousel();
 
+  const findSession = (dataset?: IDataset, sessionUID?: string) => {
+    const uid = sessionUID ? parseInt(sessionUID, 10) : NaN;
+    if (!sessionUID || isNaN(uid) || !dataset || !dataset.sessions || dataset.sessions.length === 0) {
+      return null;
+    }
+    return dataset.sessions.find((d) => d.uid === uid);
+  };
 
-  { // handle hash changes
-    const h = location.hash.slice(1);
-    const chosenDataset = data.find((d) => d.id === h);
-
-    window.addEventListener('hashchange', () => {
-      const h = location.hash.slice(1);
-      const newDataset = data.find((d) => d.id === h);
-      if (newDataset === shared.dataset) {
-        return;
+  // handle hash changes
+  const findAndLoadViaHash = (doReset: boolean = true) => {
+    const h = location.hash.slice(1).split('@');
+    const newDataset = data.find((d) => d.id === h[0]);
+    const session = findSession(newDataset, h[1]);
+    if (newDataset === shared.dataset) {
+      if (session && session !== shared.session) {
+        loadSession(session);
       }
+      return;
+    }
+    if (doReset) {
       reset();
-      if (newDataset) {
-        build(Promise.resolve(newDataset));
-      }
     }
-    );
-
-    if (chosenDataset) {
-      build(Promise.resolve(chosenDataset));
+    if (!newDataset) {
+      return;
     }
-  }
+    build(Promise.resolve(newDataset), session);
+  };
+  window.addEventListener('hashchange', () => findAndLoadViaHash(true));
+  findAndLoadViaHash(false);
 });
 
 declare const __DEBUG__: boolean;

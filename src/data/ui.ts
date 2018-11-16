@@ -29,8 +29,8 @@ function sessions(dataset: IDataset, card: HTMLElement) {
       ${dataset.sessions.map((s) => `<li class="collection-item">
         <div>
           ${s.name} <span class="grey-text lighten-2">(${fromNow(s.creationDate)})</span>
-          <a href="#${dataset.id}@${s.uid}" class="secondary-content"><i class="material-icons grey-text waves-effect waves-light">play_arrow</i></a>
-          <a href="#" class="secondary-content delete-session" data-uid="${s.uid}"><i class="material-icons grey-text waves-effect waves-light">delete</i></a>
+          <a href="#${dataset.id}@${s.uid}" class="secondary-content" title="Open session"><i class="material-icons grey-text waves-effect waves-light">play_arrow</i></a>
+          <a href="#" class="secondary-content delete-session" data-uid="${s.uid}" title="Delete session"><i class="material-icons grey-text waves-effect waves-light">delete</i></a>
         </div>
       </li>`).join('')}
     </ul>
@@ -50,7 +50,7 @@ function sessions(dataset: IDataset, card: HTMLElement) {
       try {
         await areyousure(`to delete session "${session.name}" of dataset "${dataset.title}"`);
         await deleteSession(session);
-        toast({html: `Session "${d.title}" of dataset "${dataset.title}" deleted`, displayLength: 5000});
+        toast({html: `Session "${session.name}" of dataset "${dataset.title}" deleted`, displayLength: 5000});
         d.closest('li')!.remove();
         dataset.sessions!.splice(dataset.sessions!.indexOf(session), 1);
       } catch (error) {
