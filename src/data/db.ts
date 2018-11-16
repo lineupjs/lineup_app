@@ -24,12 +24,12 @@ class LineUpDB extends Dexie {
 
 const db = new LineUpDB();
 
-export function storeDataset(dataset: IDataset): Promise<any> {
+export function storeDataset(dataset: IDataset): Promise<IDataset> {
   const copy = Object.assign({}, dataset);
   delete copy.build;
   delete copy.buildScript;
   delete copy.sessions;
-  return db.datasets.add(copy);
+  return db.datasets.add(copy).then((uid) => Object.assign(copy, {uid}));
 }
 
 export function listDatasets(): Promise<IDatasetMeta[]> {
@@ -50,7 +50,7 @@ export function storeSession(dataset: IDatasetMeta, name: string, dump: any) {
     name,
     dump
   };
-  return db.sessions.add(row).then(() => row);
+  return db.sessions.add(row).then((uid) => Object.assign(row, {uid}));
 }
 
 export function listSessions(dataset?: IDatasetMeta): Promise<ISession[]> {

@@ -7,7 +7,7 @@ import initExport from './export';
 import shared from './shared';
 import {IDataset, fromFile, allDatasets} from './data';
 import {version, buildId} from 'lineupjs';
-import {storeDataset} from './data/db';
+import {storeDataset, storeSession} from './data/db';
 import {createCard} from './data/ui';
 import {ISession} from './data/IDataset';
 
@@ -77,6 +77,7 @@ function reset() {
     shared.lineup = null;
   }
   shared.dataset = null;
+  shared.session = null;
   (<HTMLElement>document.querySelector('.brand-logo')).textContent = document.title = `LineUp`;
   Array.from(document.querySelectorAll('.nav-wrapper > a')).forEach((d: Element) => {
     (<HTMLElement>d).classList.add('disabled');
@@ -113,6 +114,19 @@ function showFile(file: File) {
     return storeDataset(r).then(() => r);
   });
   build(f);
+}
+
+async function saveSession(name: string = 'Auto Save') {
+  if (!shared.lineup || !shared.dataset) {
+    return;
+  }
+  try {
+    const session = await storeSession(shared.dataset, name, shared.lineup.dump());
+    toast({html: `Session "${session.name}" of dataset "${shared.dataset.title}" saved`, displayLength: 5000});
+    shared.dataset.sessions!.push(session);
+  } catch (error) {
+    toast({html: `Error while saving session: <pre>${error}</pre>`, displayLength: 5000});
+  }
 }
 
 window.addEventListener('resize', () => {
