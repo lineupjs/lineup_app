@@ -86,12 +86,20 @@ label {
   }
 }
 
+.card .card-title {
+  font-size: 20px;
+}
+
 .card-reveal p {
   text-align: justify;
 }
 
 .card-reveal .card-sessions {
   display: none;
+}
+
+.card-sessions .collection {
+  text-align: left;
 }
 
 .card-reveal.sessions {

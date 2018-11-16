@@ -1,12 +1,23 @@
-import {IDataset, PRELOADED_TYPE} from './IDataset';
+import {IDataset, PRELOADED_TYPE, ISession} from './IDataset';
 import {toast} from 'materialize-css';
-import {deleteDataset} from './db';
-import {areyousure} from '../ui';
+import {deleteDataset, deleteSession} from './db';
+import {areyousure, fromNow} from '../ui';
 
-function sessions(d: IDataset, card: HTMLElement) {
-  // if (!d.sessions) {
-  //   return;
-  // }
+function sessions(dataset: IDataset, card: HTMLElement) {
+
+  const session: ISession = {
+    name: 'test',
+    uid: 1,
+    creationDate: new Date(),
+    dump: {},
+    dataset: dataset.id
+  };
+
+  dataset.sessions = [session, session];
+
+  if (!dataset.sessions || dataset.sessions.length === 0) {
+    return;
+  }
 
   const content = card.querySelector<HTMLElement>('.card-reveal')!;
   content.insertAdjacentHTML('beforeend', `
@@ -15,19 +26,38 @@ function sessions(d: IDataset, card: HTMLElement) {
       <i class="material-icons right">close</i>
     </span>
     <ul class="collection">
-      <li class="collection-item">
+      ${dataset.sessions.map((s) => `<li class="collection-item">
         <div>
-        <span class="title">NAME</span>
-        <p>DATE</p>
-        <a href="#!" class="secondary-content"><i class="material-icons">play_arrow</i></a>
-        <a href="#!" class="secondary-content"><i class="material-icons">delete</i></a>
+          ${s.name} <span class="grey-text lighten-2">(${fromNow(s.creationDate)})</span>
+          <a href="#${dataset.id}@${s.uid}" class="secondary-content"><i class="material-icons grey-text waves-effect waves-light">play_arrow</i></a>
+          <a href="#" class="secondary-content delete-session" data-uid="${s.uid}"><i class="material-icons grey-text waves-effect waves-light">delete</i></a>
         </div>
-      </li>
+      </li>`).join('')}
     </ul>
   </div>`);
   content.querySelector<HTMLElement>('.card-sessions .card-title')!.onclick = () => {
     content.classList.remove('sessions');
   };
+  Array.from(content.querySelectorAll<HTMLElement>('.delete-session')).forEach((d: HTMLElement) => {
+    d.onclick = async (evt) => {
+      evt.preventDefault();
+      evt.stopPropagation();
+      const sessionId = parseInt(d.dataset.uid!, 10);
+      const session = dataset.sessions!.find((d) => d.uid === sessionId);
+      if (!session) {
+        return;
+      }
+      try {
+        await areyousure(`to delete session "${session.name}" of dataset "${dataset.title}"`);
+        await deleteSession(session);
+        toast({html: `Session "${d.title}" of dataset "${dataset.title}" deleted`, displayLength: 5000});
+        d.closest('li')!.remove();
+        dataset.sessions!.splice(dataset.sessions!.indexOf(session), 1);
+      } catch (error) {
+        toast({html: `Error while deleting session: <pre>${error}</pre>`, displayLength: 5000});
+      }
+    };
+  });
 
   const sessions = document.createElement('a');
   sessions.href = '#';
