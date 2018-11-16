@@ -4,16 +4,22 @@ import {builder, Taggle, LineUp} from 'lineupjs';
 import {cleanName, fixHeaders} from './ùtils';
 import {niceDate} from '../ui';
 
-function buildScript(rawVariable: string, domVariable: string) {
+function buildScript(rawVariable: string, domVariable: string, dumpVariable: string) {
   return `
-  const parsed = Papa.parse(${rawVariable}, {
-    dynamicTyping: true,
-    header: true,
-    skipEmptyLines: true
-  });
+const parsed = Papa.parse(${rawVariable}, {
+  dynamicTyping: true,
+  header: true,
+  skipEmptyLines: true
+});
+const dump = ${dumpVariable};
 
-  const lineup = LineUpJS.asLineUp(${domVariable}, parsed.data, ...parsed.meta.fields);
-  `;
+const lineup = LineUpJS
+  .builder(parsed.data)
+  .deriveColumns(...parsed.meta.fields)
+  .deriveColors()
+  .restore(dump)
+  .build(${domVariable});
+`;
 }
 
 

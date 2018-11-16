@@ -25,7 +25,7 @@ export interface ISession {
 
 
 export interface IDataset extends IDatasetMeta {
-  buildScript(rawVariable: string, domVariable: string): string;
+  buildScript(rawVariable: string, domVariable: string, dumpVariable: string): string;
 
   build(node: HTMLElement): Promise<LineUp | Taggle> | LineUp | Taggle;
 

@@ -50,15 +50,15 @@ export default function initExport() {
     const data = {
       title: document.title,
       description: shared.dataset!.description,
-      html: `<script id="data" type="text/csv">${shared.dataset!.rawData}</script>`,
+      html: `<script id="data" type="text/csv">${shared.dataset!.rawData}</script>\n\n<script id="dump" type="application/json">${JSON.stringify(shared.lineup!.dump(), null, ' ')}</script>`,
       css: CODEPEN_CSS,
       css_pre_processor: 'scss',
       css_starter: 'normalize',
-      js: shared.dataset!.buildScript(`document.querySelector('#data').textContent`, 'document.body'),
+      js: shared.dataset!.buildScript(`document.querySelector('#data').textContent`, 'document.body', `JSON.parse(document.querySelector('#dump').textContent)`),
       js_pre_processor: 'babel',
       js_modernizr: false,
       css_external: `https://unpkg.com/lineupjs@${version}/build/LineUpJS.min.css`,
-      js_external: `https://unpkg.com/lineupjs@${version}/build/LineUpJS.min.js;https://cdn.rawgit.com/mholt/PapaParse/master/papaparse.min.js`
+      js_external: `https://unpkg.com/lineupjs@${version}/build/LineUpJS.min.js;https://unpkg.com/papaparse`
     };
 
     const json = JSON.stringify(data)

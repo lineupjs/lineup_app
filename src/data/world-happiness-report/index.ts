@@ -16,32 +16,29 @@ export const data: IDataset = {
   ranks 155 countries by their happiness levels, was released at the United Nations at an event celebrating
   International Day of Happiness on March 20th.</p>`,
   rawData: '',
-  buildScript(rawVariable: string, domVariable: string) {
+  buildScript(rawVariable: string, domVariable: string, dumpVariable: string) {
     return `
-    const parsed = Papa.parse(${rawVariable}, {
-      dynamicTyping: true,
-      header: true,
-      skipEmptyLines: true
-    });
+const parsed = Papa.parse(${rawVariable}, {
+  dynamicTyping: true,
+  header: true,
+  skipEmptyLines: true
+});
+const dump = ${dumpVariable};
 
-    const lineup = LineUpJS.builder(parsed.data)
-      .column(LineUpJS.buildStringColumn('Country'))
-      .column(LineUpJS.buildNumberColumn('Happiness_Score', [0, 10]))
-      .column(LineUpJS.buildNumberColumn('Economy_GDP_per_Capita_', [0, 10]))
-      .column(LineUpJS.buildNumberColumn('Family', [0, 10]))
-      .column(LineUpJS.buildNumberColumn('Health_Life_Expectancy_', [0, 10]))
-      .column(LineUpJS.buildNumberColumn('Freedom', [0, 10]))
-      .column(LineUpJS.buildNumberColumn('Generosity', [0, 10]))
-      .column(LineUpJS.buildNumberColumn('Trust_Government_Corruption_', [0, 10]))
-      .column(LineUpJS.buildNumberColumn('Dystopia_Residual', [0, 10]))
-      .deriveColors()
-      .ranking(LineUpJS.buildRanking()
-        .supportTypes()
-        .allColumns()
-        .sortBy('Happiness_Score', 'desc')
-      )
-      .buildTaggle(${domVariable});
-    `;
+const lineup = LineUpJS.builder(parsed.data)
+  .column(LineUpJS.buildStringColumn('Country'))
+  .column(LineUpJS.buildNumberColumn('Happiness_Score', [0, 10]))
+  .column(LineUpJS.buildNumberColumn('Economy_GDP_per_Capita_', [0, 10]))
+  .column(LineUpJS.buildNumberColumn('Family', [0, 10]))
+  .column(LineUpJS.buildNumberColumn('Health_Life_Expectancy_', [0, 10]))
+  .column(LineUpJS.buildNumberColumn('Freedom', [0, 10]))
+  .column(LineUpJS.buildNumberColumn('Generosity', [0, 10]))
+  .column(LineUpJS.buildNumberColumn('Trust_Government_Corruption_', [0, 10]))
+  .column(LineUpJS.buildNumberColumn('Dystopia_Residual', [0, 10]))
+  .deriveColors()
+  .restore(dump)
+  .buildTaggle(${domVariable});
+`;
   },
   build(node: HTMLElement) {
     return import('raw-loader!./2017.csv').then((content: any) => {

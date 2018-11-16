@@ -4,12 +4,18 @@ import {cleanName} from './ùtils';
 import {niceDate} from '../ui';
 import {isDumpFile, fromDumpFile} from './loader_dump';
 
-function buildScript(rawVariable: string, domVariable: string) {
+function buildScript(rawVariable: string, domVariable: string, dumpVariable: string) {
   return `
-  const parsed = JSON.parse(${rawVariable});
+const parsed = JSON.parse(${rawVariable});
+const dump = ${dumpVariable};
 
-  const lineup = LineUpJS.asLineUp(${domVariable}, parsed);
-  `;
+const lineup = LineUpJS
+  .builder(parsed)
+  .deriveColumns()
+  .deriveColors()
+  .restore(dump)
+  .build(${domVariable});
+`;
 }
 
 export function exportJSON(lineup: LineUp | Taggle) {

@@ -26,35 +26,31 @@ university measures. Founded in the United Kingdom in 2010, it has been criticiz
 and for undermining non-English-instructing institutions.
 </p>`,
   rawData: '',
-  buildScript(rawVariable: string, domVariable: string) {
+  buildScript(rawVariable: string, domVariable: string, dumpVariable: string) {
     const yearArray = (<any>this).yearArray;
-    return `// per year:
-      const yearArray = ${JSON.stringify(yearArray)};
-      const rows = JSON.parse(${rawVariable});
+    return `
+// per year:
+const yearArray = ${JSON.stringify(yearArray)};
+const rows = JSON.parse(${rawVariable});
+const dump = ${dumpVariable};
 
-      const perYear = 'score,national_rank,quality_of_education,alumni_employment,quality_of_faculty,publications,influence,citations,broad_impact,patents'.split(',');
-      const b = builder(rows)
-        .column(buildStringColumn('institution'))
-        .column(buildStringColumn('country'));
+const perYear = 'score,national_rank,quality_of_education,alumni_employment,quality_of_faculty,publications,influence,citations,broad_impact,patents'.split(',');
+const b = LineUpJS.builder(rows)
+  .column(LineUpJS.buildStringColumn('institution'))
+  .column(LineUpJS.buildStringColumn('country'));
 
-      yearArray.slice(0, 2).forEach((year) => {
-        const bb = buildRanking()
-          .supportTypes()
-          .column('institution')
-          .column('country')
-          .sortBy(year + '_score', 'desc');
-        perYear.forEach((k) => {
-          b.column(buildNumberColumn(year + '_' + k).label(k + '(' + year + ')'));
-          bb.column(year + '_' + k);
-        });
-        b.ranking(bb);
-      });
+yearArray.slice(0, 2).forEach((year) => {
+  perYear.forEach((k) => {
+    b.column(LineUpJS.buildNumberColumn(year + '_' + k).label(k + '(' + year + ')'));
+  });
+});
 
-      yearArray.slice(2).forEach((year) => {
-        b.column(buildNumberColumn(year + '_score').label('score (' + year + ')'));
-      });
+yearArray.slice(2).forEach((year) => {
+  b.column(LineUpJS.buildNumberColumn(year + '_score').label('score (' + year + ')'));
+});
 
-      return b.deriveColors().buildTaggle(${domVariable});`;
+const lineup = b.deriveColors().restore(dump).buildTaggle(${domVariable});
+  `;
   },
   build(node: HTMLElement) {
     return import('raw-loader!./cwurData.csv').then((content: any) => {

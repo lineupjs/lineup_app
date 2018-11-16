@@ -14,42 +14,40 @@ export const data: IDataset = {
   The aim of this dataset is to offer in a relatively small number of columns (~30) data to compare the performance of some football players, or to compare the efficiency of strikers in-between different European leagues.
 </p>`,
   rawData: '',
-  buildScript(rawVariable: string, domVariable: string) {
+  buildScript(rawVariable: string, domVariable: string, dumpVariable: string) {
     return `
-  const parsed = Papa.parse(${rawVariable}, {
-    dynamicTyping: true,
-    header: true,
-    skipEmptyLines: true
-  });
+const parsed = Papa.parse(${rawVariable}, {
+  dynamicTyping: true,
+  header: true,
+  skipEmptyLines: true
+});
+const dump = ${dumpVariable};
 
-  parsed.data.forEach((row) => {
-    const suffix = [12, 13, 14, 15, 16, 17];
-    const cols = ['games', 'goals', 'minutes', 'assists'];
-    cols.forEach((col) => {
-      row[col] = suffix.map((d) => !row[col + d] && row[col + d] !== 0 ? null : row[col + d]);
-    });
+parsed.data.forEach((row) => {
+  const suffix = [12, 13, 14, 15, 16, 17];
+  const cols = ['games', 'goals', 'minutes', 'assists'];
+  cols.forEach((col) => {
+    row[col] = suffix.map((d) => !row[col + d] && row[col + d] !== 0 ? null : row[col + d]);
   });
+});
 
-  const lineup = LineUpJS.builder(parsed.data)
-    .column(buildStringColumn('player'))
-    .column(buildNumberColumn('age', [0, NaN]))
-    .column(buildStringColumn('current_club'))
-    .column(buildCategoricalColumn('current_league'))
-    .column(buildCategoricalColumn('foot'))
-    .column(buildNumberColumn('height', [160, NaN]))
-    .column(buildStringColumn('nationality'))
-    .column(buildCategoricalColumn('position'))
-    .column(buildNumberColumn('games', [0, NaN]).asArray(4))
-    .column(buildNumberColumn('goals', [0, NaN]).asArray(4))
-    .column(buildNumberColumn('minutes', [0, NaN]).asArray(4))
-    .column(buildNumberColumn('assists', [0, NaN]).asArray(4))
-    .deriveColors()
-    .ranking(buildRanking()
-      .supportTypes()
-      .allColumns()
-    )
-    .buildTaggle(${domVariable});
-  `;
+const lineup = LineUpJS.builder(parsed.data)
+  .column(LineUpJS.buildStringColumn('player'))
+  .column(LineUpJS.buildNumberColumn('age', [0, NaN]))
+  .column(LineUpJS.buildStringColumn('current_club'))
+  .column(LineUpJS.buildCategoricalColumn('current_league'))
+  .column(LineUpJS.buildCategoricalColumn('foot'))
+  .column(LineUpJS.buildNumberColumn('height', [160, NaN]))
+  .column(LineUpJS.buildStringColumn('nationality'))
+  .column(LineUpJS.buildCategoricalColumn('position'))
+  .column(LineUpJS.buildNumberColumn('games', [0, NaN]).asArray(4))
+  .column(LineUpJS.buildNumberColumn('goals', [0, NaN]).asArray(4))
+  .column(LineUpJS.buildNumberColumn('minutes', [0, NaN]).asArray(4))
+  .column(LineUpJS.buildNumberColumn('assists', [0, NaN]).asArray(4))
+  .deriveColors()
+  .restore(dump)
+  .buildTaggle(${domVariable});
+`;
   },
   build(node: HTMLElement) {
     return import('raw-loader!./soccer.csv').then((content: any) => {
