@@ -56,7 +56,7 @@ export const ieeebars: IDataset = {
     const colSpectrumWeights = spectrumWeights.slice(); //duplicate array
 
     sources.forEach((source, i) => {
-      const colName = source + ' ' + y;
+      const colName = source + ' ' + year;
       if(colName === 'Google Trends 2018') {
         // not available in dataset
         colSpectrumWeights.splice(i, 1); //remove weight
@@ -182,7 +182,7 @@ export const ieeeheat: IDataset = {
 
   // source matrices
   sources.forEach((source) => {
-    dataBuilder = dataBuilder.column(LineUpJS.buildNumberColumn(source, [0, NaN]).asArray(years.map(String));
+    dataBuilder = dataBuilder.column(LineUpJS.buildNumberColumn(source, [0, NaN]).asArray(years.map(String)));
   });
 
   // year matrices
