@@ -13,13 +13,13 @@ export {IDataset} from './IDataset';
 export * from './ui';
 
 const preloaded: IDataset[] = [
+  soccer,
   wur,
   shanghai,
   forbes,
   happiness,
   ieeebars,
-  ieeeheat,
-  soccer
+  ieeeheat
 ];
 
 
