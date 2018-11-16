@@ -54,7 +54,7 @@ const areas: [number, string | ((d: number) => string)][] = [
   [25 * DAY, (d) => `${Math.ceil(d / DAY)} days ago`],
   [45 * DAY, 'a month ago'],
   [319 * DAY, (d) => `${Math.ceil(d / DAY / 30)} months ago`],
-  [547 * DAY, (d) => 'a year ago']
+  [547 * DAY, () => 'a year ago']
 ];
 
 /**
