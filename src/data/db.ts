@@ -1,21 +1,14 @@
 import Dexie from 'dexie';
-import {IDatasetMeta, IDataset} from './IDataset';
+import {IDatasetMeta, IDataset, ISession} from './IDataset';
 
 const SCHEMA_VERSION = 1;
-
-interface IDBSession {
-  uid?: number; // auto increment;
-  dataset: string; // <-> IDBDataset.id
-  creationDate: Date;
-  dump: any;
-}
 
 //
 // Declare Database
 //
 class LineUpDB extends Dexie {
   datasets: Dexie.Table<IDatasetMeta, number>;
-  sessions: Dexie.Table<IDBSession, number>;
+  sessions: Dexie.Table<ISession, number>;
 
   constructor() {
     super('LineUp App DB');
@@ -35,6 +28,7 @@ export function storeDataset(dataset: IDataset): Promise<any> {
   const copy = Object.assign({}, dataset);
   delete copy.build;
   delete copy.buildScript;
+  delete copy.sessions;
   return db.datasets.add(copy);
 }
 
@@ -49,23 +43,23 @@ export function deleteDataset(dataset: IDatasetMeta): Promise<any> {
   ]));
 }
 
-export function storeSession(dataset: IDatasetMeta, dump: any) {
-  const row: IDBSession = {
+export function storeSession(dataset: IDatasetMeta, name: string, dump: any) {
+  const row: ISession = {
     dataset: dataset.id,
     creationDate: new Date(),
+    name,
     dump
   };
   return db.sessions.add(row).then(() => row);
 }
 
-export function listSessions(dataset: IDatasetMeta): Promise<IDBSession[]> {
-  function parse(d: IDBSession) {
-    d.creationDate = new Date(d.creationDate);
-    return d;
+export function listSessions(dataset?: IDatasetMeta): Promise<ISession[]> {
+  if (!dataset) {
+    return db.sessions.toArray();
   }
-  return db.sessions.where('dataset').equals(dataset.id).toArray((r) => r.map(parse));
+  return db.sessions.where('dataset').equals(dataset.id).toArray();
 }
 
-export function deleteSession(session: IDBSession): Promise<any> {
+export function deleteSession(session: ISession): Promise<any> {
   return db.sessions.delete(session.uid!);
 }

@@ -5,9 +5,10 @@ import './style.scss';
 import 'typeface-roboto/index.css';
 import initExport from './export';
 import shared from './shared';
-import {toCard, IDataset, fromFile, allDatasets} from './data';
+import {IDataset, fromFile, allDatasets} from './data';
 import {version, buildId} from 'lineupjs';
-import {storeDataset, deleteDataset} from './data/db';;
+import {storeDataset} from './data/db';
+import {createCard} from './data/ui';
 
 const uploader = <HTMLElement>document.querySelector('main');
 
@@ -64,7 +65,7 @@ function reset() {
   uploader.dataset.state = 'initial';
 }
 
-function rebuildCarousel(data: IDataset[]) {
+function refreshCarousel() {
   const base = <HTMLElement>document.querySelector('.carousel');
   const instance = Carousel.getInstance(base);
   if (instance) {
@@ -72,31 +73,23 @@ function rebuildCarousel(data: IDataset[]) {
   }
   delete base.dataset.namespace;
   base.classList.remove('initialized');
-  base.innerHTML = '';
-  data.forEach((d) => base.insertAdjacentHTML('afterbegin', toCard(d))); // init carousel
   Carousel.init(base);
-
-  // init buttons
-  Array.from(base.querySelectorAll<HTMLElement>('[data-action=delete]')).forEach((elem: HTMLElement) => {
-    elem.onclick = (evt) => {
-      evt.preventDefault();
-      evt.stopPropagation();
-      const id = elem.dataset.id;
-      const datasetIndex = data.findIndex((d) => d.id === id);
-      deleteDataset(data[datasetIndex]).then(() => {
-        const old = data.splice(datasetIndex, 1)[0]!;
-        toast({html: `Dataset "${old.title}" deleted`, displayLength: 5000});
-        rebuildCarousel(data);
-      }).catch((error) => {
-        toast({html: `Error while deleting dataset: <pre>${error}</pre>`, displayLength: 5000});
-      });
-    };
-  });
 }
 
-function showFile(file: File, datasets: IDataset[]) {
+function addToCarousel(d: IDataset) {
+  const base = <HTMLElement>document.querySelector('.carousel');
+  const node = createCard(d, () => {
+    node.remove();
+    refreshCarousel();
+  });
+  base.appendChild(node);
+}
+
+function showFile(file: File) {
   const f = fromFile(file).then((r) => {
-    datasets.unshift(r);
+    shared.datasets.unshift(r);
+    addToCarousel(r);
+    refreshCarousel();
     return storeDataset(r).then(() => r);
   });
   build(f);
@@ -126,10 +119,11 @@ Tooltip.init(document.querySelectorAll('.tooltipped'));
 }
 
 allDatasets().then((data) => {
+  shared.datasets = data;
   {
     const file = (<HTMLInputElement>document.querySelector('input[type=file]'));
     file.addEventListener('change', () => {
-      showFile(file.files![0], data);
+      showFile(file.files![0]);
     }
     );
     (<HTMLElement>document.querySelector('#dropper a.btn')).addEventListener('click', (evt) => {
@@ -147,16 +141,19 @@ allDatasets().then((data) => {
       if (evt.dataTransfer!.files.length !== 1) {
         return;
       }
-      showFile(evt.dataTransfer!.files[0], data);
+      showFile(evt.dataTransfer!.files[0]);
       evt.preventDefault();
     }
     );
   }
 
-  rebuildCarousel(data);
+  for (const d of data) {
+    addToCarousel(d);
+  }
+  refreshCarousel();
 
 
-  {
+  { // handle hash changes
     const h = location.hash.slice(1);
     const chosenDataset = data.find((d) => d.id === h);
 
@@ -167,7 +164,6 @@ allDatasets().then((data) => {
         return;
       }
       reset();
-      rebuildCarousel(data);
       if (newDataset) {
         build(Promise.resolve(newDataset));
       }
