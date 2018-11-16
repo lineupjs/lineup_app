@@ -6,7 +6,7 @@ export interface IDatasetMeta {
   id: string;
   type: string;
   creationDate: Date;
-  title: string;
+  name: string;
   image?: string;
   link?: string;
   description: string;
@@ -20,7 +20,7 @@ export interface ISession {
   dataset: string; // <-> IDBDataset.id
   name: string;
   creationDate: Date;
-  dump: any;
+  dump: any; // TOOD typing
 }
 
 
@@ -29,13 +29,14 @@ export interface IDataset extends IDatasetMeta {
 
   build(node: HTMLElement): Promise<LineUp | Taggle> | LineUp | Taggle;
 
+  dump?: any; // TODO typing
   sessions?: ISession[];
 }
 
 export interface IDataLoader {
   type: string;
   supports(file: File): boolean;
-  loadFile(file: File): Promise<IDataset>;
+  loadFile(file: File): Promise<IDataset | IDatasetMeta>;
 
   complete(db: IDatasetMeta): IDataset;
 }

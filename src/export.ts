@@ -2,6 +2,8 @@ import {isSupportType, LocalDataProvider, version} from 'lineupjs';
 import shared from './shared';
 
 import CODEPEN_CSS from 'raw-loader!../templates/style.tcss';
+import {exportJSON} from './data/loader_json';
+import {exportCSV} from './data/loader_csv';
 
 
 export default function initExport() {
@@ -9,31 +11,22 @@ export default function initExport() {
   document.querySelector('#downloadCSV')!.addEventListener('click', (evt) => {
     evt.preventDefault();
     evt.stopPropagation();
-    shared.lineup!.data.exportTable(shared.lineup!.data.getRankings()[0], {}).then((csv) => {
+    exportCSV(shared.lineup!).then((csv) => {
       // download link
       downloadHelper.href = `data:text/csv;charset=utf-8;base64,${btoa(unescape(encodeURIComponent(csv)))}`;
-      (<any>downloadHelper).download = `${shared.dataset!.title}.csv`;
+      (<any>downloadHelper).download = `${shared.dataset!.name}.csv`;
       downloadHelper.click();
     });
   });
   document.querySelector('#downloadJSON')!.addEventListener('click', (evt) => {
     evt.preventDefault();
     evt.stopPropagation();
-    const ranking = shared.lineup!.data.getRankings()[0];
-    const cols = ranking.flatColumns.filter((d) => !isSupportType(d));
-    const data = <LocalDataProvider>shared.lineup!.data;
-    const ordered = data.viewRawRows(ranking.getOrder());
-    const json = ordered.map((row) => {
-      const r: any = {};
-      cols.forEach((col) => {
-        r[col.label] = col.getValue(row);
-      });
-      return r;
+    exportJSON(shared.lineup!).then((json) => {
+      // download link
+      downloadHelper.href = `data:application/json;charset=utf-8;base64,${btoa(unescape(encodeURIComponent(JSON.stringify(json))))}`;
+      (<any>downloadHelper).download = `${shared.dataset!.name}.json`;
+      downloadHelper.click();
     });
-    // download link
-    downloadHelper.href = `data:application/json;charset=utf-8;base64,${btoa(unescape(encodeURIComponent(JSON.stringify(json))))}`;
-    (<any>downloadHelper).download = `${shared.dataset!.title}.json`;
-    downloadHelper.click();
   });
 
 

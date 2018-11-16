@@ -9,7 +9,7 @@ export const ieeebars: IDataset = {
   id: 'ieee_bars',
   type: PRELOADED_TYPE,
   creationDate: new Date(),
-  title: 'IEEE Programming Languages Bars',
+  name: 'IEEE Programming Languages Bars',
   image: imageBars,
   description: `<p>
   55 programming languages are compared by 11 metrics from 2014 to 2018.
@@ -145,7 +145,7 @@ export const ieeeheat: IDataset = {
   id: 'ieee-heatmap',
   type: PRELOADED_TYPE,
   creationDate: new Date(),
-  title: 'IEEE Programming Languages Heatmap',
+  name: 'IEEE Programming Languages Heatmap',
   image: imageHeat,
   description: `<p>
   55 programming languages are compared by 11 metrics from 2014 to 2018.

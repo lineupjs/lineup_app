@@ -7,7 +7,7 @@ export const data: IDataset = {
   id: 'happiness',
   type: PRELOADED_TYPE,
   creationDate: new Date(),
-  title: 'World Happiness Report',
+  name: 'World Happiness Report',
   image,
   link: 'https://www.kaggle.com/unsdsn/world-happiness',
   description: `<p>The World Happiness Report is a landmark survey of the state of global happiness. The first report was published in 2012,

@@ -1,7 +1,8 @@
 import {IDataLoader, IDataset, IDatasetMeta} from './IDataset';
-import {builder} from 'lineupjs';
-import {randomChars} from './ùtils';
+import {builder, Taggle, isSupportType, LocalDataProvider, LineUp} from 'lineupjs';
+import {cleanName} from './ùtils';
 import {niceDate} from '../ui';
+import {isDumpFile, fromDumpFile} from './loader_dump';
 
 function buildScript(rawVariable: string, domVariable: string) {
   return `
@@ -9,6 +10,20 @@ function buildScript(rawVariable: string, domVariable: string) {
 
   const lineup = LineUpJS.asLineUp(${domVariable}, parsed);
   `;
+}
+
+export function exportJSON(lineup: LineUp | Taggle) {
+  const data = <LocalDataProvider>lineup!.data;
+  const ranking = data.getRankings()[0];
+  const cols = ranking.flatColumns.filter((d) => !isSupportType(d));
+  const ordered = data.viewRawRows(ranking.getOrder());
+  return Promise.resolve(ordered.map((row) => {
+    const r: any = {};
+    cols.forEach((col) => {
+      r[col.label] = col.getExportValue(row, 'json');
+    });
+    return r;
+  }));
 }
 
 export const JSON_LOADER: IDataLoader = {
@@ -24,11 +39,17 @@ export const JSON_LOADER: IDataLoader = {
       };
       reader.readAsText(file);
     }).then(({raw, parsed}) => {
-      const title = file.name.split('.').slice(0, -1).join('.');
+      if (isDumpFile(parsed)) {
+        return Promise.resolve(fromDumpFile(parsed));
+      }
+      if (!Array.isArray(parsed) || parsed.length === 0 || typeof parsed[0] !== 'object') {
+        return Promise.reject<IDataset>('not an array of objects');
+      }
+      const name = file.name.split('.').slice(0, -1).join('.');
       return {
-        id: `${title.toLowerCase().replace(/\s+/g, '-')}-${randomChars(3)}`,
+        id: cleanName(name),
         type: <'json'>'json',
-        title,
+        name,
         creationDate: new Date(),
         description: `Imported from "${file.name}" on ${niceDate(new Date())}`,
         rawData: raw,

@@ -7,7 +7,7 @@ export const data: IDataset = {
   id: 'soccer',
   type: PRELOADED_TYPE,
   creationDate: new Date(),
-  title: 'Soccer Stats',
+  name: 'Soccer Stats',
   image: './preview.png',
   link: 'https://www.kaggle.com/gimunu/football-striker-performance',
   description: `<p>

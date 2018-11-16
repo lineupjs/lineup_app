@@ -1,6 +1,6 @@
 import {IDataset, PRELOADED_TYPE} from './IDataset';
 import {toast} from 'materialize-css';
-import {deleteDataset, deleteSession, storeDataset} from './db';
+import {deleteDataset, deleteSession, editDataset} from './db';
 import {areyousure, fromNow, saveDialog} from '../ui';
 
 function sessions(dataset: IDataset, card: HTMLElement) {
@@ -37,9 +37,9 @@ function sessions(dataset: IDataset, card: HTMLElement) {
         return;
       }
       try {
-        await areyousure(`to delete session "${session.name}" of dataset "${dataset.title}"`);
+        await areyousure(`to delete session "${session.name}" of dataset "${dataset.name}"`);
         await deleteSession(session);
-        toast({html: `Session "${session.name}" of dataset "${dataset.title}" deleted`, displayLength: 5000});
+        toast({html: `Session "${session.name}" of dataset "${dataset.name}" deleted`, displayLength: 5000});
         d.closest('li')!.remove();
         dataset.sessions!.splice(dataset.sessions!.indexOf(session), 1);
       } catch (error) {
@@ -67,7 +67,7 @@ export function createCard(dataset: IDataset, onDelete: () => void) {
     ${dataset.image ? `<img class="activator" src="${dataset.image}" alt="No Preview Available">`: `<span class="material-icons grey-text local-image activator">photo</span>`}
   </div>
   <div class="card-content">
-    <span class="card-title activator grey-text text-darken-4"><span class="dd-title">${dataset.title}</span>
+    <span class="card-title activator grey-text text-darken-4"><span class="dd-title">${dataset.name}</span>
       <i class="material-icons right">more_vert</i>
     </span>
   </div>
@@ -76,7 +76,7 @@ export function createCard(dataset: IDataset, onDelete: () => void) {
   </div>
   <div class="card-reveal">
     <div class="card-desc">
-      <span class="card-title grey-text text-darken-4"><span class="dd-title">${dataset.title}</span>
+      <span class="card-title grey-text text-darken-4"><span class="dd-title">${dataset.name}</span>
         <i class="material-icons right">close</i>
       </span>
       <div class="dd-desc">
@@ -103,15 +103,15 @@ export function createCard(dataset: IDataset, onDelete: () => void) {
     evt.preventDefault();
     evt.stopPropagation();
     try {
-      const desc = await saveDialog(`Edit dataset "${dataset.title}"`, dataset.title, dataset.description);
-      dataset.title = desc.name;
+      const desc = await saveDialog(`Edit dataset "${dataset.name}"`, dataset.name, dataset.description);
+      dataset.name = desc.name;
       dataset.description = desc.description;
-      await storeDataset(dataset);
+      await editDataset(dataset);
 
-      Array.from(card.querySelectorAll<HTMLElement>('.dd-title')).forEach((d) => d.innerHTML = dataset.title);
+      Array.from(card.querySelectorAll<HTMLElement>('.dd-title')).forEach((d) => d.innerHTML = dataset.name);
       Array.from(card.querySelectorAll<HTMLElement>('.dd-desc')).forEach((d) => d.innerHTML = dataset.description);
 
-      toast({html: `Dataset "${dataset.title}" edited`, displayLength: 5000});
+      toast({html: `Dataset "${dataset.name}" edited`, displayLength: 5000});
       onDelete();
     } catch (error) {
       toast({html: `Error while editing dataset: <pre>${error}</pre>`, displayLength: 5000});
@@ -126,9 +126,9 @@ export function createCard(dataset: IDataset, onDelete: () => void) {
     evt.preventDefault();
     evt.stopPropagation();
     try {
-      await areyousure(`to delete dataset "${dataset.title}"`);
+      await areyousure(`to delete dataset "${dataset.name}"`);
       await deleteDataset(dataset);
-      toast({html: `Dataset "${dataset.title}" deleted`, displayLength: 5000});
+      toast({html: `Dataset "${dataset.name}" deleted`, displayLength: 5000});
       onDelete();
     } catch (error) {
       toast({html: `Error while deleting dataset: <pre>${error}</pre>`, displayLength: 5000});

@@ -7,7 +7,7 @@ export const data: IDataset = {
   id: 'forbes',
   type: PRELOADED_TYPE,
   creationDate: new Date(),
-  title: 'Forbes Top 2000',
+  name: 'Forbes Top 2000',
   image,
   link: 'https://www.kaggle.com/ash316/forbes-top-2000-companies',
   description: `<p>

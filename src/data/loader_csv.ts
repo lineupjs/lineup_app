@@ -1,7 +1,7 @@
 import {parse, ParseResult} from 'papaparse';
 import {IDataLoader, IDatasetMeta, IDataset} from './IDataset';
-import {builder} from 'lineupjs';
-import {randomChars} from './ùtils';
+import {builder, Taggle, LineUp} from 'lineupjs';
+import {cleanName} from './ùtils';
 import {niceDate} from '../ui';
 
 function buildScript(rawVariable: string, domVariable: string) {
@@ -14,6 +14,11 @@ function buildScript(rawVariable: string, domVariable: string) {
 
   const lineup = LineUpJS.asLineUp(${domVariable}, parsed.data, ...parsed.meta.fields);
   `;
+}
+
+
+export function exportCSV(lineup: LineUp | Taggle) {
+  return lineup!.data.exportTable(lineup!.data.getRankings()[0], {});
 }
 
 export const CSV_LOADER: IDataLoader = {
@@ -33,11 +38,11 @@ export const CSV_LOADER: IDataLoader = {
       };
       reader.readAsText(file);
     }).then(({raw, parsed}) => {
-      const title = file.name.split('.').slice(0, -1).join('.');
+      const name = file.name.split('.').slice(0, -1).join('.');
       return {
-        id: `${title.toLowerCase().replace(/\s+/g, '-')}-${randomChars(3)}`,
+        id: cleanName(name),
         type: <'csv'>'csv',
-        title,
+        name,
         creationDate: new Date(),
         description: `Imported from "${file.name}" on ${niceDate(new Date())}`,
         rawData: raw,

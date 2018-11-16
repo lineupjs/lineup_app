@@ -32,7 +32,7 @@ function build(builder: Promise<IDataset>, session?: ISession | null) {
       input.insertAdjacentHTML('afterend', `<span class="lever"></span>`);
       input.insertAdjacentHTML('beforebegin', `<span>Item</span>`);
     } //
-    (<HTMLElement>document.querySelector('.brand-logo')).textContent = document.title = `LineUp ${shared.dataset!.title}`;
+    (<HTMLElement>document.querySelector('.brand-logo')).textContent = document.title = `LineUp ${shared.dataset!.name}`;
     Array.from(document.querySelectorAll<HTMLElement>('.nav-wrapper a.disabled')).forEach((d) => {
       d.classList.remove('disabled');
     });
@@ -124,7 +124,7 @@ async function saveSession() {
     const dump = JSON.parse(JSON.stringify(shared.lineup.dump()));
     const desc = await saveDialog('Save Session as &hellip;', 'Auto Save');
     const session = await storeSession(shared.dataset, desc.name, dump);
-    toast({html: `Session "${session.name}" of dataset "${shared.dataset.title}" saved`, displayLength: 5000});
+    toast({html: `Session "${session.name}" of dataset "${shared.dataset.name}" saved`, displayLength: 5000});
     shared.dataset.sessions!.push(session);
     shared.session = session;
     location.replace(`#${shared.dataset!.id}@${session.uid}`);

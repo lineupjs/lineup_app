@@ -13,7 +13,7 @@ class LineUpDB extends Dexie {
   constructor() {
     super('LineUp App DB');
     this.version(SCHEMA_VERSION).stores({
-      datasets: '++uid,id,title,creationDate',
+      datasets: '++uid,id,name,creationDate',
       sessions: '++uid,dataset,creationDate'
     });
     // hack for linting
@@ -28,8 +28,34 @@ export function storeDataset(dataset: IDataset): Promise<IDataset> {
   const copy = Object.assign({}, dataset);
   delete copy.build;
   delete copy.buildScript;
+  const sessions = copy.sessions;
   delete copy.sessions;
-  return db.datasets.add(copy).then((uid) => Object.assign(copy, {uid}));
+  const add = db.datasets.add(copy).then((uid) => Object.assign(copy, {uid}));
+
+  if (!sessions || sessions.length === 0) {
+    return add;
+  }
+  const s = sessions.map((s) => {
+    const row: ISession = {
+      dataset: dataset.id,
+      creationDate: s.creationDate || new Date(),
+      name: s.name,
+      dump: s.dump
+    };
+    return db.sessions.add(row).then((uid) => Object.assign(row, {uid}));
+  });
+  return Promise.all<(IDataset | ISession)[]>(<any>[add, ...s]).then((r: any[]) => {
+    const ds = <IDataset>r[0];
+    ds.sessions = r.slice(1);
+    return ds;
+  });
+}
+
+export function editDataset(dataset: IDataset): Promise<IDataset> {
+  return db.datasets.update((<any>dataset).uid, {
+    name: dataset.name,
+    description: dataset.description
+  }).then(() => dataset);
 }
 
 function byCreationDate<T extends {creationDate: Date}>(arr: T[]) {

@@ -9,7 +9,7 @@ export const wur: IDataset = {
   id: 'wur',
   type: PRELOADED_TYPE,
   creationDate: new Date(),
-  title: 'Times Higher Education World University Ranking',
+  name: 'Times Higher Education World University Ranking',
   image,
   link: 'https://www.kaggle.com/mylesoneill/world-university-rankings/version/3',
   description: `<p>
@@ -104,7 +104,7 @@ export const shanghai: IDataset = {
   id: 'shanghai',
   type: PRELOADED_TYPE,
   creationDate: new Date(),
-  title: 'Academic Ranking of World Universities',
+  name: 'Academic Ranking of World Universities',
   image: imageShanghai,
   link: 'https://www.kaggle.com/mylesoneill/world-university-rankings/version/3',
   description: `<p>
