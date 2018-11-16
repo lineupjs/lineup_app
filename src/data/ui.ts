@@ -3,9 +3,20 @@ import {toast} from 'materialize-css';
 import {deleteDataset} from './db';
 
 function sessions(d: IDataset, card: HTMLElement) {
-  if (!d.sessions) {
-    return;
-  }
+  // if (!d.sessions) {
+  //   return;
+  // }
+  card.insertAdjacentHTML('beforeend',
+  `<ul class="collection">
+    <li class="collection-item">
+      <div>
+      <span class="title">NAME</span>
+      <p>DATE</p>
+      <a href="#!" class="secondary-content"><i class="material-icons">play_arrow</i></a>
+      <a href="#!" class="secondary-content"><i class="material-icons">delete</i></a>
+      </div>
+    </li>
+  </ul>`);
   // TODO
 }
 
@@ -14,7 +25,7 @@ export function createCard(d: IDataset, onDelete: () => void) {
 
   card.classList.add('carousel-item', 'card', 'sticky-action');
   card.innerHTML = `<div class="card-image waves-effect waves-block waves-light sticky-action">
-    <img class="activator" src="${d.image || ''}" alt="No Preview Available">
+    ${d.image ? `<img class="activator" src="${d.image}" alt="No Preview Available">`: `<span class="material-icons grey-text local-image activator">photo</span>`}
   </div>
   <div class="card-content">
     <span class="card-title activator grey-text text-darken-4">${d.title}
@@ -33,12 +44,14 @@ export function createCard(d: IDataset, onDelete: () => void) {
     <a href="${d.link}" target="_blank" rel="noopener">Kaggle Link</a>
   </p>` : ''}
   </div>`;
-  sessions(d, <HTMLElement>card.firstElementChild!);
+  sessions(d, <HTMLElement>card.lastElementChild!);
 
   if (d.type === PRELOADED_TYPE) {
     // no further actions
     return card;
   }
+
+  card.querySelector<HTMLElement>('.card-image')!.innerHTML = `<span class="material-icons grey-text local-image activator">computer</span>`;
 
   const deleteButton = document.createElement('a');
   deleteButton.href = '#';
