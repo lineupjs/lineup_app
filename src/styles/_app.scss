@@ -10,6 +10,17 @@ body {
   flex-direction: column;
 }
 
+.nav-wrapper {
+  z-index: 200;
+  display: flex;
+
+  > .brand-logo {
+    margin-left: 1em;
+    position: unset;
+    margin-right: 1em;
+  }
+}
+
 .main-wrapper {
   flex: 1 0 auto;
   position: relative;
@@ -19,7 +30,23 @@ body {
   > div {
     flex: 1 1 auto;
     opacity: 1;
-    transition: opacity 0.5s ease;
+    transition: opacity 0.5s ease, background 0.5s ease;
+  }
+
+  .lu-blocker {
+    opacity: 0;
+    z-index: 100;
+    visibility: hidden;
+    background: rgba(255, 255, 255, 0.9);
+    position: absolute;
+    top: 3px;
+    left: 0;
+    right: 0;
+    bottom: 3px;
+  }
+
+  .chooser {
+    z-index: 101;
   }
 
   &[data-state=initial] {
@@ -36,6 +63,11 @@ body {
     .lu {
       visibility: visible;
     }
+
+    .lu-blocker {
+      visibility: visible;
+      opacity: 1;
+    }
   }
 
   &[data-state=ready] {
@@ -51,11 +83,18 @@ body {
   }
 }
 
-.brand-logo {
-  margin-left: 1em;
+.btn-floating.halfway-fab {
+  bottom: -11px;
+  right: 70px;
 }
 
-.btn-floating.halfway-fab {
+.fixed-action-btn.direction-left ul {
+  right: 64px - 24px + 70px;
+}
+
+.btn-floating.save-session {
+  position: absolute;
+  right: 24px;
   bottom: -11px;
 }
 
@@ -86,8 +125,30 @@ label {
   }
 }
 
-.card-reveal > p {
+.card .card-title {
+  font-size: 20px;
+}
+
+.card-reveal p {
   text-align: justify;
+}
+
+.card-reveal .card-sessions {
+  display: none;
+}
+
+.card-sessions .collection {
+  text-align: left;
+}
+
+.card-reveal.sessions {
+  .card-sessions {
+    display: block;
+  }
+
+  .card-desc {
+    display: none;
+  }
 }
 
 .lu-c {
@@ -110,4 +171,13 @@ label {
 .footer-copyright {
   min-height: 30px;
   padding: 0 1em;
+}
+
+.material-icons.local-image {
+  font-size: 240px;
+}
+
+#modalAreYouSure,
+#modalSave {
+  max-width: 30em;
 }

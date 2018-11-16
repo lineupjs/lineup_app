@@ -4,7 +4,8 @@
 
 .fa-codepen::before,
 .fa-file-code-o::before,
-.fa-file-excel-o::before {
+.fa-file-excel-o::before,
+.fa-file-archive-o::before {
   @include fa-icon();
 }
 
@@ -18,4 +19,8 @@
 
 .fa-file-excel-o::before {
   content: $fa-var-file-excel-o;
+}
+
+.fa-file-archive-o::before {
+  content: $fa-var-file-archive-o;
 }

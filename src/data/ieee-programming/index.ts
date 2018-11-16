@@ -1,4 +1,4 @@
-import {IDataset} from '../IDataset';
+import {IDataset, PRELOADED_TYPE} from '../IDataset';
 import {parse, ParseResult} from 'papaparse';
 import {builder, buildRanking, buildStringColumn, buildCategoricalColumn, buildNumberColumn} from 'lineupjs';
 
@@ -7,7 +7,9 @@ import imageHeat from './ieee_heat.png';
 
 export const ieeebars: IDataset = {
   id: 'ieee_bars',
-  title: 'IEEE Programming Languages Bars',
+  type: PRELOADED_TYPE,
+  creationDate: new Date(),
+  name: 'IEEE Programming Languages Bars',
   image: imageBars,
   description: `<p>
   55 programming languages are compared by 11 metrics from 2014 to 2018.
@@ -15,13 +17,14 @@ export const ieeebars: IDataset = {
 </p>
   <p>Source: <a href="https://spectrum.ieee.org/static/ieee-top-programming-languages-2018-methods">IEEE Spectrum</a></p>`,
   rawData: '',
-  buildScript(rawVariable: string, domVariable: string) {
+  buildScript(rawVariable: string, domVariable: string, dumpVariable: string) {
     return `
   const parsed = Papa.parse(${rawVariable}, {
     dynamicTyping: true,
     header: true,
     skipEmptyLines: true
   });
+  const dump = ${dumpVariable};
 
   const years = [2014, 2015, 2016, 2017, 2018]; // 5 years
   const sources = ['Career Builder', 'Dice', 'Github (active)', 'Github (created)', 'Google Search', 'Google Trends', 'Hacker News', 'IEEE Xplore', 'Reddit (posts)', 'Stack Overflow (?s)', 'Stack Overflow (views)', 'Twitter']; // 12 sources
@@ -34,17 +37,17 @@ export const ieeebars: IDataset = {
   });
 
   // basic data
-  let dataBuilder = builder(parsed.data)
-    .column(buildStringColumn('name'))
-    .column(buildCategoricalColumn('web'))
-    .column(buildCategoricalColumn('mobile'))
-    .column(buildCategoricalColumn('enterprise'))
-    .column(buildCategoricalColumn('embedded'))
-    .column(buildNumberColumn('NA 2018')); // NA column of 2018
+  let dataBuilder = LineUpJS.builder(parsed.data)
+    .column(LineUpJS.buildStringColumn('name'))
+    .column(LineUpJS.buildCategoricalColumn('web'))
+    .column(LineUpJS.buildCategoricalColumn('mobile'))
+    .column(LineUpJS.buildCategoricalColumn('enterprise'))
+    .column(LineUpJS.buildCategoricalColumn('embedded'))
+    .column(LineUpJS.buildNumberColumn('NA 2018')); // NA column of 2018
 
   // source matrices
   sources.forEach((source) => {
-    dataBuilder = dataBuilder.column(buildNumberColumn(source).asArray(years.map(String)));
+    dataBuilder = dataBuilder.column(LineUpJS.buildNumberColumn(source).asArray(years.map(String)));
   });
 
   // rankings per year, begin with 2018
@@ -53,26 +56,18 @@ export const ieeebars: IDataset = {
     const colSpectrumWeights = spectrumWeights.slice(); //duplicate array
 
     sources.forEach((source, i) => {
-      const colName = source + ' ' + y;
+      const colName = source + ' ' + year;
       if(colName === 'Google Trends 2018') {
         // not available in dataset
         colSpectrumWeights.splice(i, 1); //remove weight
       } else {
-        dataBuilder = dataBuilder.column(buildNumberColumn(colName)); //Create a column to use it for the ranking
+        dataBuilder = dataBuilder.column(LineUpJS.buildNumberColumn(colName)); //Create a column to use it for the ranking
         columnNames.push(colName);
       }
     });
-
-    dataBuilder = dataBuilder.ranking(
-      buildRanking()
-        .column({ type: 'weightedSum', columns: columnNames, weights: colSpectrumWeights, label: year.toString()})
-        .supportTypes()
-        .column('name')
-        .sortBy(year.toString(), 'desc')
-    );
   });
 
-  const lineup= dataBuilder.deriveColors().buildTaggle(${domVariable});
+  const lineup = dataBuilder.deriveColors().restore(dump).buildTaggle(${domVariable});
   `;
   },
   build(node: HTMLElement) {
@@ -141,7 +136,9 @@ export const ieeebars: IDataset = {
 
 export const ieeeheat: IDataset = {
   id: 'ieee-heatmap',
-  title: 'IEEE Programming Languages Heatmap',
+  type: PRELOADED_TYPE,
+  creationDate: new Date(),
+  name: 'IEEE Programming Languages Heatmap',
   image: imageHeat,
   description: `<p>
   55 programming languages are compared by 11 metrics from 2014 to 2018.
@@ -149,13 +146,14 @@ export const ieeeheat: IDataset = {
 </p>
   <p>Source: <a href="https://spectrum.ieee.org/static/ieee-top-programming-languages-2018-methods">IEEE Spectrum</a></p>`,
   rawData: '',
-  buildScript(rawVariable: string, domVariable: string) {
+  buildScript(rawVariable: string, domVariable: string, dumpVariable: string) {
     return `
   const parsed = Papa.parse(${rawVariable}, {
     dynamicTyping: true,
     header: true,
     skipEmptyLines: true
   });
+  const dump = ${dumpVariable};
 
   const years = [2014, 2015, 2016, 2017, 2018]; // 5 years
   const sources = ['Career Builder', 'Dice', 'Github (active)', 'Github (created)', 'Google Search', 'Google Trends', 'Hacker News', 'IEEE Xplore', 'Reddit (posts)', 'Stack Overflow (?s)', 'Stack Overflow (views)', 'Twitter']; // 12 sources
@@ -174,41 +172,25 @@ export const ieeeheat: IDataset = {
 
 
   // basic data
-  let dataBuilder = builder(parsed.data)
-    .column(buildStringColumn('name'))
-    .column(buildCategoricalColumn('web'))
-    .column(buildCategoricalColumn('mobile'))
-    .column(buildCategoricalColumn('enterprise'))
-    .column(buildCategoricalColumn('embedded'))
-    .column(buildNumberColumn('NA 2018')); // NA column of 2018
+  let dataBuilder = LineUpJS.builder(parsed.data)
+    .column(LineUpJS.buildStringColumn('name'))
+    .column(LineUpJS.buildCategoricalColumn('web'))
+    .column(LineUpJS.buildCategoricalColumn('mobile'))
+    .column(LineUpJS.buildCategoricalColumn('enterprise'))
+    .column(LineUpJS.buildCategoricalColumn('embedded'))
+    .column(LineUpJS.buildNumberColumn('NA 2018')); // NA column of 2018
 
   // source matrices
   sources.forEach((source) => {
-    dataBuilder = dataBuilder.column(buildNumberColumn(source, [0, NaN]).asArray(years.map(String));
+    dataBuilder = dataBuilder.column(LineUpJS.buildNumberColumn(source, [0, NaN]).asArray(years.map(String)));
   });
 
   // year matrices
   years.forEach((year) => {
-    dataBuilder = dataBuilder.column(buildNumberColumn(year.toString(), [0, NaN]).asArray(sources));
+    dataBuilder = dataBuilder.column(LineUpJS.buildNumberColumn(year.toString(), [0, NaN]).asArray(sources));
   });
 
-  dataBuilder = dataBuilder.ranking(
-  buildRanking()
-      .supportTypes()
-      .column('name')
-      .column('2018')
-      .sortBy('2018', 'desc')
-    );
-
-  dataBuilder = dataBuilder.ranking(
-    buildRanking()
-        .supportTypes()
-        .column('name')
-        .column('2017').column('2016').column('2015').column('2014')
-        .sortBy('2017', 'desc')
-      );
-
-  const lineup= dataBuilder.deriveColors().buildTaggle(${domVariable});
+  const lineup = dataBuilder.deriveColors().restore(dump).buildTaggle(${domVariable});
   `;
   },
   build(node: HTMLElement) {

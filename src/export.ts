@@ -1,7 +1,10 @@
-import {isSupportType, LocalDataProvider, version} from 'lineupjs';
+import {version} from 'lineupjs';
 import shared from './shared';
 
 import CODEPEN_CSS from 'raw-loader!../templates/style.tcss';
+import {exportJSON} from './data/loader_json';
+import {exportCSV} from './data/loader_csv';
+import {exportDump} from './data/loader_dump';
 
 
 export default function initExport() {
@@ -9,31 +12,32 @@ export default function initExport() {
   document.querySelector('#downloadCSV')!.addEventListener('click', (evt) => {
     evt.preventDefault();
     evt.stopPropagation();
-    shared.lineup!.data.exportTable(shared.lineup!.data.getRankings()[0], {}).then((csv) => {
+    exportCSV(shared.lineup!).then((csv) => {
       // download link
       downloadHelper.href = `data:text/csv;charset=utf-8;base64,${btoa(unescape(encodeURIComponent(csv)))}`;
-      (<any>downloadHelper).download = `${shared.dataset!.title}.csv`;
+      (<any>downloadHelper).download = `${shared.dataset!.name}.csv`;
       downloadHelper.click();
     });
   });
   document.querySelector('#downloadJSON')!.addEventListener('click', (evt) => {
     evt.preventDefault();
     evt.stopPropagation();
-    const ranking = shared.lineup!.data.getRankings()[0];
-    const cols = ranking.flatColumns.filter((d) => !isSupportType(d));
-    const data = <LocalDataProvider>shared.lineup!.data;
-    const ordered = data.viewRawRows(ranking.getOrder());
-    const json = ordered.map((row) => {
-      const r: any = {};
-      cols.forEach((col) => {
-        r[col.label] = col.getValue(row);
-      });
-      return r;
+    exportJSON(shared.lineup!).then((json) => {
+      // download link
+      downloadHelper.href = `data:application/json;charset=utf-8;base64,${btoa(unescape(encodeURIComponent(JSON.stringify(json, null, ' '))))}`;
+      (<any>downloadHelper).download = `${shared.dataset!.name}.json`;
+      downloadHelper.click();
     });
-    // download link
-    downloadHelper.href = `data:application/json;charset=utf-8;base64,${btoa(unescape(encodeURIComponent(JSON.stringify(json))))}`;
-    (<any>downloadHelper).download = `${shared.dataset!.title}.json`;
-    downloadHelper.click();
+  });
+  document.querySelector('#downloadDump')!.addEventListener('click', (evt) => {
+    evt.preventDefault();
+    evt.stopPropagation();
+    Promise.resolve(exportDump(shared.dataset!, shared.lineup!)).then((json) => {
+      // download link
+      downloadHelper.href = `data:application/json;charset=utf-8;base64,${btoa(unescape(encodeURIComponent(JSON.stringify(json, null, ' '))))}`;
+      (<any>downloadHelper).download = `${shared.dataset!.name}.json`;
+      downloadHelper.click();
+    });
   });
 
 
@@ -46,15 +50,15 @@ export default function initExport() {
     const data = {
       title: document.title,
       description: shared.dataset!.description,
-      html: `<script id="data" type="text/csv">${shared.dataset!.rawData}</script>`,
+      html: `<script id="data" type="text/csv">${shared.dataset!.rawData}</script>\n\n<script id="dump" type="application/json">${JSON.stringify(shared.lineup!.dump(), null, ' ')}</script>`,
       css: CODEPEN_CSS,
       css_pre_processor: 'scss',
       css_starter: 'normalize',
-      js: shared.dataset!.buildScript(`document.querySelector('#data').textContent`, 'document.body'),
+      js: shared.dataset!.buildScript(`document.querySelector('#data').textContent`, 'document.body', `JSON.parse(document.querySelector('#dump').textContent)`),
       js_pre_processor: 'babel',
       js_modernizr: false,
-      css_external: `https://unpkg.com/lineupjs@${version}/build/LineUpJS.min.css`,
-      js_external: `https://unpkg.com/lineupjs@${version}/build/LineUpJS.min.js;https://cdn.rawgit.com/mholt/PapaParse/master/papaparse.min.js`
+      css_external: `https://unpkg.com/lineupjs@${version}/build/LineUpJS.css`,
+      js_external: `https://unpkg.com/lineupjs@${version}/build/LineUpJS.js;https://unpkg.com/papaparse`
     };
 
     const json = JSON.stringify(data)

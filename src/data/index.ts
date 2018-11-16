@@ -4,10 +4,15 @@ import forbes from './forbes-top-2000-companies';
 import happiness from './world-happiness-report';
 import soccer from './soccer';
 import {ieeeheat, ieeebars} from './ieee-programming';
-export {IDataset} from './IDataset';
-export {default as fromFile} from './fromFile';
+import {listDatasets, listSessions} from './db';
+import JSON_LOADER from './loader_json';
+import CSV_LOADER from './loader_csv';
+import {IDatasetMeta, PRELOADED_TYPE} from './IDataset';
 
-export const data: IDataset[] = [
+export {IDataset} from './IDataset';
+export * from './ui';
+
+const preloaded: IDataset[] = [
   wur,
   shanghai,
   forbes,
@@ -17,31 +22,54 @@ export const data: IDataset[] = [
   soccer
 ];
 
-export default data;
+
+const loaders = [JSON_LOADER, CSV_LOADER];
+
+function complete(db: IDataset | IDatasetMeta) {
+  if (typeof (<IDataset>db).build === 'function') {
+    return <IDataset>db;
+  }
+
+  for (const loader of loaders) {
+    if (db.type === loader.type) {
+      return loader.complete(db);
+    }
+  }
+
+  if (db.type.startsWith(PRELOADED_TYPE)) {
+    const id = db.type.slice(PRELOADED_TYPE.length + 1); // for -
+    const preloadedDataset = preloaded.find((d) => d.id === id);
+    if (preloadedDataset) {
+      return Object.assign(db, {
+        buildScript: preloadedDataset.buildScript,
+        build: preloadedDataset.build,
+        rawData: preloadedDataset.rawData
+      });
+    }
+  }
+  return <IDataset>db;
+}
+
+export function fromFile(file: File): Promise<IDataset> {
+  for (const loader of loaders) {
+    if (loader.supports(file)) {
+      return loader.loadFile(file).then(complete);
+    }
+  }
+  return Promise.reject(`unknown file type: ${file.name}`);
+}
 
 
-export function toCard(d: IDataset) {
-  return `<!--card item-->
-    <div class="carousel-item card sticky-action">
-      <div class="card-image waves-effect waves-block waves-light sticky-action">
-        <img class="activator" src="${d.image || ''}" alt="No Preview Available">
-      </div>
-      <div class="card-content">
-        <span class="card-title activator grey-text text-darken-4">${d.title}
-          <i class="material-icons right">more_vert</i>
-        </span>
-      </div>
-      <div class="card-action">
-        <a href="#${d.id}">Select</a>
-      </div>
-      <div class="card-reveal">
-        <span class="card-title grey-text text-darken-4">${d.title}
-          <i class="material-icons right">close</i>
-        </span>
-        ${d.description}
-        ${d.link ? `<p>
-          <a href="${d.link}" target="_blank" rel="noopener">Kaggle Link</a>
-        </p>` : ''}
-      </div>
-    </div>`;
+export function allDatasets() {
+  return Promise.all([listDatasets(), listSessions()]).then(([ds, sessions]) => {
+    const full = <IDataset[]>ds.map(complete).filter((d) => d != null);
+    const data = preloaded.concat(full);
+
+    // insert sessions
+    for (const d of data) {
+      d.sessions = sessions.filter((s) => s.dataset === d.id);
+    }
+
+    return data;
+  });
 }

@@ -1,0 +1,57 @@
+{
+  "definitions": {},
+  "$schema": "https://json-schema.org/draft-07/schema#",
+  "$id": "https://lineup.js.org/app_develop/schema.1.0.0.json",
+  "type": "object",
+  "title": "LineUp App Dump Schema",
+  "required": [
+    "name",
+    "type",
+    "creationDate",
+    "rawData"
+  ],
+  "properties": {
+    "creationDate": {
+      "type": "string",
+      "title": "date dump"
+    },
+    "name": {
+      "type": "string"
+    },
+    "type": {
+      "type": "string"
+    },
+    "image": {
+      "type": "string",
+      "title": "url to preview image"
+    },
+    "description": {
+      "type": "string"
+    },
+    "rawData": {
+      "type": "string"
+    },
+    "dump": {
+      "$ref": "https://lineup.js.org/develop/schema.4.0.0.json"
+    },
+    "sessions": {
+      "type": "array",
+      "title": "list of stored sessions",
+      "items": {
+        "type": "object",
+        "title": "a stored session",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "creationDate": {
+            "type": "string"
+          },
+          "dump": {
+            "$ref": "https://lineup.js.org/develop/schema.4.0.0.json"
+          }
+        }
+      }
+    }
+  }
+}
