@@ -1,7 +1,7 @@
 import {parse, ParseResult} from 'papaparse';
 import {IDataLoader, IDatasetMeta, IDataset} from './IDataset';
 import {builder, Taggle, LineUp} from 'lineupjs';
-import {cleanName, fixHeaders} from './ùtils';
+import {cleanName, fixHeaders} from './utils';
 import {niceDate} from '../ui';
 
 function buildScript(rawVariable: string, domVariable: string, dumpVariable: string) {

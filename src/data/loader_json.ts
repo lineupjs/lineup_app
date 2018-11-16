@@ -1,6 +1,6 @@
 import {IDataLoader, IDataset, IDatasetMeta} from './IDataset';
 import {builder, Taggle, isSupportType, LocalDataProvider, LineUp} from 'lineupjs';
-import {cleanName} from './ùtils';
+import {cleanName} from './utils';
 import {niceDate} from '../ui';
 import {isDumpFile, fromDumpFile} from './loader_dump';
 

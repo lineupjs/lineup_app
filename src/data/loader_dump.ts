@@ -1,5 +1,5 @@
 import {IDataset, IDatasetMeta, PRELOADED_TYPE} from './IDataset';
-import {cleanName} from './ùtils';
+import {cleanName} from './utils';
 import '!file-loader?name=schema.1.0.0.json!./schema.json';
 import {LineUp, Taggle} from 'lineupjs';
 
