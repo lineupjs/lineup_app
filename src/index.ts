@@ -268,6 +268,10 @@ document.querySelector<HTMLElement>('.delete-dataset')!.onclick = (evt) => {
   }
 };
 
+Array.from(document.querySelectorAll<HTMLElement>('.modal-close')).forEach((d) => d.onclick = (evt) => {
+  evt.preventDefault();
+});
+
 
 allDatasets().then((data) => {
   shared.datasets = data;
