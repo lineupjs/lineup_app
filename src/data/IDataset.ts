@@ -1,5 +1,7 @@
 import {LineUp, Taggle} from 'lineupjs';
 
+export const PRELOADED_TYPE = 'preloaded';
+
 export interface IDatasetMeta {
   id: string;
   type: string;

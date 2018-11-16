@@ -1,11 +1,11 @@
-import {IDataset} from '../IDataset';
+import {IDataset, PRELOADED_TYPE} from '../IDataset';
 import {parse, ParseResult} from 'papaparse';
 import {builder, buildRanking, buildStringColumn, buildCategoricalColumn, buildNumberColumn} from 'lineupjs';
 import '!file-loader?name=preview.png!./soccer.png';
 
 export const data: IDataset = {
   id: 'soccer',
-  type: 'preloaded',
+  type: PRELOADED_TYPE,
   creationDate: new Date(),
   title: 'Soccer Stats',
   image: './preview.png',

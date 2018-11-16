@@ -1,4 +1,4 @@
-import {IDataset} from '../IDataset';
+import {IDataset, PRELOADED_TYPE} from '../IDataset';
 import {parse, ParseResult} from 'papaparse';
 import {builder, buildRanking, buildStringColumn, buildNumberColumn} from 'lineupjs';
 
@@ -7,7 +7,7 @@ import imageShanghai from './shanghai.png';
 
 export const wur: IDataset = {
   id: 'wur',
-  type: 'preloaded',
+  type: PRELOADED_TYPE,
   creationDate: new Date(),
   title: 'Times Higher Education World University Ranking',
   image,
@@ -102,7 +102,7 @@ and for undermining non-English-instructing institutions.
 
 export const shanghai: IDataset = {
   id: 'shanghai',
-  type: 'preloaded',
+  type: PRELOADED_TYPE,
   creationDate: new Date(),
   title: 'Academic Ranking of World Universities',
   image: imageShanghai,

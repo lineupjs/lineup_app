@@ -1,11 +1,11 @@
-import {IDataset} from '../IDataset';
+import {IDataset, PRELOADED_TYPE} from '../IDataset';
 import {parse, ParseResult} from 'papaparse';
 import {builder, buildRanking, buildStringColumn, buildCategoricalColumn, buildNumberColumn} from 'lineupjs';
 import image from './forbes.png';
 
 export const data: IDataset = {
   id: 'forbes',
-  type: 'preloaded',
+  type: PRELOADED_TYPE,
   creationDate: new Date(),
   title: 'Forbes Top 2000',
   image,

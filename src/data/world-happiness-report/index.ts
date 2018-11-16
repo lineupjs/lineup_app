@@ -1,11 +1,11 @@
-import {IDataset} from '../IDataset';
+import {IDataset, PRELOADED_TYPE} from '../IDataset';
 import {parse, ParseResult} from 'papaparse';
 import {builder, buildRanking, buildStringColumn, buildNumberColumn} from 'lineupjs';
 import image from './happiness.png';
 
 export const data: IDataset = {
   id: 'happiness',
-  type: 'preloaded',
+  type: PRELOADED_TYPE,
   creationDate: new Date(),
   title: 'World Happiness Report',
   image,

@@ -1,27 +1,6 @@
-import {IDataset} from './IDataset';
+import {IDataset, PRELOADED_TYPE} from './IDataset';
 import {toast} from 'materialize-css';
 import {deleteDataset} from './db';
-
-function editAble(d: IDataset, card: HTMLElement, onDelete: ()=>void) {
-  if (d.type === 'preloaded') {
-    return; // no options for preloaded
-  }
-  card.insertAdjacentHTML('beforeend', `<p>
-    <a class="waves-effect waves-light btn" data-id="${d.id}" data-action="delete">Delete</a>
-  </p>`);
-
-  const deleteButton = card.querySelector<HTMLElement>('[data-action=delete]')!;
-  deleteButton.onclick = (evt) => {
-    evt.preventDefault();
-    evt.stopPropagation();
-    deleteDataset(d).then(() => {
-      toast({html: `Dataset "${d.title}" deleted`, displayLength: 5000});
-      onDelete();
-    }).catch((error) => {
-      toast({html: `Error while deleting dataset: <pre>${error}</pre>`, displayLength: 5000});
-    });
-  };
-}
 
 function sessions(d: IDataset, card: HTMLElement) {
   if (!d.sessions) {
@@ -50,14 +29,31 @@ export function createCard(d: IDataset, onDelete: () => void) {
       <i class="material-icons right">close</i>
     </span>
     ${d.description}
+    ${d.link ? `<p>
+    <a href="${d.link}" target="_blank" rel="noopener">Kaggle Link</a>
+  </p>` : ''}
   </div>`;
+  sessions(d, <HTMLElement>card.firstElementChild!);
 
-  editAble(d, card, onDelete);
-  if (d.link) {
-    card.insertAdjacentHTML('beforeend', `<p>
-      <a href="${d.link}" target="_blank" rel="noopener">Kaggle Link</a>
-    </p>`);
+  if (d.type === PRELOADED_TYPE) {
+    // no further actions
+    return card;
   }
-  sessions(d, card);
+
+  const deleteButton = document.createElement('a');
+  deleteButton.href = '#';
+  deleteButton.innerHTML = `Delete`;
+  card.querySelector<HTMLElement>('.card-action')!.appendChild(deleteButton);
+  deleteButton.onclick = (evt) => {
+    evt.preventDefault();
+    evt.stopPropagation();
+    deleteDataset(d).then(() => {
+      toast({html: `Dataset "${d.title}" deleted`, displayLength: 5000});
+      onDelete();
+    }).catch((error) => {
+      toast({html: `Error while deleting dataset: <pre>${error}</pre>`, displayLength: 5000});
+    });
+  };
+
   return card;
 }

@@ -1,4 +1,4 @@
-import {IDataset} from '../IDataset';
+import {IDataset, PRELOADED_TYPE} from '../IDataset';
 import {parse, ParseResult} from 'papaparse';
 import {builder, buildRanking, buildStringColumn, buildCategoricalColumn, buildNumberColumn} from 'lineupjs';
 
@@ -7,7 +7,7 @@ import imageHeat from './ieee_heat.png';
 
 export const ieeebars: IDataset = {
   id: 'ieee_bars',
-  type: 'preloaded',
+  type: PRELOADED_TYPE,
   creationDate: new Date(),
   title: 'IEEE Programming Languages Bars',
   image: imageBars,
@@ -143,7 +143,7 @@ export const ieeebars: IDataset = {
 
 export const ieeeheat: IDataset = {
   id: 'ieee-heatmap',
-  type: 'preloaded',
+  type: PRELOADED_TYPE,
   creationDate: new Date(),
   title: 'IEEE Programming Languages Heatmap',
   image: imageHeat,
