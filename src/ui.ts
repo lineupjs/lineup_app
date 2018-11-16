@@ -1,13 +1,38 @@
-import {Modal} from 'materialize-css';
+import {Modal, updateTextFields} from 'materialize-css';
 
 
 const areYouSureModal = Modal.init(document.getElementById('modalAreYouSure')!);
+const saveModal = Modal.init(document.getElementById('modalSave')!);
 
 export function areyousure(content: string): Promise<boolean> {
   return new Promise((resolve) => {
     areYouSureModal.el.querySelector('.are-you-sure')!.innerHTML = content;
     areYouSureModal.el.querySelector<HTMLElement>('.are-you-sure-confirm')!.onclick = () => resolve();
     areYouSureModal.open();
+  });
+}
+
+export function saveDialog(title: string, name: string, description?: string): Promise<{name: string, description: string}> {
+  const form = <HTMLFormElement>saveModal.el;
+  form.querySelector('h4')!.innerHTML = title;
+  form.querySelector('input')!.value = name;
+  const area = form.querySelector('textarea')!;
+  area.parentElement!.style.display = description == null ? 'none' : null;
+  area.value = description || '';
+  updateTextFields();
+
+  return new Promise((resolve) => {
+    form.onsubmit = (evt) => {
+      evt.preventDefault();
+      evt.stopPropagation();
+      const data = new FormData(form);
+      saveModal.close();
+      resolve({
+        name: <string>data.get('name'),
+        description: <string>data.get('description')
+      });
+    };
+    saveModal.open();
   });
 }
 

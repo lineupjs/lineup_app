@@ -10,6 +10,7 @@ import {version, buildId} from 'lineupjs';
 import {storeDataset, storeSession} from './data/db';
 import {createCard} from './data/ui';
 import {ISession} from './data/IDataset';
+import {saveDialog} from './ui';
 
 const uploader = <HTMLElement>document.querySelector('main');
 
@@ -114,15 +115,15 @@ function showFile(file: File) {
   build(f);
 }
 
-async function saveSession(name: string = 'Auto Save') {
+async function saveSession() {
   if (!shared.lineup || !shared.dataset) {
     return;
   }
   try {
     // dump and parse to get rid of not cloneable things
     const dump = JSON.parse(JSON.stringify(shared.lineup.dump()));
-    console.log(dump);
-    const session = await storeSession(shared.dataset, name, dump);
+    const desc = await saveDialog('Save Session as &hellip;', 'Auto Save');
+    const session = await storeSession(shared.dataset, desc.name, dump);
     toast({html: `Session "${session.name}" of dataset "${shared.dataset.title}" saved`, displayLength: 5000});
     shared.dataset.sessions!.push(session);
     shared.session = session;

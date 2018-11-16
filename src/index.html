@@ -129,6 +129,28 @@
     </div>
   </div>
 
+  <form id="modalSave" class="modal">
+    <div class="modal-content">
+      <h4>Save stuff</h4>
+      <div class="row">
+        <div class="input-field col s12">
+          <input type="text" name="name" id="saveName" required class="validate">
+          <label for="saveName">Name</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s12">
+          <textarea name="description" id="saveDescription" class="materialize-textarea validate"></textarea>
+          <label for="saveDescription">Description</label>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class="modal-close waves-effect waves-gray btn-flat">Cancel</a>
+      <button type="submit" class="waves-effect waves-red btn-flat save-confirm">Save</button>
+    </div>
+  </form>
+
   <div style="display: none;" id="export-helper">
     <span>Exporting &hellip;</span>
     <div class="preloader-wrapper active">
