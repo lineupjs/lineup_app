@@ -5,9 +5,11 @@ import happiness from './world-happiness-report';
 import soccer from './soccer';
 import {ieeeheat, ieeebars} from './ieee-programming';
 import {listDatasets, listSessions} from './db';
-import {complete} from './loaders';
+import JSON_LOADER from './loader_json';
+import CSV_LOADER from './loader_csv';
+import {IDatasetMeta, PRELOADED_TYPE} from './IDataset';
+
 export {IDataset} from './IDataset';
-export {fromFile} from './loaders';
 export * from './ui';
 
 const preloaded: IDataset[] = [
@@ -19,6 +21,43 @@ const preloaded: IDataset[] = [
   ieeeheat,
   soccer
 ];
+
+
+const loaders = [JSON_LOADER, CSV_LOADER];
+
+function complete(db: IDataset | IDatasetMeta) {
+  if (typeof (<IDataset>db).build === 'function') {
+    return <IDataset>db;
+  }
+
+  for (const loader of loaders) {
+    if (db.type === loader.type) {
+      return loader.complete(db);
+    }
+  }
+
+  if (db.type.startsWith(PRELOADED_TYPE)) {
+    const id = db.type.slice(PRELOADED_TYPE.length + 1); // for -
+    const preloadedDataset = preloaded.find((d) => d.id === id);
+    if (preloadedDataset) {
+      return Object.assign(db, {
+        buildScript: preloadedDataset.buildScript,
+        build: preloadedDataset.build,
+        rawData: preloadedDataset.rawData
+      });
+    }
+  }
+  return <IDataset>db;
+}
+
+export function fromFile(file: File): Promise<IDataset> {
+  for (const loader of loaders) {
+    if (loader.supports(file)) {
+      return loader.loadFile(file).then(complete);
+    }
+  }
+  return Promise.reject(`unknown file type: ${file.name}`);
+}
 
 
 export function allDatasets() {

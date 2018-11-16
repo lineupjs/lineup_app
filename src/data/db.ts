@@ -59,6 +59,9 @@ export function editDataset(dataset: IDataset): Promise<IDataset> {
 }
 
 function byCreationDate<T extends {creationDate: Date}>(arr: T[]) {
+  for (const entry of arr) {
+    entry.creationDate = entry.creationDate instanceof Date ? entry.creationDate : new Date(entry.creationDate);
+  }
   return arr.sort((a, b) => b.creationDate.getTime() - a.creationDate.getTime());
 }
 

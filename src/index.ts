@@ -111,6 +111,7 @@ function addToCarousel(d: IDataset) {
 }
 
 function showFile(file: File) {
+  reset();
   const f = fromFile(file).then((r) => {
     shared.datasets.unshift(r);
     addToCarousel(r);
