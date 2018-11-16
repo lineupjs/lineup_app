@@ -73,7 +73,7 @@
     "@types/papaparse": "^4.5.5",
     "dexie": "^2.0.4",
     "font-awesome": "^4.7.0",
-    "lineupjs": "^4.0.0-alpha.7",
+    "lineupjs": "^4.0.0-alpha.8",
     "material-design-icons": "^3.0.1",
     "materialize-css": "^1.0.0",
     "papaparse": "^4.6.2",
