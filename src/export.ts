@@ -1,9 +1,10 @@
-import {isSupportType, LocalDataProvider, version} from 'lineupjs';
+import {version} from 'lineupjs';
 import shared from './shared';
 
 import CODEPEN_CSS from 'raw-loader!../templates/style.tcss';
 import {exportJSON} from './data/loader_json';
 import {exportCSV} from './data/loader_csv';
+import {exportDump} from './data/loader_dump';
 
 
 export default function initExport() {
@@ -22,6 +23,16 @@ export default function initExport() {
     evt.preventDefault();
     evt.stopPropagation();
     exportJSON(shared.lineup!).then((json) => {
+      // download link
+      downloadHelper.href = `data:application/json;charset=utf-8;base64,${btoa(unescape(encodeURIComponent(JSON.stringify(json))))}`;
+      (<any>downloadHelper).download = `${shared.dataset!.name}.json`;
+      downloadHelper.click();
+    });
+  });
+  document.querySelector('#downloadDump')!.addEventListener('click', (evt) => {
+    evt.preventDefault();
+    evt.stopPropagation();
+    Promise.resolve(exportDump(shared.dataset!, shared.lineup!)).then((json) => {
       // download link
       downloadHelper.href = `data:application/json;charset=utf-8;base64,${btoa(unescape(encodeURIComponent(JSON.stringify(json))))}`;
       (<any>downloadHelper).download = `${shared.dataset!.name}.json`;

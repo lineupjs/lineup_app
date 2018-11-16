@@ -1,6 +1,6 @@
 import {IDataset, IDatasetMeta} from './IDataset';
 import {cleanName} from './ùtils';
-import '!!file-loader?name=schema.1.0.0.json!./schema.json';
+import '!file-loader?name=schema.1.0.0.json!./schema.json';
 
 const SCHEMA_REF = 'https://lineup.js.org/app_develop/schema.1.0.0.json';
 
