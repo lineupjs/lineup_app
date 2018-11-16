@@ -1,6 +1,7 @@
 import {IDataset, IDatasetMeta} from './IDataset';
 import {cleanName} from './ùtils';
 import '!file-loader?name=schema.1.0.0.json!./schema.json';
+import {LineUp, Taggle} from 'lineupjs';
 
 const SCHEMA_REF = 'https://lineup.js.org/app_develop/schema.1.0.0.json';
 
@@ -14,10 +15,10 @@ export function fromDumpFile(parsed: any): IDatasetMeta {
   return parsed;
 }
 
-export function exportDump(dataset: IDataset, lineup: any) {
+export function exportDump(dataset: IDataset, lineup: LineUp|Taggle) {
   const dump = Object.assign({
     $schema: SCHEMA_REF,
-    dump: lineup
+    dump: lineup.dump()
   }, dataset);
 
   delete dump.build;

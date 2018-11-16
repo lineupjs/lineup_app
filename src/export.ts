@@ -24,7 +24,7 @@ export default function initExport() {
     evt.stopPropagation();
     exportJSON(shared.lineup!).then((json) => {
       // download link
-      downloadHelper.href = `data:application/json;charset=utf-8;base64,${btoa(unescape(encodeURIComponent(JSON.stringify(json))))}`;
+      downloadHelper.href = `data:application/json;charset=utf-8;base64,${btoa(unescape(encodeURIComponent(JSON.stringify(json, null, ' '))))}`;
       (<any>downloadHelper).download = `${shared.dataset!.name}.json`;
       downloadHelper.click();
     });
@@ -34,7 +34,7 @@ export default function initExport() {
     evt.stopPropagation();
     Promise.resolve(exportDump(shared.dataset!, shared.lineup!)).then((json) => {
       // download link
-      downloadHelper.href = `data:application/json;charset=utf-8;base64,${btoa(unescape(encodeURIComponent(JSON.stringify(json))))}`;
+      downloadHelper.href = `data:application/json;charset=utf-8;base64,${btoa(unescape(encodeURIComponent(JSON.stringify(json, null, ' '))))}`;
       (<any>downloadHelper).download = `${shared.dataset!.name}.json`;
       downloadHelper.click();
     });

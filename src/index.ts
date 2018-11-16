@@ -45,6 +45,10 @@ function build(builder: Promise<IDataset>, session?: ISession | null) {
     } else {
       shared.session = null;
       next = `#${shared.dataset!.id}`;
+
+      if (shared.dataset!.dump) {
+        shared.lineup!.data.restore(shared.dataset!.dump);
+      }
     }
     if (location.hash !== next) {
       location.assign(next);
@@ -63,6 +67,7 @@ function loadSession(session?: ISession) {
   }
   shared.session = session;
   shared.lineup.data.restore(session.dump);
+  location.replace(`#${shared.dataset!.id}@${session.uid}`);
 }
 
 function disableBubbling(node: HTMLElement, ...events: string[]) {
