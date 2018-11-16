@@ -1,6 +1,6 @@
 import {IDataset, PRELOADED_TYPE} from './IDataset';
 import {toast} from 'materialize-css';
-import {deleteDataset, deleteSession, editDataset} from './db';
+import {deleteSession, editDataset} from './db';
 import {areyousure, fromNow, saveDialog} from '../ui';
 
 function sessions(dataset: IDataset, card: HTMLElement) {
@@ -59,7 +59,7 @@ function sessions(dataset: IDataset, card: HTMLElement) {
   };
 }
 
-export function createCard(dataset: IDataset, onDelete: () => void) {
+export function createCard(dataset: IDataset, onDelete: (dataset: IDataset) => void, onEdit: (dataset: IDataset) => void) {
   const card = document.createElement('div');
 
   card.classList.add('carousel-item', 'card', 'sticky-action');
@@ -99,40 +99,20 @@ export function createCard(dataset: IDataset, onDelete: () => void) {
   editButton.href = '#';
   editButton.innerHTML = `Edit`;
   card.querySelector<HTMLElement>('.card-action')!.appendChild(editButton);
-  editButton.onclick = async (evt) => {
+  editButton.onclick = (evt) => {
     evt.preventDefault();
     evt.stopPropagation();
-    try {
-      const desc = await saveDialog(`Edit dataset "${dataset.name}"`, dataset.name, dataset.description);
-      dataset.name = desc.name;
-      dataset.description = desc.description;
-      await editDataset(dataset);
-
-      Array.from(card.querySelectorAll<HTMLElement>('.dd-title')).forEach((d) => d.innerHTML = dataset.name);
-      Array.from(card.querySelectorAll<HTMLElement>('.dd-desc')).forEach((d) => d.innerHTML = dataset.description);
-
-      toast({html: `Dataset "${dataset.name}" edited`, displayLength: 5000});
-      onDelete();
-    } catch (error) {
-      toast({html: `Error while editing dataset: <pre>${error}</pre>`, displayLength: 5000});
-    }
+    onEdit(dataset);
   };
 
   const deleteButton = document.createElement('a');
   deleteButton.href = '#';
   deleteButton.innerHTML = `Delete`;
   card.querySelector<HTMLElement>('.card-action')!.appendChild(deleteButton);
-  deleteButton.onclick = async (evt) => {
+  deleteButton.onclick = (evt) => {
     evt.preventDefault();
     evt.stopPropagation();
-    try {
-      await areyousure(`to delete dataset "${dataset.name}"`);
-      await deleteDataset(dataset);
-      toast({html: `Dataset "${dataset.name}" deleted`, displayLength: 5000});
-      onDelete();
-    } catch (error) {
-      toast({html: `Error while deleting dataset: <pre>${error}</pre>`, displayLength: 5000});
-    }
+    onDelete(dataset);
   };
 
   return card;

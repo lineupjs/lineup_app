@@ -7,10 +7,10 @@ import initExport from './export';
 import shared from './shared';
 import {IDataset, fromFile, allDatasets} from './data';
 import {version, buildId} from 'lineupjs';
-import {storeDataset, storeSession} from './data/db';
+import {storeDataset, storeSession, deleteDataset, editDataset} from './data/db';
 import {createCard} from './data/ui';
 import {ISession} from './data/IDataset';
-import {saveDialog} from './ui';
+import {saveDialog, areyousure} from './ui';
 
 const uploader = <HTMLElement>document.querySelector('main');
 
@@ -78,30 +78,69 @@ function disableBubbling(node: HTMLElement, ...events: string[]) {
   }
 }
 
-function refreshCarousel() {
+function refreshCarousel(focus?: number) {
   const base = <HTMLElement>document.querySelector('.carousel');
   const instance = Carousel.getInstance(base);
   if (instance) {
     instance.destroy();
   }
-  delete base.dataset.namespace;
-  base.classList.remove('initialized');
-  Carousel.init(base);
+  const newInstance = Carousel.init(base);
+  if (focus != null) {
+    newInstance.set(focus);
+  }
 }
 
 function ensureCarousel() {
   const base = <HTMLElement>document.querySelector('.carousel');
-  if (!base.classList.contains('initialized')) {
+  const instance = Carousel.getInstance(base);
+  if (!instance) {
     refreshCarousel();
   }
 }
 
-function addToCarousel(d: IDataset) {
+async function deleteDatasetFromUI(dataset: IDataset) {
+  try {
+    await areyousure(`to delete dataset "${dataset.name}"`);
+    await deleteDataset(dataset);
+    toast({html: `Dataset "${dataset.name}" deleted`, displayLength: 5000});
+    const index = shared.datasets!.findIndex((d) => d.id === dataset.id);
+    shared.datasets!.splice(index, 1);
+
+    const card = document.querySelector<HTMLElement>(`.card[data-id="${dataset.id}"]`);
+    if (card) {
+      card.remove();
+      refreshCarousel(index % shared.datasets!.length);
+    }
+  } catch (error) {
+    toast({html: `Error while deleting dataset: <pre>${error}</pre>`, displayLength: 5000});
+  }
+}
+
+async function editDatasetInUI(dataset: IDataset) {
+  try {
+    const desc = await saveDialog(`Edit dataset "${dataset.name}"`, dataset.name, dataset.description);
+    dataset.name = desc.name;
+    dataset.description = desc.description;
+    await editDataset(dataset);
+
+    Array.from(document.querySelectorAll<HTMLElement>(`.card[data-id="${dataset.id}"] .dd-title`)).forEach((d) => d.innerHTML = dataset.name);
+    Array.from(document.querySelectorAll<HTMLElement>(`.card[data-id="${dataset.id}"] .dd-desc`)).forEach((d) => d.innerHTML = dataset.description);
+
+    if (dataset === shared.dataset) {
+      // edit current visible one, update title
+      (<HTMLElement>document.querySelector('.brand-logo')).textContent = document.title = `LineUp ${dataset.name}`;
+    }
+
+    toast({html: `Dataset "${dataset.name}" edited`, displayLength: 5000});
+  } catch (error) {
+    toast({html: `Error while editing dataset: <pre>${error}</pre>`, displayLength: 5000});
+  }
+}
+
+function addToCarousel(dataset: IDataset) {
   const base = <HTMLElement>document.querySelector('.carousel');
-  const node = createCard(d, () => {
-    node.remove();
-    refreshCarousel();
-  });
+  const node = createCard(dataset, deleteDatasetFromUI, editDatasetInUI);
+  node.dataset.id = dataset.id;
   base.appendChild(node);
 }
 
