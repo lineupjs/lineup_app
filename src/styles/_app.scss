@@ -30,14 +30,14 @@ body {
   > div {
     flex: 1 1 auto;
     opacity: 1;
-    transition: opacity 0.5s ease, background 0.5s ease;
+    transition: opacity 0.5s ease, background-color 0.5s ease;
   }
 
   .lu-blocker {
     opacity: 0;
     z-index: 100;
     visibility: hidden;
-    background: rgba(255, 255, 255, 0.9);
+    background-color: rgba(255, 255, 255, 0.9);
     position: absolute;
     top: 3px;
     left: 0;
@@ -84,17 +84,6 @@ body {
 }
 
 .btn-floating.halfway-fab {
-  bottom: -11px;
-  right: 70px;
-}
-
-.fixed-action-btn.direction-left ul {
-  right: 64px - 24px + 70px;
-}
-
-.btn-floating.save-session {
-  position: absolute;
-  right: 24px;
   bottom: -11px;
 }
 

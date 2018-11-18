@@ -12,6 +12,10 @@ import {createCard} from './data/ui';
 import {ISession, PRELOADED_TYPE} from './data/IDataset';
 import {saveDialog, areyousure} from './ui';
 
+function forEach(selector: string, callback: (d: HTMLElement)=>void) {
+  Array.from(document.querySelectorAll<HTMLElement>(selector)).forEach(callback);
+}
+
 const uploader = <HTMLElement>document.querySelector('main');
 
 function build(builder: Promise<IDataset>, session?: ISession | null) {
@@ -33,10 +37,12 @@ function build(builder: Promise<IDataset>, session?: ISession | null) {
       input.insertAdjacentHTML('beforebegin', `<span>Item</span>`);
     } //
     (<HTMLElement>document.querySelector('.brand-logo')).textContent = document.title = `LineUp ${shared.dataset!.name}`;
-    Array.from(document.querySelectorAll<HTMLElement>('.nav-wrapper a.disabled')).forEach((d) => {
+    forEach('.export-dataset, .save-session', (d) => {
       d.classList.remove('disabled');
     });
-    document.querySelector<HTMLElement>('.dataset-menu')!.style.display = shared.dataset!.type === PRELOADED_TYPE ? 'none' : null;
+    forEach('.edit-dataset, .delete-dataset', (d) => {
+      d.style.display = shared.dataset!.type === PRELOADED_TYPE ? 'none' : null;
+    });
   }).then(() => {
     let next: string;
     if (session) {
@@ -122,10 +128,12 @@ function reset() {
   shared.dataset = null;
   shared.session = null;
   (<HTMLElement>document.querySelector('.brand-logo')).textContent = document.title = `LineUp`;
-  Array.from(document.querySelectorAll<HTMLElement>('.nav-wrapper > a')).forEach((d) => {
+  forEach('.export-dataset, .save-session', (d) => {
     d.classList.add('disabled');
   });
-  document.querySelector<HTMLElement>('.dataset-menu')!.style.display = 'none';
+  forEach('.edit-dataset, .delete-dataset', (d) => {
+    d.style.display = 'none';
+  });
   uploader.dataset.state = 'initial';
   ensureCarousel();
 }
@@ -161,8 +169,8 @@ async function editDatasetInUI(dataset: IDataset) {
     dataset.description = desc.description;
     await editDataset(dataset);
 
-    Array.from(document.querySelectorAll<HTMLElement>(`.card[data-id="${dataset.id}"] .dd-title`)).forEach((d) => d.innerHTML = dataset.name);
-    Array.from(document.querySelectorAll<HTMLElement>(`.card[data-id="${dataset.id}"] .dd-desc`)).forEach((d) => d.innerHTML = dataset.description);
+    forEach(`.card[data-id="${dataset.id}"] .dd-title`, (d) => d.innerHTML = dataset.name);
+    forEach(`.card[data-id="${dataset.id}"] .dd-desc`, (d) => d.innerHTML = dataset.description);
 
     if (dataset === shared.dataset) {
       // edit current visible one, update title
@@ -268,7 +276,7 @@ document.querySelector<HTMLElement>('.delete-dataset')!.onclick = (evt) => {
   }
 };
 
-Array.from(document.querySelectorAll<HTMLElement>('.modal-close')).forEach((d) => d.onclick = (evt) => {
+forEach('.modal-close', (d) => d.onclick = (evt) => {
   evt.preventDefault();
 });
 
@@ -276,12 +284,12 @@ Array.from(document.querySelectorAll<HTMLElement>('.modal-close')).forEach((d) =
 allDatasets().then((data) => {
   shared.datasets = data;
   {
-    const file = (<HTMLInputElement>document.querySelector('input[type=file]'));
+    const file = document.querySelector<HTMLInputElement>('input[type=file]')!;
     file.addEventListener('change', () => {
       showFile(file.files![0]);
     }
     );
-    (<HTMLElement>document.querySelector('#dropper a.btn')).addEventListener('click', (evt) => {
+    document.querySelector<HTMLElement>('#dropper a.btn')!.addEventListener('click', (evt) => {
       evt.preventDefault();
       evt.stopPropagation();
       file.click();
