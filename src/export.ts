@@ -9,34 +9,34 @@ import {exportDump} from './data/loader_dump';
 
 export default function initExport() {
   const downloadHelper = <HTMLLinkElement>document.querySelector('#downloadHelper');
+
+  const downloadImpl = (data: string, name: string, mimetype: string) => {
+    // download link
+    const b = new Blob([data], {type: mimetype});
+    downloadHelper.href = URL.createObjectURL(b);
+    (<any>downloadHelper).download = name;
+    downloadHelper.click();
+  };
+
   document.querySelector('#downloadCSV')!.addEventListener('click', (evt) => {
     evt.preventDefault();
     evt.stopPropagation();
     exportCSV(shared.lineup!).then((csv) => {
-      // download link
-      downloadHelper.href = `data:text/csv;charset=utf-8;base64,${btoa(unescape(encodeURIComponent(csv)))}`;
-      (<any>downloadHelper).download = `${shared.dataset!.name}.csv`;
-      downloadHelper.click();
+      downloadImpl(csv, `${shared.dataset!.name}.csv`, 'text/csv');
     });
   });
   document.querySelector('#downloadJSON')!.addEventListener('click', (evt) => {
     evt.preventDefault();
     evt.stopPropagation();
     exportJSON(shared.lineup!).then((json) => {
-      // download link
-      downloadHelper.href = `data:application/json;charset=utf-8;base64,${btoa(unescape(encodeURIComponent(JSON.stringify(json, null, ' '))))}`;
-      (<any>downloadHelper).download = `${shared.dataset!.name}.json`;
-      downloadHelper.click();
+      downloadImpl(JSON.stringify(json, null, ' '), `${shared.dataset!.name}.json`, 'application/json');
     });
   });
   document.querySelector('#downloadDump')!.addEventListener('click', (evt) => {
     evt.preventDefault();
     evt.stopPropagation();
     Promise.resolve(exportDump(shared.dataset!, shared.lineup!)).then((json) => {
-      // download link
-      downloadHelper.href = `data:application/json;charset=utf-8;base64,${btoa(unescape(encodeURIComponent(JSON.stringify(json, null, ' '))))}`;
-      (<any>downloadHelper).download = `${shared.dataset!.name}.json`;
-      downloadHelper.click();
+      downloadImpl(JSON.stringify(json, null, ' '), `${shared.dataset!.name}.json`, 'application/json');
     });
   });
 
