@@ -1,11 +1,13 @@
 {
   "productName": "LineUp App",
-  "main": "index.js",
-  "devDependencies": {
-    "electron-force": "^5.2.3"
-  },
+  "main": "app/index.js",
   "dependencies": {
-    "electron": "^3.0.10"
+    "electron-compile": "^6.4.3",
+    "electron-squirrel-startup": "^1.0.0"
+  },
+  "devDependencies": {
+    "electron-forge": "^5.2.3",
+    "electron-prebuilt-compile": "3.0.10"
   },
   "scripts": {
     "start": "electron-forge start",
