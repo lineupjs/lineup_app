@@ -1,0 +1,45 @@
+{
+  "productName": "LineUp App",
+  "main": "index.js",
+  "devDependencies": {
+    "electron-force": "^5.2.3"
+  },
+  "dependencies": {
+    "electron": "^3.0.10"
+  },
+  "scripts": {
+    "start": "electron-forge start",
+    "package": "electron-forge package",
+    "make": "electron-forge make",
+    "publish": "electron-forge publish"
+  },
+  "config": {
+    "forge": {
+      "make_targets": {
+        "win32": [
+          "squirrel"
+        ],
+        "darwin": [
+          "zip"
+        ],
+        "linux": [
+          "deb",
+          "rpm"
+        ]
+      },
+      "electronWinstallerConfig": {
+        "name": "LineUp App"
+      },
+      "electronInstallerDebian": {},
+      "electronInstallerRedhat": {},
+      "github_repository": {
+        "owner": "Samuel Gratzl",
+        "name": "LineUp App"
+      },
+      "windowsStoreConfig": {
+        "packageName": "lineup_app",
+        "name": "LineUp App"
+      }
+    }
+  }
+}

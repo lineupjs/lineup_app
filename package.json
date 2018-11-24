@@ -1,5 +1,6 @@
 {
   "name": "lineup_app",
+  "productName": "LineUp Demo Application",
   "homepage": "https://github.com/datavisyn/lineup_app",
   "version": "1.0.0-beta.2",
   "author": {
@@ -34,6 +35,7 @@
     "release:patch": "npm version patch && npm run build && git push --follow-tags",
     "release:pre": "npm version prerelease && npm run build && git push --follow-tags",
     "predist": "npm run build",
+    "dist:native": "cd electron && node prepare.js && cp -r ../build . && npm i && npm run make",
     "dist": "mkdirp dist && cd build && tar cvzf ../dist/lineup_app.tar.gz --exclude \"docs\" * && cd .."
   },
   "devDependencies": {
