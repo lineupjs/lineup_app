@@ -1,47 +1,17 @@
 {
   "productName": "LineUpApp",
   "main": "app/index.js",
-  "dependencies": {
-    "electron-compile": "^6.4.3",
-    "electron-squirrel-startup": "^1.0.0"
+  "scripts": {
+    "premake": "ncp ../build ./app/build",
+    "make": "electron-packager ./app --out=../dist --icon ./app/build/favicon",
+    "postmake": "node zipall.js"
   },
   "devDependencies": {
-    "electron-forge": "^5.2.3",
-    "electron-prebuilt-compile": "3.0.10"
+    "ncp": "^2.0.0",
+    "electron-installer-zip": "^0.1.2",
+    "electron-packager": "^12.2.0"
   },
-  "scripts": {
-    "start": "electron-forge start",
-    "package": "electron-forge package",
-    "make": "electron-forge make",
-    "publish": "electron-forge publish"
-  },
-  "config": {
-    "forge": {
-      "make_targets": {
-        "win32": [
-          "squirrel"
-        ],
-        "darwin": [
-          "zip"
-        ],
-        "linux": [
-          "deb",
-          "rpm"
-        ]
-      },
-      "electronWinstallerConfig": {
-        "name": "LineUpApp"
-      },
-      "electronInstallerDebian": {},
-      "electronInstallerRedhat": {},
-      "github_repository": {
-        "owner": "Samuel Gratzl",
-        "name": "LineUpApp"
-      },
-      "windowsStoreConfig": {
-        "packageName": "lineup_app",
-        "name": "LineUpApp"
-      }
-    }
+  "dependencies": {
+    "electron": "^3.0.10"
   }
 }

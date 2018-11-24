@@ -34,9 +34,8 @@
     "release:minor": "npm version minor && npm run build && git push --follow-tags",
     "release:patch": "npm version patch && npm run build && git push --follow-tags",
     "release:pre": "npm version prerelease && npm run build && git push --follow-tags",
-    "predist": "npm run build",
-    "dist:native": "cd electron && node prepare.js && cp -r ../build ./app/build && npm i && npm run make",
-    "dist": "mkdirp dist && cd build && tar cvzf ../dist/lineup_app.tar.gz --exclude \"docs\" * && cd .."
+    "xpredist": "npm run build",
+    "dist": "rimraf dist electron/app/build && cd electron && node prepare.js && npm i && npm run make && cd .."
   },
   "devDependencies": {
     "cache-loader": "^1.2.5",

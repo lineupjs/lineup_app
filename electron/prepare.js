@@ -6,4 +6,4 @@ const tmpl = require('./package.tmpl.json');
 // override tmpl
 Object.assign(base, tmpl);
 
-fs.writeFileSync('./package.json', JSON.stringify(base, null, ' '));
+fs.writeFileSync('./package.json', JSON.stringify(base, null, 2));
