@@ -1,6 +1,6 @@
 {
   "name": "lineup_app",
-  "productName": "LineUp Demo Application",
+  "description": "LineUp demo application to explore datasets",
   "homepage": "https://github.com/datavisyn/lineup_app",
   "version": "1.0.0-beta.2",
   "author": {

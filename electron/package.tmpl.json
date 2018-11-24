@@ -1,5 +1,5 @@
 {
-  "productName": "LineUp App",
+  "productName": "LineUpApp",
   "main": "app/index.js",
   "dependencies": {
     "electron-compile": "^6.4.3",
@@ -30,17 +30,17 @@
         ]
       },
       "electronWinstallerConfig": {
-        "name": "LineUp App"
+        "name": "LineUpApp"
       },
       "electronInstallerDebian": {},
       "electronInstallerRedhat": {},
       "github_repository": {
         "owner": "Samuel Gratzl",
-        "name": "LineUp App"
+        "name": "LineUpApp"
       },
       "windowsStoreConfig": {
         "packageName": "lineup_app",
-        "name": "LineUp App"
+        "name": "LineUpApp"
       }
     }
   }
