@@ -9,7 +9,7 @@ function createWindow() {
   win = new BrowserWindow({ width: 1280, height: 860, title: 'LineUp App' });
 
   // and load the index.html of the app.
-  win.loadFile(`./build/index.html`);
+  win.loadFile(__dirname + `/build/index.html`);
 
   // Emitted when the window is closed.
   win.on('closed', () => {
