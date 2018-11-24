@@ -1,6 +1,5 @@
 {
   "productName": "LineUpApp",
-  "main": "app/index.js",
   "scripts": {
     "premake": "ncp ../build ./app/build",
     "make": "electron-packager ./app --out=../dist --icon ./app/build/favicon",
