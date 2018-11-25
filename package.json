@@ -1,5 +1,6 @@
 {
   "name": "lineup_app",
+  "description": "LineUp demo application to explore datasets",
   "homepage": "https://github.com/datavisyn/lineup_app",
   "version": "1.0.0-beta.2",
   "author": {
@@ -29,12 +30,12 @@
     "watch": "webpack --mode development --watch --devtool source-map",
     "start": "webpack-dev-server --mode development --devtool source-map",
     "preversion": "npm test",
-    "release:major": "npm version major && npm run build && git push --follow-tags",
-    "release:minor": "npm version minor && npm run build && git push --follow-tags",
-    "release:patch": "npm version patch && npm run build && git push --follow-tags",
-    "release:pre": "npm version prerelease && npm run build && git push --follow-tags",
+    "release:major": "release-it major",
+    "release:minor": "release-it minor",
+    "release:patch": "release-it patch",
+    "release:pre": "release-it --preRelease=beta --npm.tag=next",
     "predist": "npm run build",
-    "dist": "mkdirp dist && cd build && tar cvzf ../dist/lineup_app.tar.gz --exclude \"docs\" * && cd .."
+    "dist": "rimraf dist electron/app/build && cd electron && node prepare.js && npm i && npm run make && cd .."
   },
   "devDependencies": {
     "cache-loader": "^1.2.5",
@@ -48,6 +49,7 @@
     "mkdirp": "^0.5.1",
     "node-sass": "^4.10.0",
     "raw-loader": "^1.0.0-beta.0",
+    "release-it": "^8.0.1",
     "rimraf": "^2.6.2",
     "sass-loader": "^7.1.0",
     "style-loader": "^0.23.1",
