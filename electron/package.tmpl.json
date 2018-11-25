@@ -2,7 +2,7 @@
   "productName": "LineUpApp",
   "scripts": {
     "premake": "ncp ../build ./app/build",
-    "make": "electron-packager . --out=../dist --icon ./app/build/favicon",
+    "make": "electron-packager . --out=../tmp --icon ./app/build/favicon",
     "postmake": "node zipall.js"
   },
   "main": "./app/index.js",
