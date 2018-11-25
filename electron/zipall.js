@@ -19,10 +19,10 @@ dirs.forEach((dir) => {
 
 zip({
   dir: join(__dirname, './app/build'),
-  out: join(base, 'LineUp.zip')
+  out: join(base, 'LineUpApp.zip')
 }, function(err) {
   if (err) {
     console.error(err);
   }
-  console.log('Zip file written to: ', join(base, 'LineUp.zip'));
+  console.log('Zip file written to: ', join(base, 'LineUpApp.zip'));
 });
