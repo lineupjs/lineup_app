@@ -67,6 +67,12 @@
             </a>
           </li>
           <li class="export-option">
+            <a href="#" id="createCodeSandbox" class="btn-floating btn-small black waves-effect waves-light tooltipped" data-position="bottom" data-delay="50"
+              data-tooltip="Export to CodeSandbox.io">
+              <i class="material-icons fa fa-code"></i>
+            </a>
+          </li>
+          <li class="export-option">
             <a href="#" id="createJSFiddle" class="btn-floating btn-small black waves-effect waves-light tooltipped" data-position="bottom" data-delay="50"
               data-tooltip="Export to JSFiddle">
               <i class="material-icons fa fa-jsfiddle"></i>
@@ -136,6 +142,9 @@
     <a href="#" id="downloadHelper" target="_blank" rel="noopener"></a>
     <form id="createCodePenHelper" method="post" action="https://codepen.io/pen/define" target="_blank" rel="noopener">
       <input type="hidden" name="data">
+    </form>
+    <form id="createCodeSandboxHelper" method="post" action="https://codesandbox.io/api/v1/sandboxes/define" target="_blank" rel="noopener">
+      <input type="hidden" name="parameters">
     </form>
     <form id="createJSFiddleHelper" method="post" action="https://jsfiddle.net/api/post/library/pure/" target="_blank" rel="noopener">
       <!--https://docs.jsfiddle.net/api/display-a-fiddle-from-post-->
