@@ -116,36 +116,37 @@ is an equally influential ranking. It was founded in China in 2003 and has been 
 and for undermining humanities and quality of instruction.
 </p>`,
   rawData: '',
-  buildScript(rawVariable: string, domVariable: string) {
+  buildScript(rawVariable: string, domVariable: string, dumpVariable: string) {
     const yearArray = (<any>this).yearArray;
     return `// per year:
-      const yearArray = ${JSON.stringify(yearArray)};
-      const rows = JSON.parse(${rawVariable});
+const yearArray = ${JSON.stringify(yearArray)};
+const rows = JSON.parse(${rawVariable});
+const dump = ${dumpVariable};
 
-      const perYear = 'total_score,alumni,award,hici,ns,pub,pcp'.split(',');
-      const b = builder(rows)
-        .column(buildStringColumn('university_name'));
+const perYear = 'total_score,alumni,award,hici,ns,pub,pcp'.split(',');
+const b = builder(rows)
+  .column(buildStringColumn('university_name'));
 
-      yearArray.slice(0, 2).forEach((year) => {
-        const bb = buildRanking()
-          .supportTypes()
-          .column('university_name')
-          .column(year + '_national_rank')
-          .sortBy(year + '_total_score', 'desc');
+yearArray.slice(0, 2).forEach((year) => {
+  const bb = buildRanking()
+    .supportTypes()
+    .column('university_name')
+    .column(year + '_national_rank')
+    .sortBy(year + '_total_score', 'desc');
 
-        b.column(buildNumberColumn(year + '_national_rank').label('national_rank'));
-        perYear.forEach((k) => {
-          b.column(buildNumberColumn(year + '_' + k, [0, 100]).label(k + '(' + year + ')'));
-          bb.column(year + '_' + k);
-        });
-        b.ranking(bb);
-      });
+  b.column(buildNumberColumn(year + '_national_rank').label('national_rank'));
+  perYear.forEach((k) => {
+    b.column(buildNumberColumn(year + '_' + k, [0, 100]).label(k + '(' + year + ')'));
+    bb.column(year + '_' + k);
+  });
+  b.ranking(bb);
+});
 
-      yearArray.slice(2).forEach((year) => {
-        b.column(buildNumberColumn(year + '_total_score', [0, 100]).label('total_score (' + year + ')'));
-      });
+yearArray.slice(2).forEach((year) => {
+  b.column(buildNumberColumn(year + '_total_score', [0, 100]).label('total_score (' + year + ')'));
+});
 
-      return b.deriveColors().buildTaggle(${domVariable});`;
+const lineup = b.deriveColors().restore(dump).buildTaggle(${domVariable});`;
   },
   build(node: HTMLElement) {
     return import('raw-loader!./shanghaiData.csv').then((content: any) => {
