@@ -69,4 +69,25 @@ export default function initExport() {
     createCodepenHelper.querySelector('input')!.value = json;
     createCodepenHelper.submit();
   });
+
+  const createJSFiddle = <HTMLLinkElement>document.querySelector('#createJSFiddle');
+  const createJSFiddleHelper = <HTMLFormElement>document.querySelector('#createJSFiddleHelper');
+  createJSFiddle.addEventListener('click', (evt) => {
+    evt.preventDefault();
+    evt.stopPropagation();
+
+    const setInput = (name: string, value: any) => {
+      const input = createJSFiddleHelper.querySelector<HTMLInputElement>(`[name="${name}"]`)!;
+      input.value = value.toString();
+    };
+
+    setInput('title', document.title);
+    setInput('description', shared.dataset!.description);
+    setInput('html', `<script id="data" type="text/csv">${shared.dataset!.rawData}</script>\n\n<script id="dump" type="application/json">${JSON.stringify(shared.lineup!.dump(), null, ' ')}</script>`);
+    setInput('css', CODEPEN_CSS);
+    setInput('js', shared.dataset!.buildScript(`document.querySelector('#data').textContent`, 'document.body', `JSON.parse(document.querySelector('#dump').textContent)`));
+    setInput('resources', `https://unpkg.com/lineupjs@${version}/build/LineUpJS.css,https://unpkg.com/lineupjs@${version}/build/LineUpJS.js,https://unpkg.com/papaparse`);
+
+    createJSFiddleHelper.submit();
+  });
 }

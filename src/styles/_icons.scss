@@ -3,14 +3,22 @@
 @import '~font-awesome/scss/mixins';
 
 .fa-codepen::before,
+.fa-jsfiddle::before,
 .fa-file-code-o::before,
 .fa-file-excel-o::before,
 .fa-file-archive-o::before {
   @include fa-icon();
+
+  font-size: 20px;
+  transform: translateY(-4px);
 }
 
 .fa-codepen::before {
   content: $fa-var-codepen;
+}
+
+.fa-jsfiddle::before {
+  content: $fa-var-jsfiddle;
 }
 
 .fa-file-code-o::before {
