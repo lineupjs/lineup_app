@@ -1,19 +1,20 @@
 {
   "name": "lineup_app",
   "description": "LineUp demo application to explore datasets",
-  "homepage": "https://github.com/datavisyn/lineup_app",
+  "homepage": "https://github.com/lineupjs/lineup_app",
   "version": "1.0.0-beta.2",
   "author": {
     "name": "Samuel Gratzl",
-    "email": "samuel_gratzl@gmx.at"
+    "email": "sam@sgratzl.com",
+    "url": "https://www.sgratzl.com"
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/datavisyn/lineup_app/issues"
+    "url": "https://github.com/lineupjs/lineup_app/issues"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/datavisyn/lineup_app.git"
+    "url": "https://github.com/lineupjs/lineup_app.git"
   },
   "private": true,
   "scripts": {
@@ -21,7 +22,7 @@
     "compile": "tsc",
     "lint": "tslint --project tsconfig.json -c tslint.json && stylelint src/**/*.scss",
     "docs": "typedoc --out ./build/docs/ src tsd.d.ts",
-    "prebuild": "npm run clean && (node -e \"process.exit(process.env.PHOVEA_SKIP_TESTS === undefined?1:0)\" || npm run test)",
+    "prebuild": "npm run clean && npm run test",
     "pretest": "npm run clean && npm run compile",
     "test": "echo 'no tests'",
     "posttest": "npm run lint",
