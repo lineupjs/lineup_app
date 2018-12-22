@@ -151,7 +151,8 @@ module.exports = (env, options) => {
       // ignored: /node_modules/
     },
     devServer: {
-      contentBase: 'demo'
+      contentBase: 'demo',
+      disableHostCheck: true
     }
   };
 };
