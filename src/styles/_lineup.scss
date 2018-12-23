@@ -112,12 +112,36 @@ input[type=search].lu-search-input {
 .lu-checkbox-color {
   width: 25px;
   height: 25px;
+  margin: 1px;
 
   > span {
     padding-left: 0 !important;
+    width: 25px;
   }
+}
+
+.lu-dialog-color {
+  width: 25em;
+}
+
+.lu-color-gradient > span {
+  height: 20px !important;
+  line-height: 20px !important;
 }
 
 .lu-checkbox > span {
   display: inline-flex !important;
+}
+
+// color mapping dialog
+input[name=kind] + span > input {
+  width: 4em !important;
+}
+
+input[name=threshold] + span {
+  height: 2.4rem !important;
+
+  > input {
+    width: 6em !important;
+  }
 }
