@@ -6,11 +6,12 @@ import 'typeface-roboto/index.css';
 import initExport from './export';
 import shared from './shared';
 import {IDataset, fromFile, allDatasets} from './data';
-import {version, buildId} from 'lineupjs';
 import {storeDataset, storeSession, deleteDataset, editDataset} from './data/db';
 import {createCard} from './data/ui';
 import {ISession, PRELOADED_TYPE} from './data/IDataset';
 import {saveDialog, areyousure} from './ui';
+
+declare const __LINEUP_VERSION__: string;
 
 function forEach(selector: string, callback: (d: HTMLElement)=>void) {
   Array.from(document.querySelectorAll<HTMLElement>(selector)).forEach(callback);
@@ -251,7 +252,7 @@ Tooltip.init(document.querySelectorAll('.tooltipped'));
 
 {
   // update version info
-  document.querySelector<HTMLElement>('.version-info')!.innerHTML = `LineUp.js v${version} (${buildId})`;
+  document.querySelector<HTMLElement>('.version-info')!.innerHTML = `LineUp.js v${__LINEUP_VERSION__}`;
 }
 
 document.querySelector<HTMLElement>('.save-session')!.onclick = (evt) => {

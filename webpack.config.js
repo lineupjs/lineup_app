@@ -1,5 +1,6 @@
 const resolve = require('path').resolve;
 const pkg = require('./package.json');
+const pkgLock = require('./package-lock.json');
 const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
@@ -54,7 +55,7 @@ module.exports = (_env, options) => {
         __VERSION__: JSON.stringify(pkg.version),
         __LICENSE__: JSON.stringify(pkg.license),
         __BUILD_ID__: JSON.stringify(buildId),
-        __LINEUP_VERSION: JSON.stringify(pkg.dependencies.lineupjs)
+        __LINEUP_VERSION__: JSON.stringify(pkgLock.dependencies.lineupjs.version)
       }),
       new MiniCssExtractPlugin({
         // Options similar to the same options in webpackOptions.output
