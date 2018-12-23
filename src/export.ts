@@ -1,4 +1,3 @@
-import {version} from 'lineupjs';
 import shared from './shared';
 
 import CODEPEN_CSS from 'raw-loader!../templates/style.tcss';
@@ -6,6 +5,8 @@ import {exportJSON} from './data/loader_json';
 import {exportCSV} from './data/loader_csv';
 import {exportDump} from './data/loader_dump';
 import LZString from 'lz-string';
+
+declare const __LINEUP_VERSION__: string;
 
 
 export default function initExport() {
@@ -58,8 +59,8 @@ export default function initExport() {
       js: shared.dataset!.buildScript(`document.querySelector('#data').textContent`, 'document.body', `JSON.parse(document.querySelector('#dump').textContent)`),
       js_pre_processor: 'babel',
       js_modernizr: false,
-      css_external: `https://unpkg.com/lineupjs@${version}/build/LineUpJS.css`,
-      js_external: `https://unpkg.com/lineupjs@${version}/build/LineUpJS.js;https://unpkg.com/papaparse`
+      css_external: `https://unpkg.com/lineupjs@${__LINEUP_VERSION__}/build/LineUpJS.css`,
+      js_external: `https://unpkg.com/lineupjs@${__LINEUP_VERSION__}/build/LineUpJS.js;https://unpkg.com/papaparse`
     };
 
     const json = JSON.stringify(data)
@@ -87,7 +88,7 @@ export default function initExport() {
     setInput('html', `<script id="data" type="text/csv">${shared.dataset!.rawData}</script>\n\n<script id="dump" type="application/json">${JSON.stringify(shared.lineup!.dump(), null, ' ')}</script>`);
     setInput('css', CODEPEN_CSS);
     setInput('js', shared.dataset!.buildScript(`document.querySelector('#data').textContent`, 'document.body', `JSON.parse(document.querySelector('#dump').textContent)`));
-    setInput('resources', `https://unpkg.com/lineupjs@${version}/build/LineUpJS.css,https://unpkg.com/lineupjs@${version}/build/LineUpJS.js,https://unpkg.com/papaparse`);
+    setInput('resources', `https://unpkg.com/lineupjs@${__LINEUP_VERSION__}/build/LineUpJS.css,https://unpkg.com/lineupjs@${__LINEUP_VERSION__}/build/LineUpJS.js,https://unpkg.com/papaparse`);
 
     createJSFiddleHelper.submit();
   });
@@ -139,7 +140,7 @@ ${shared.dataset!.buildScript(`exportData.default`, 'document.body', `exportDump
             name: document.title,
             description: shared.dataset!.description,
             dependencies: {
-              lineupjs: `^${version}`,
+              lineupjs: __LINEUP_VERSION__,
               papaparse: '^4.6.2'
             }
           }
