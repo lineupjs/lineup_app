@@ -108,3 +108,16 @@ input[type=search].lu-search-input {
 .lu-dialog-weights-table-entry > input[type=number] {
   width: unset;
 }
+
+.lu-checkbox-color {
+  width: 25px;
+  height: 25px;
+
+  > span {
+    padding-left: 0 !important;
+  }
+}
+
+.lu-checkbox > span {
+  display: inline-flex !important;
+}

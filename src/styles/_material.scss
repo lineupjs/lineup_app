@@ -2,20 +2,20 @@
 
 // modify checkbox style
 [type="checkbox"] {
-  + label {
+  + span {
     padding-left: 25px;
   }
 
-  + label::before,
-  &:not(.filled-in) + label::after {
+  + span::before,
+  &:not(.filled-in) + span::after {
     border: 1px solid color("grey", "darken-1");
   }
 
-  &:not(:checked):disabled + label {
+  &:not(:checked):disabled + span {
     cursor: not-allowed;
   }
 
-  &:not(:checked):disabled + label::before {
+  &:not(:checked):disabled + span::before {
     border: 1px solid color("grey", "lighten-1");
     background: color("grey", "lighten-2");
   }
