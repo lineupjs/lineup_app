@@ -5,10 +5,8 @@ import './style.scss';
 import 'typeface-roboto/index.css';
 import initExport from './export';
 import shared from './shared';
-import {IDataset, fromFile, allDatasets} from './data';
+import {IDataset, fromFile, allDatasets, ISession, PRELOADED_TYPE, createCard} from './data';
 import {storeDataset, storeSession, deleteDataset, editDataset} from './data/db';
-import {createCard} from './data/ui';
-import {ISession, PRELOADED_TYPE} from './data/IDataset';
 import {saveDialog, areyousure} from './ui';
 
 declare const __LINEUP_VERSION__: string;

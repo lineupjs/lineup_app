@@ -10,7 +10,7 @@ import JSON_LOADER from './loader_json';
 import CSV_LOADER from './loader_csv';
 import {IDatasetMeta, PRELOADED_TYPE} from './IDataset';
 
-export {IDataset} from './IDataset';
+export * from './IDataset';
 export * from './ui';
 
 const preloaded: IDataset[] = [
