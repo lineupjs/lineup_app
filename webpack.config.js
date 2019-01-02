@@ -64,7 +64,8 @@ module.exports = (_env, options) => {
         chunkFilename: '[id].css'
       }),
       new ForkTsCheckerWebpackPlugin({
-        checkSyntacticErrors: true
+        checkSyntacticErrors: true,
+        silent: process.argv.includes('--json') // avoid output in profiling mode
       })
     ].concat(dev ? [
       // dev plugins
