@@ -73,8 +73,7 @@ for (let i = 0; i < 1000000; ++i) {
     number: Math.random() * 10,
     number2: Math.random() * 10,
     cat: cats[Math.floor(Math.random() * cats.length)],
-    cat2: cat2[Math.floor(Math.random() * cat2.length)],
-    date: new Date(Date.now() - Math.floor(Math.random() * 1000000000000))
+    cat2: cat2[Math.floor(Math.random() * cat2.length)]
   });
 }
 console.log('generated');
@@ -115,11 +114,6 @@ const desc = [{
       color: 'blue'
     }]
   },
-  {
-    label: 'Date',
-    type: 'date',
-    column: 'date'
-  },
 ];
 LineUpJS.deriveColors(desc);
 
@@ -144,8 +138,7 @@ lineup.update();
         number: Math.random() * 10,
         number2: Math.random() * 10,
         cat: cats[Math.floor(Math.random() * cats.length)],
-        cat2: cat2[Math.floor(Math.random() * cat2.length)],
-        date: new Date(Date.now() - Math.floor(Math.random() * 1000000000000))
+        cat2: cat2[Math.floor(Math.random() * cat2.length)]
       });
     }
     console.log('generated');
@@ -185,11 +178,6 @@ lineup.update();
           label: 'A2',
           color: 'blue'
         }]
-      },
-      {
-        label: 'Date',
-        type: 'date',
-        column: 'date'
       },
     ];
     deriveColors(desc);
