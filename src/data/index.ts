@@ -4,7 +4,7 @@ import forbes from './forbes-top-2000-companies';
 import happiness from './world-happiness-report';
 import soccer from './soccer';
 import {ieeeheat, ieeebars} from './ieee-programming';
-import {simple} from './simple';
+import {simple, big} from './simple';
 import {listDatasets, listSessions} from './db';
 import JSON_LOADER from './loader_json';
 import CSV_LOADER from './loader_csv';
@@ -21,7 +21,8 @@ const preloaded: IDataset[] = [
   happiness,
   ieeebars,
   ieeeheat,
-  simple
+  simple,
+  big
 ];
 
 
