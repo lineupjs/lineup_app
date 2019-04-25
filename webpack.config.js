@@ -95,7 +95,7 @@ module.exports = (_env, options) => {
         },
         {
           test: /\.tsx?$/,
-          exclude: /node_modules/,
+          exclude: /node_modules\/(?!lineupjs|lineupengine)\//, // exlude all node_modules except lineupjs and lineupengine
           use: [{
               loader: 'cache-loader'
             },
