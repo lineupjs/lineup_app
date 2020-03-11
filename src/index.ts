@@ -40,7 +40,7 @@ function build(builder: Promise<IDataset>, session?: ISession | null) {
       d.classList.remove('disabled');
     });
     forEach('.edit-dataset, .delete-dataset', (d) => {
-      d.style.display = shared.dataset!.type === PRELOADED_TYPE ? 'none' : null;
+      d.style.display = shared.dataset!.type === PRELOADED_TYPE ? 'none' : '';
     });
   }).then(() => {
     let next: string;

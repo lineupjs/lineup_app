@@ -17,7 +17,7 @@ export function saveDialog(title: string, name: string, description?: string): P
   form.querySelector('h4')!.innerHTML = title;
   form.querySelector('input')!.value = name;
   const area = form.querySelector('textarea')!;
-  area.parentElement!.style.display = description == null ? 'none' : null;
+  area.parentElement!.style.display = description == null ? 'none' : '';
   area.value = description || '';
   updateTextFields();
 
