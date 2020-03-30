@@ -80,7 +80,6 @@ module.exports = (_env, options) => {
         // and not allow any straggling "old" SWs to hang around
         clientsClaim: true,
         skipWaiting: true,
-        importsDirectory: 'sw'
       })
     ]),
     externals: {},
