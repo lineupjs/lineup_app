@@ -44,7 +44,7 @@ export function storeDataset(dataset: IDataset): Promise<IDataset> {
     };
     return db.sessions.add(row).then((uid) => Object.assign(row, {uid}));
   });
-  return Promise.all<(IDataset | ISession)[]>(<any>[add, ...s]).then((r: any[]) => {
+  return Promise.all<(IDataset | ISession)[]>([<any>add].concat(s)).then((r: any[]) => {
     const ds = <IDataset>r[0];
     ds.sessions = r.slice(1);
     return ds;

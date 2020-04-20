@@ -15,7 +15,7 @@ const dump = ${dumpVariable};
 
 const lineup = LineUpJS
   .builder(parsed.data)
-  .deriveColumns(...parsed.meta.fields)
+  .deriveColumns(parsed.meta.fields)
   .deriveColors()
   .restore(dump)
   .build(${domVariable});
@@ -55,7 +55,7 @@ export const CSV_LOADER: IDataLoader = {
         buildScript,
         build: (node: HTMLElement) => {
           return builder(parsed.data)
-            .deriveColumns(...parsed.meta.fields)
+            .deriveColumns(parsed.meta.fields)
             .deriveColors()
             .defaultRanking()
             .buildTaggle(node);
@@ -75,7 +75,7 @@ export const CSV_LOADER: IDataLoader = {
           skipEmptyLines: true
         });
         return builder(parsed.data)
-            .deriveColumns(...parsed.meta.fields)
+            .deriveColumns(parsed.meta.fields)
             .deriveColors()
             .defaultRanking()
             .buildTaggle(node);
