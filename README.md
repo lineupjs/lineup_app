@@ -1,18 +1,16 @@
 LineUp App
 ==========
 
-[![License: MIT][mit-image]][mit-url] [![CircleCI][ci-image]][ci-url]  [![CircleCI][ci-image-dev]][ci-url-dev] <sup>(dev)</sup>
+[![License: MIT][mit-image]][mit-url] [![CircleCI][ci-image]][ci-url]  [![CircleCI][ci-image-dev]][ci-url-dev] <sup>(v4)</sup>
 
 LineUp is an interactive technique designed to create, visualize and explore rankings of items based on a set of heterogeneous attributes. 
 This is a demo application using [LineUp.js](https://github.com/lineupjs/lineupjs). Details about the LineUp visualization technique can be found at [http://lineup.caleydo.org](http://lineup.caleydo.org). 
 
-The application is deployed at: https://lineup.js.org/app. The develop version is deployed at https://lineup.js.org/app_develop. 
+The application is deployed at: https://lineup.js.org/app. The develop version using LineUp v4 is deployed at https://lineup.js.org/app_develop. It is a Single Pape Application that requires no server installation. No data is transfered to any server but just kept local in your browser local storage using [IndexedDB](https://developer.mozilla.org/de/docs/Web/API/IndexedDB_API).
 
+![Start Page](./_readme/homepage.png)
 
-![Start Page](https://user-images.githubusercontent.com/4129778/50603800-03172600-0ebc-11e9-8664-269bd39009b8.png)
-
-![Soccer dataset](https://user-images.githubusercontent.com/4129778/50603801-03172600-0ebc-11e9-9b74-75b408385807.png)
-
+![Soccer dataset](./_readme/soccer.png)
 
 Features
 --------
@@ -22,23 +20,40 @@ Features
    * Import/Export JSON File
    * Import/Export LineUp JSON Dump
  * Session Management
-   save different analyses 
- * Export current to one of 
+   save different analyses with a custom session name. A session represents a view on the current dataset along with the currently specified sorting, filtering, grouping, and so on.
+ * Export the current state to one of 
    * https://codepen.io
    * https://jsfiddle.net
    * https://codesandbox.io
- * 
 
-**Note** Uploaded files are stored in your local web browser
-
+**Note** Uploaded files are stored in your local web browser only.
 
 Supported Browsers
 ------------------
 
- * Chrome 64+ (best performance)
- * Firefox 57+
- * Edge 16+
+ * last 2 Chrome versions (best performance)
+ * last 2 Edge versions (best performance)
+ * last 2 Firefox versions
+ * Firefox [Extended Support Release](https://www.mozilla.org/en-US/firefox/enterprise/) (ESR)
+ * Edge 18
+
+
+Usage
+-----
+
+![Start Page](./_readme/homepage_annotated.png)
+
+![Soccer Dataset](./_readme/soccer_annotated.png)
  
+
+Hosting
+-------
+
+This app is a client only app. Thus, requires no server since all data is stored on the browser only. To host it onself: 
+
+1. build the app by following the development environemtn instructions and create a distribution package.
+1. copy the content of the `/build` directory to your target destination
+1. host the content through a web server such as NGINX or host it by running a local web server. A list of web servers can be found at https://gist.github.com/willurd/5720255. 
 
 
 Development Environment
