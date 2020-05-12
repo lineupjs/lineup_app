@@ -25,16 +25,17 @@ Features
    * https://codepen.io
    * https://jsfiddle.net
    * https://codesandbox.io
- * 
 
 **Note** Uploaded files are stored in your local web browser only.
 
 Supported Browsers
 ------------------
 
- * Chrome 64+ (best performance)
- * Firefox 57+
- * Edge 16+
+ * last 2 Chrome versions (best performance)
+ * last 2 Edge versions (best performance)
+ * last 2 Firefox versions
+ * Firefox [Extended Support Release](https://www.mozilla.org/en-US/firefox/enterprise/) (ESR)
+ * Edge 18
 
 
 Usage
