@@ -19,5 +19,3 @@ declare module 'raw-loader!*';
 declare module 'url-loader!*';
 //allow html dependencies
 declare module 'imports-loader!*';
-
-declare module 'materialize-css';

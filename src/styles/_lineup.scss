@@ -1,0 +1,151 @@
+@import './vars';
+
+@import '~lineupjs/build/LineUpJS.css';
+
+.lu-rule-button-chooser.switch {
+  overflow: inherit;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 0.5em;
+
+  span {
+    font-size: 1rem;
+  }
+}
+
+.lu-group-hierarchy,
+.lu-sort-hierarchy,
+.lu-sort-groups-hierarchy {
+  margin-bottom: 1em;
+}
+
+.lu-hierarchy-entry,
+.lu-hierarchy-adder {
+  align-items: center;
+  padding: 6px 0.5em 0.5em 0.5em;
+}
+
+.lu-hierarchy-entry > .lu-label {
+  align-self: stretch;
+}
+
+.lu-search::before {
+  line-height: 1.15;
+  font-size: 16px;
+  padding: 3px 5px;
+  border: 1px solid $secondary-color;
+  border-right: none;
+  border-radius: 3px 0 0 3px;
+}
+
+.lu-search-list {
+  top: 2.4rem;
+  left: calc(1.2em + 2px);
+}
+
+input[type=search].lu-search-input {
+  margin-bottom: 0;
+  border: 1px solid $secondary-color;
+  border-radius: 0 3px 3px 0;
+  padding: 3px 5px;
+  box-sizing: border-box;
+}
+
+.lu-hierarchy-adder {
+  &::before {
+    color: #cecece;
+  }
+
+  .lu-search::before {
+    font-size: small;
+    border-color: #dedede;
+  }
+
+  input[type=search].lu-search-input {
+    margin: 0;
+    height: 2em;
+    border-color: #dedede;
+    font-size: small;
+    font-weight: normal;
+  }
+
+  .lu-search-list {
+    top: calc(2em - 3px);
+    left: calc(1.2em - 1px);
+  }
+}
+
+.lu-summary .lu-checkbox > [type=checkbox] + label {
+  margin: 0;
+  font-size: 12px;
+  line-height: 100%;
+}
+
+.lu-side-panel-entry {
+  margin-bottom: 0.8em;
+}
+
+.lu-side-panel {
+  padding-top: 2em;
+
+  &.lu-collapsed {
+    transform: unset;
+
+    > .lu-rule-button-chooser.switch {
+      display: none;
+    }
+  }
+}
+
+.lu-header > .lu-label {
+  line-height: 1.5;
+}
+
+.lu-collapser {
+  padding: 1.5em 0.2em;
+}
+
+.lu-dialog-table > .lu-checkbox > [type="checkbox"] + label {
+  display: inline-flex;
+}
+
+.lu-dialog-weights-table-entry > input[type=number] {
+  width: unset;
+}
+
+.lu-checkbox-color {
+  width: 25px;
+  height: 25px;
+  margin: 1px;
+
+  > span {
+    padding-left: 0 !important;
+    width: 25px;
+  }
+}
+
+.lu-dialog-color {
+  width: 25em;
+}
+
+.lu-color-gradient > span {
+  height: 20px !important;
+  line-height: 20px !important;
+}
+
+.lu-checkbox > span {
+  display: inline-flex !important;
+}
+
+// color mapping dialog
+input[name=kind] + span > input {
+  width: 4em !important;
+}
+
+input[name=threshold] + span {
+  height: 2.4rem !important;
+
+  > input {
+    width: 6em !important;
+  }
+}

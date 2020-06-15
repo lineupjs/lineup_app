@@ -1,4 +1,4 @@
-import {IDataset} from '../IDataset';
+import {IDataset, PRELOADED_TYPE} from '../IDataset';
 import {parse, ParseResult} from 'papaparse';
 import {builder, buildRanking, buildStringColumn, buildNumberColumn} from 'lineupjs';
 
@@ -7,7 +7,9 @@ import imageShanghai from './shanghai.png';
 
 export const wur: IDataset = {
   id: 'wur',
-  title: 'Times Higher Education World University Ranking',
+  type: PRELOADED_TYPE,
+  creationDate: new Date(),
+  name: 'Times Higher Education World University Ranking',
   image,
   link: 'https://www.kaggle.com/mylesoneill/world-university-rankings/version/3',
   description: `<p>
@@ -24,35 +26,31 @@ university measures. Founded in the United Kingdom in 2010, it has been criticiz
 and for undermining non-English-instructing institutions.
 </p>`,
   rawData: '',
-  buildScript(rawVariable: string, domVariable: string) {
+  buildScript(rawVariable: string, domVariable: string, dumpVariable: string) {
     const yearArray = (<any>this).yearArray;
-    return `// per year:
-      const yearArray = ${JSON.stringify(yearArray)};
-      const rows = JSON.parse(${rawVariable});
+    return `
+// per year:
+const yearArray = ${JSON.stringify(yearArray)};
+const rows = JSON.parse(${rawVariable});
+const dump = ${dumpVariable};
 
-      const perYear = 'score,national_rank,quality_of_education,alumni_employment,quality_of_faculty,publications,influence,citations,broad_impact,patents'.split(',');
-      const b = builder(rows)
-        .column(buildStringColumn('institution'))
-        .column(buildStringColumn('country'));
+const perYear = 'score,national_rank,quality_of_education,alumni_employment,quality_of_faculty,publications,influence,citations,broad_impact,patents'.split(',');
+const b = LineUpJS.builder(rows)
+  .column(LineUpJS.buildStringColumn('institution'))
+  .column(LineUpJS.buildStringColumn('country'));
 
-      yearArray.slice(0, 2).forEach((year) => {
-        const bb = buildRanking()
-          .supportTypes()
-          .column('institution')
-          .column('country')
-          .sortBy(year + '_score', 'desc');
-        perYear.forEach((k) => {
-          b.column(buildNumberColumn(year + '_' + k).label(k + '(' + year + ')'));
-          bb.column(year + '_' + k);
-        });
-        b.ranking(bb);
-      });
+yearArray.slice(0, 2).forEach((year) => {
+  perYear.forEach((k) => {
+    b.column(LineUpJS.buildNumberColumn(year + '_' + k).label(k + '(' + year + ')'));
+  });
+});
 
-      yearArray.slice(2).forEach((year) => {
-        b.column(buildNumberColumn(year + '_score').label('score (' + year + ')'));
-      });
+yearArray.slice(2).forEach((year) => {
+  b.column(LineUpJS.buildNumberColumn(year + '_score').label('score (' + year + ')'));
+});
 
-      return b.deriveColors().buildTaggle(${domVariable});`;
+const lineup = b.deriveColors().restore(dump).buildTaggle(${domVariable});
+  `;
   },
   build(node: HTMLElement) {
     return import('raw-loader!./cwurData.csv').then((content: any) => {
@@ -100,7 +98,9 @@ and for undermining non-English-instructing institutions.
 
 export const shanghai: IDataset = {
   id: 'shanghai',
-  title: 'Academic Ranking of World Universities',
+  type: PRELOADED_TYPE,
+  creationDate: new Date(),
+  name: 'Academic Ranking of World Universities',
   image: imageShanghai,
   link: 'https://www.kaggle.com/mylesoneill/world-university-rankings/version/3',
   description: `<p>
@@ -116,36 +116,37 @@ is an equally influential ranking. It was founded in China in 2003 and has been 
 and for undermining humanities and quality of instruction.
 </p>`,
   rawData: '',
-  buildScript(rawVariable: string, domVariable: string) {
+  buildScript(rawVariable: string, domVariable: string, dumpVariable: string) {
     const yearArray = (<any>this).yearArray;
     return `// per year:
-      const yearArray = ${JSON.stringify(yearArray)};
-      const rows = JSON.parse(${rawVariable});
+const yearArray = ${JSON.stringify(yearArray)};
+const rows = JSON.parse(${rawVariable});
+const dump = ${dumpVariable};
 
-      const perYear = 'total_score,alumni,award,hici,ns,pub,pcp'.split(',');
-      const b = builder(rows)
-        .column(buildStringColumn('university_name'));
+const perYear = 'total_score,alumni,award,hici,ns,pub,pcp'.split(',');
+const b = builder(rows)
+  .column(buildStringColumn('university_name'));
 
-      yearArray.slice(0, 2).forEach((year) => {
-        const bb = buildRanking()
-          .supportTypes()
-          .column('university_name')
-          .column(year + '_national_rank')
-          .sortBy(year + '_total_score', 'desc');
+yearArray.slice(0, 2).forEach((year) => {
+  const bb = buildRanking()
+    .supportTypes()
+    .column('university_name')
+    .column(year + '_national_rank')
+    .sortBy(year + '_total_score', 'desc');
 
-        b.column(buildNumberColumn(year + '_national_rank').label('national_rank'));
-        perYear.forEach((k) => {
-          b.column(buildNumberColumn(year + '_' + k, [0, 100]).label(k + '(' + year + ')'));
-          bb.column(year + '_' + k);
-        });
-        b.ranking(bb);
-      });
+  b.column(buildNumberColumn(year + '_national_rank').label('national_rank'));
+  perYear.forEach((k) => {
+    b.column(buildNumberColumn(year + '_' + k, [0, 100]).label(k + '(' + year + ')'));
+    bb.column(year + '_' + k);
+  });
+  b.ranking(bb);
+});
 
-      yearArray.slice(2).forEach((year) => {
-        b.column(buildNumberColumn(year + '_total_score', [0, 100]).label('total_score (' + year + ')'));
-      });
+yearArray.slice(2).forEach((year) => {
+  b.column(buildNumberColumn(year + '_total_score', [0, 100]).label('total_score (' + year + ')'));
+});
 
-      return b.deriveColors().buildTaggle(${domVariable});`;
+const lineup = b.deriveColors().restore(dump).buildTaggle(${domVariable});`;
   },
   build(node: HTMLElement) {
     return import('raw-loader!./shanghaiData.csv').then((content: any) => {

@@ -1,0 +1,172 @@
+@import './vars';
+
+html {
+  font-size: 14px;
+}
+
+body {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+.nav-wrapper {
+  z-index: 200;
+  display: flex;
+
+  > .brand-logo {
+    margin-left: 1em;
+    position: unset;
+    margin-right: 1em;
+  }
+}
+
+.main-wrapper {
+  flex: 1 0 auto;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+
+  > div {
+    flex: 1 1 auto;
+    opacity: 1;
+    transition: opacity 0.5s ease, background-color 0.5s ease;
+  }
+
+  .lu-blocker {
+    opacity: 0;
+    z-index: 100;
+    visibility: hidden;
+    background-color: rgba(255, 255, 255, 0.9);
+    position: absolute;
+    top: 3px;
+    left: 0;
+    right: 0;
+    bottom: 3px;
+  }
+
+  .chooser {
+    z-index: 101;
+  }
+
+  &[data-state=initial] {
+    #uploader {
+      display: none;
+    }
+  }
+
+  &[data-state=uploading] {
+    #dropper {
+      display: none;
+    }
+
+    .lu {
+      visibility: visible;
+    }
+
+    .lu-blocker {
+      visibility: visible;
+      opacity: 1;
+    }
+  }
+
+  &[data-state=ready] {
+    > *:not(.lu) {
+      display: none;
+    }
+
+    .lu {
+      visibility: visible;
+      pointer-events: all;
+      opacity: 1;
+    }
+  }
+}
+
+.btn-floating.halfway-fab {
+  bottom: -11px;
+}
+
+.export-option {
+  float: unset;
+  text-align: right;
+  margin-top: 11px;
+
+  > a.btn-floating {
+    margin: 0;
+  }
+}
+
+label {
+  color: color("grey", "darken-3");
+}
+
+.carousel {
+  height: 600px;
+}
+
+.carousel > .carousel-item {
+  width: 500px;
+  height: 400px;
+
+  > .card-image {
+    height: 250px;
+  }
+}
+
+.card .card-title {
+  font-size: 20px;
+}
+
+.card-reveal p {
+  text-align: justify;
+}
+
+.card-reveal .card-sessions {
+  display: none;
+}
+
+.card-sessions .collection {
+  text-align: left;
+}
+
+.card-reveal.sessions {
+  .card-sessions {
+    display: block;
+  }
+
+  .card-desc {
+    display: none;
+  }
+}
+
+.lu-c {
+  position: absolute !important;
+  left: 5px;
+  right: 5px;
+  top: 5px;
+  bottom: 5px;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  pointer-events: none;
+  line-height: 1;
+}
+
+.page-footer {
+  padding-top: 0;
+
+  .footer-copyright {
+    min-height: 30px;
+    padding: 0 1em;
+  }
+}
+
+.material-icons.local-image {
+  font-size: 240px;
+}
+
+#modalAreYouSure,
+#modalSave {
+  max-width: 30em;
+}

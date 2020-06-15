@@ -39,29 +39,61 @@
 <body>
   <nav>
     <div class="nav-wrapper">
-      <a href="#" class="brand-logo" onclick="window.location.reload()">
-        LineUp</a>
-      <div class="fixed-action-btn horizontal" style="position: initial">
-        <a class="btn-floating grey lighten-1 halfway-fab disabled">
+      <a href="#" class="brand-logo">LineUp</a>
+      <ul class="hide-on-med-and-down dataset-menu">
+        <li>
+          <a href="#" class="edit-dataset tooltipped" data-position="bottom" data-delay="50" data-tooltip="Edit Dataset" style="display: none;">
+            <i class="material-icons">edit</i>
+          </a>
+        </li>
+        <li><a href="#" class="delete-dataset tooltipped" data-position="bottom" data-delay="50" data-tooltip="Delete Dataset" style="display: none;">
+            <i class="material-icons">delete</i>
+          </a>
+        </li>
+        <li><a href="#" class="save-session tooltipped disabled" data-position="bottom" data-delay="50" data-tooltip="Save Session">
+            <i class="material-icons">save</i>
+          </a>
+        </li>
+      </ul>
+      <div class="fixed-action-btn horizontal" style="position: initial;">
+        <a class="btn-floating grey lighten-1 halfway-fab disabled export-dataset">
           <i class="material-icons">file_download</i>
         </a>
-        <ul>
-          <li>
-            <a href="#" id="createCodePen" class="btn-floating black waves-effect waves-light tooltipped" data-position="bottom" data-delay="50"
+        <ul style="transform: translateY(-22%); right: 55px;">
+          <li class="export-option">
+            <a href="#" id="createCodePen" class="btn-floating btn-small black waves-effect waves-light tooltipped" data-position="bottom" data-delay="50"
               data-tooltip="Export to CodePen.io">
               <i class="material-icons fa fa-codepen"></i>
             </a>
           </li>
-          <li>
-            <a href="#" id="downloadJSON" class="btn-floating black waves-effect waves-light tooltipped" data-position="bottom" data-delay="50"
+          <li class="export-option">
+            <a href="#" id="createCodeSandbox" class="btn-floating btn-small black waves-effect waves-light tooltipped" data-position="bottom" data-delay="50"
+              data-tooltip="Export to CodeSandbox.io">
+              <i class="material-icons fa fa-code"></i>
+            </a>
+          </li>
+          <li class="export-option">
+            <a href="#" id="createJSFiddle" class="btn-floating btn-small black waves-effect waves-light tooltipped" data-position="bottom" data-delay="50"
+              data-tooltip="Export to JSFiddle">
+              <i class="material-icons fa fa-jsfiddle"></i>
+            </a>
+          </li>
+          <li class="export-option">
+            <a href="#" id="downloadJSON" class="btn-floating btn-small black waves-effect waves-light tooltipped" data-position="bottom" data-delay="50"
               data-tooltip="Download JSON">
               <i class="material-icons fa fa-file-code-o"></i>
             </a>
           </li>
-          <li>
-            <a href="#" id="downloadCSV" class="btn-floating black waves-effect waves-light tooltipped" data-position="bottom" data-delay="50"
+          <li class="export-option">
+            <a href="#" id="downloadCSV" class="btn-floating btn-small black waves-effect waves-light tooltipped" data-position="bottom" data-delay="50"
               data-tooltip="Download CSV">
               <i class="material-icons fa fa-file-excel-o"></i>
+            </a>
+          </li>
+          <li class="export-option">
+            <a href="#" id="downloadDump" class="btn-floating btn-small black waves-effect waves-light tooltipped" data-position="bottom" data-delay="50"
+              data-tooltip="Download JSON Dump">
+              <i class="material-icons fa fa-file-archive-o"></i>
             </a>
           </li>
         </ul>
@@ -69,14 +101,15 @@
     </div>
   </nav>
 
-  <main data-state="initial">
+  <main class="main-wrapper" data-state="initial">
     <div class="lu-c"></div>
-    <div class="container valign-wrapper">
-      <div class="row" style="flex: 1 1 auto">
+    <div class="lu-blocker"></div>
+    <div class="container chooser valign-wrapper">
+      <div class="row" style="flex: 1 1 auto;">
         <div class="center-align col s12" id="dropper">
           <div class="carousel">
           </div>
-          <a class="btn btn-floating btn-large pulse tooltipped" data-position="bottom" data-delay="50" data-tooltip="Drop file here or Click to select file">
+          <a class="btn btn-floating btn-large pulse tooltipped" data-position="bottom" data-delay="50" data-tooltip="Drop file here or Click to select file.<br>Uploaded files are stored in your web browser, NO data is transmitted to a server.">
             <i class="material-icons">file_upload</i>
           </a>
         </div>
@@ -97,23 +130,74 @@
         <a href="https://lineup.js.org" target="_blank" rel="noopener">LineUp.js</a>
         is a
         <a href="http://caleydo.org" target="_blank" rel="noopener">Caleydo</a> project that is maintained by
-        <a href="https://datavisyn.io" target="_blank" rel="noopener">datavisyn</a>
+        <a href="https://www.datavisyn.io" target="_blank" rel="noopener">datavisyn</a>
         under the lead of
-        <a href="https://github.com/datavisyn" target="_blank" rel="noopener">Samuel Gratzl</a>.
+        <a href="https://www.sgratzl.com" target="_blank" rel="noopener">Samuel Gratzl</a>.
       </div>
+      <div class="version-info"></div>
     </div>
   </footer>
 
-  <div style="position: absolute; left: -10000px">
+  <div style="position: absolute; left: -10000px;">
     <a href="#" id="downloadHelper" target="_blank" rel="noopener"></a>
     <form id="createCodePenHelper" method="post" action="https://codepen.io/pen/define" target="_blank" rel="noopener">
       <input type="hidden" name="data">
+    </form>
+    <form id="createCodeSandboxHelper" method="post" action="https://codesandbox.io/api/v1/sandboxes/define" target="_blank" rel="noopener">
+      <input type="hidden" name="parameters">
+    </form>
+    <form id="createJSFiddleHelper" method="post" action="https://jsfiddle.net/api/post/library/pure/" target="_blank" rel="noopener">
+      <!--https://docs.jsfiddle.net/api/display-a-fiddle-from-post-->
+      <input type="hidden" name="title">
+      <input type="hidden" name="description">
+      <input type="hidden" name="resources">
+      <input type="hidden" name="html">
+      <input type="hidden" name="css">
+      <input type="hidden" name="js">
+      <input type="hidden" name="wrap" value="d">
+      <input type="hidden" name="normalize_css" value="yes">
+      <input type="hidden" name="css_panel" value="1"><!--SCSS-->
+      <input type="hidden" name="js_panel" value="2"><!--JS 1.7-->
     </form>
 
     <input type="file">
   </div>
 
-  <div style="display: none" id="export-helper">
+   <!-- Modal Structure -->
+  <div id="modalAreYouSure" class="modal">
+    <div class="modal-content">
+      <h4>Are you sure</h4>
+      <p class="are-you-sure">ABOUT</p>
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class="modal-close waves-effect waves-gray btn-flat">Cancel</a>
+      <a href="#!" class="modal-close waves-effect waves-red btn-flat are-you-sure-confirm">Delete</a>
+    </div>
+  </div>
+
+  <form id="modalSave" class="modal">
+    <div class="modal-content">
+      <h4>Save stuff</h4>
+      <div class="row">
+        <div class="input-field col s12">
+          <input type="text" name="name" id="saveName" required class="validate">
+          <label for="saveName">Name</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s12">
+          <textarea name="description" id="saveDescription" class="materialize-textarea validate"></textarea>
+          <label for="saveDescription">Description</label>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class="modal-close waves-effect waves-gray btn-flat">Cancel</a>
+      <button type="submit" class="waves-effect waves-red btn-flat save-confirm">Save</button>
+    </div>
+  </form>
+
+  <div style="display: none;" id="export-helper">
     <span>Exporting &hellip;</span>
     <div class="preloader-wrapper active">
       <div class="spinner-layer spinner-blue">

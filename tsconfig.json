@@ -23,6 +23,7 @@
     "noImplicitThis": true,
     "noUnusedParameters": true,
     "strictNullChecks": true,
+    "skipLibCheck": true,
     "stripInternal": true,
     "strictFunctionTypes": true,
     "strictPropertyInitialization": true,

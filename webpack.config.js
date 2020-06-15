@@ -1,7 +1,8 @@
 const resolve = require('path').resolve;
 const pkg = require('./package.json');
+const pkgLock = require('./package-lock.json');
 const webpack = require('webpack');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const WorkboxPlugin = require('workbox-webpack-plugin');
 
@@ -11,15 +12,14 @@ const buildId = `${now.getUTCFullYear()}${prefix(now.getUTCMonth() + 1)}${prefix
 pkg.version = pkg.version.replace('SNAPSHOT', buildId);
 
 const year = (new Date()).getFullYear();
-const banner = '/*! ' + (pkg.title || pkg.name) + ' - v' + pkg.version + ' - ' + year + '\n' +
-  (pkg.homepage ? '* ' + pkg.homepage + '\n' : '') +
-  '* Copyright (c) ' + year + ' ' + pkg.author.name + ';' +
-  ' Licensed ' + pkg.license + '*/\n';
+const banner = `/*! ${pkg.title || pkg.name} - v${pkg.version} - ${year}\n` +
+  (pkg.homepage ? `* ${pkg.homepage}\n` : '') +
+  `* Copyright (c) ${year} ${pkg.author.name}; Licensed ${pkg.license} */\n`;
 
 /**
  * generate a webpack configuration
  */
-module.exports = (env, options) => {
+module.exports = (_env, options) => {
   const dev = options.mode.startsWith('d');
   return {
     node: {
@@ -54,13 +54,18 @@ module.exports = (env, options) => {
         __DEBUG__: JSON.stringify(dev),
         __VERSION__: JSON.stringify(pkg.version),
         __LICENSE__: JSON.stringify(pkg.license),
-        __BUILD_ID__: JSON.stringify(buildId)
+        __BUILD_ID__: JSON.stringify(buildId),
+        __LINEUP_VERSION__: JSON.stringify(pkgLock.dependencies.lineupjs.version)
       }),
-      new ExtractTextPlugin({
-        filename: `[name].css`
+      new MiniCssExtractPlugin({
+        // Options similar to the same options in webpackOptions.output
+        // both options are optional
+        filename: '[name].css',
+        chunkFilename: '[id].css'
       }),
       new ForkTsCheckerWebpackPlugin({
-        checkSyntacticErrors: true
+        checkSyntacticErrors: true,
+        silent: process.argv.includes('--json') // avoid output in profiling mode
       })
     ].concat(dev ? [
       // dev plugins
@@ -75,17 +80,17 @@ module.exports = (env, options) => {
         // and not allow any straggling "old" SWs to hang around
         clientsClaim: true,
         skipWaiting: true,
-        importsDirectory: 'sw'
       })
     ]),
     externals: {},
     module: {
       rules: [{
           test: /\.s?css$/,
-          use: ExtractTextPlugin.extract({
-            fallback: 'style-loader',
-            use: ['css-loader', 'sass-loader']
-          })
+          use: [
+            MiniCssExtractPlugin.loader,
+            'css-loader',
+            'sass-loader'
+          ]
         },
         {
           test: /\.tsx?$/,
@@ -135,6 +140,11 @@ module.exports = (env, options) => {
         {
           test: /\.(ttf|eot)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
           loader: 'file-loader'
+        },
+        {
+          test: /schema\.json$/,
+          type: 'javascript/auto',
+          loader: 'file-loader'
         }
       ]
     },
@@ -142,7 +152,8 @@ module.exports = (env, options) => {
       // ignored: /node_modules/
     },
     devServer: {
-      contentBase: 'demo'
+      contentBase: 'demo',
+      disableHostCheck: true
     }
   };
 };

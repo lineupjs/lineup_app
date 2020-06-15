@@ -244,7 +244,7 @@ Albert Gudmundsson,20,PSV Eindhoven,NLD - Eredivisie,right,177,Iceland,W,1,2,24,
 Maximiliano Romero,19,PSV Eindhoven,NLD - Eredivisie,right,179,Argentina,CF,,,0,11,18,10,,,0,3,1,4,,,0,551,733,886,,,0,0,1,1
 Luuk de Jong,27,PSV Eindhoven,NLD - Eredivisie,right,188,Netherlands,CF,31,26,45,44,39,29,8,0,26,32,9,11,2023,791,3930,3849,3388,2167,4,1,14,12,9,9
 Sam Lammers,20,PSV Eindhoven,NLD - Eredivisie,both,189,Netherlands,CF,,,19,42,44,20,,,7,13,21,10,,,1645,3136,3248,1298,,,7,9,5,3
-Donyell Malen,19,PSV Eindhoven U21,NLD - Eredivisie,right,0,Netherlands,CF,,,1,20,35,23,,,0,6,12,8,,,90,1146,2512,1392,,,0,2,7,2
+Donyell Malen,19,PSV Eindhoven U21,NLD - Eredivisie,right,,Netherlands,CF,,,1,20,35,23,,,0,6,12,8,,,90,1146,2512,1392,,,0,2,7,2
 Sam Larsson,24,Feyenoord Rotterdam,NLD - Eredivisie,right,180,Sweden,W,37,20,31,37,36,27,8,2,8,6,9,7,2701,1654,2667,3265,2770,1588,12,5,6,9,16,5
 Jean-Paul Boëtius,23,Feyenoord Rotterdam,NLD - Eredivisie,right,178,Netherlands  Suriname,W,26,33,44,19,29,33,6,11,5,4,8,4,1885,2318,2556,978,1732,2224,5,10,4,1,6,7
 Cheick Toure,17,Feyenoord Rotterdam,NLD - Eredivisie,,167,Netherlands  Guinea,W,,,,,7,25,,,,,0,3,,,,,386,1721,,,,,0,4
@@ -275,7 +275,7 @@ Marco Rojas,26,SC Heerenveen,NLD - Eredivisie,right,168,New Zealand  Chile,W,27,
 Reza Ghoochannejhad,30,SC Heerenveen,NLD - Eredivisie,left,180,Iran  Netherlands,CF,22,26,9,25,39,27,12,3,2,4,22,7,1373,1403,352,1114,3354,1838,5,1,0,1,3,1
 Henk Veerman,27,SC Heerenveen,NLD - Eredivisie,right,201,Netherlands,CF,20,39,51,39,32,32,15,15,24,16,13,9,1554,2026,2962,2380,925,1447,0,1,8,7,0,3
 Bryan Linssen,27,Vitesse Arnhem,NLD - Eredivisie,right,170,Netherlands,W,39,34,37,41,31,33,10,13,12,6,11,13,3010,2963,2929,2601,2161,2869,3,0,10,6,1,5
-Lars ten Teije,19,Vitesse Arnhem U21,NLD - Eredivisie,,0,Netherlands,W,,,5,26,30,19,,,0,9,8,4,,,450,2191,2389,1627,,,0,5,5,0
+Lars ten Teije,19,Vitesse Arnhem U21,NLD - Eredivisie,,,Netherlands,W,,,5,26,30,19,,,0,9,8,4,,,450,2191,2389,1627,,,0,5,5,0
 Roy Beerens,30,Vitesse Arnhem,NLD - Eredivisie,,173,Netherlands,W,41,51,29,3,43,26,5,5,5,0,7,2,3291,4241,2274,187,3407,1570,9,7,1,0,3,3
 Mitchell van Bergen,18,Vitesse Arnhem,NLD - Eredivisie,right,170,Netherlands,W,,,,19,27,22,,,,3,1,4,,,,1437,1086,1468,,,,4,5,1
 Tim Matavz,29,Vitesse Arnhem,NLD - Eredivisie,right,188,Slovenia,CF,39,24,17,24,21,30,20,4,3,0,5,10,2505,1335,603,1284,1579,2330,11,3,1,1,3,2
@@ -294,7 +294,7 @@ Piotr Parzyszek,24,PEC Zwolle,NLD - Eredivisie,both,191,Poland  Netherlands,CF,4
 Stef Nijland,29,PEC Zwolle,NLD - Eredivisie,both,187,Netherlands,CF,16,32,40,30,15,19,3,8,13,10,2,4,1010,1685,1939,1510,448,775,0,1,6,3,0,3
 Oussama Assaidi,29,FC Twente Enschede,NLD - Eredivisie,right,175,Morocco  Netherlands,W,14,26,38,1,6,24,0,5,3,0,1,8,717,1554,2009,29,265,1891,1,5,4,0,0,3
 Adnane Tighadouini,25,FC Twente Enschede,NLD - Eredivisie,both,180,Morocco  Netherlands,W,26,14,39,19,32,21,7,2,16,1,7,4,1736,556,3192,704,1926,930,9,1,3,0,2,0
-Dylan George,19,FC Twente Enschede,NLD - Eredivisie,right,0,Netherlands,W,,,,19,30,14,,,,4,8,3,,,,1149,2140,990,,,,0,1,0
+Dylan George,19,FC Twente Enschede,NLD - Eredivisie,right,,Netherlands,W,,,,19,30,14,,,,4,8,3,,,,1149,2140,990,,,,0,1,0
 Luciano Slagveer,24,FC Twente Enschede,NLD - Eredivisie,right,179,Netherlands  Suriname,W,33,35,38,39,38,20,16,6,12,7,8,1,2425,2003,3306,2754,1856,972,1,5,4,7,6,1
 Tom Boere,25,FC Twente Enschede,NLD - Eredivisie,right,185,Netherlands,CF,0,18,34,19,39,31,0,4,9,3,34,7,0,1176,2436,976,3434,2405,0,0,5,1,6,5
 Mounir El Hamdaoui,33,FC Twente Enschede,NLD - Eredivisie,right,183,Morocco  Netherlands,CF,20,13,3,9,13,3,3,3,1,5,5,0,647,538,37,751,1043,88,1,2,0,2,0,0
@@ -335,7 +335,7 @@ Fred Friday,22,Sparta Rotterdam,NLD - Eredivisie,both,187,Nigeria,CF,3,19,29,14,
 Robert Mühren,28,Sparta Rotterdam,NLD - Eredivisie,both,187,Netherlands,CF,41,36,32,44,34,22,13,27,16,12,15,5,2170,3086,2135,1824,1759,1679,5,1,6,3,1,5
 Nick Proschwitz,31,Sparta Rotterdam,NLD - Eredivisie,right,192,Germany,CF,31,20,29,33,21,11,5,6,3,8,3,3,1224,1139,1045,2694,1199,725,1,0,0,0,1,0
 Ragnar Ache,19,Sparta Rotterdam,NLD - Eredivisie,,187,Germany  Ghana,CF,,,,10,27,24,,,,10,16,3,,,,900,1858,867,,,,0,6,0
-Thomas Agyepong,21,NAC Breda,NLD - Eredivisie,,0,Ghana,W,,,,17,38,13,,,,2,3,0,,,,788,1919,597,,,,1,5,0
+Thomas Agyepong,21,NAC Breda,NLD - Eredivisie,,,Ghana,W,,,,17,38,13,,,,2,3,0,,,,788,1919,597,,,,1,5,0
 Diego Snepvangers,19,NAC Breda,NLD - Eredivisie,left,175,Netherlands,W,,,,,18,12,,,,,5,3,,,,,1421,1049,,,,,1,0
 Giovanni Korte,24,NAC Breda,NLD - Eredivisie,right,170,Netherlands,W,29,38,17,30,44,27,12,17,3,11,11,3,1854,2266,1323,1543,3119,1618,0,3,0,5,9,2
 Paolo Fernandes,19,NAC Breda,NLD - Eredivisie,left,167,Spain,W,,,2,4,29,22,,,0,0,13,1,,,22,56,2180,892,,,0,0,7,0
@@ -596,12 +596,12 @@ Mbaye Diagne,26,Kasimpasa,TUR - Süper Lig,right,191,Senegal,CF,,11,14,44,17,8,,
 Bengali-Fodé Koita,27,Kasimpasa,TUR - Süper Lig,right,186,Guinea  France,CF,22,34,30,26,25,5,3,6,3,1,6,1,891,1896,1968,1259,1725,314,1,1,2,3,1,0
 Franck Etoundi,27,Kasimpasa,TUR - Süper Lig,right,185,Cameroon,CF,26,34,37,26,4,8,4,7,15,5,0,1,1523,1641,2439,1642,128,302,4,4,6,6,0,0
 Adam Stahl,23,Kardemir Karabükspor,TUR - Süper Lig,right,185,Sweden,W,,26,22,19,26,6,,3,0,4,7,2,,1742,1906,1465,2212,411,,4,3,1,9,1
-Ahmet Karadayi,22,Kardemir Karabükspor,TUR - Süper Lig,right,0,Belgium  Turkey,W,,,,,27,18,,,,,3,8,,,,,1471,1588,,,,,0,1
+Ahmet Karadayi,22,Kardemir Karabükspor,TUR - Süper Lig,right,,Belgium  Turkey,W,,,,,27,18,,,,,3,8,,,,,1471,1588,,,,,0,1
 Hervé Kage,28,Kardemir Karabükspor,TUR - Süper Lig,right,177,DR Congo  Belgium,W,32,35,22,29,29,14,4,7,3,6,9,1,2351,2177,857,1705,1888,551,4,5,4,6,6,1
 Leandrinho,31,Kardemir Karabükspor,TUR - Süper Lig,right,178,Brazil,W,4,27,16,30,39,11,1,5,3,17,12,3,305,1066,1043,2449,2529,621,0,4,0,5,5,1
 Marius Alexe,28,Kardemir Karabükspor,TUR - Süper Lig,right,186,Romania,CF,36,8,29,35,2,14,17,0,6,8,0,1,3018,266,2110,2736,94,821,2,0,4,3,0,0
 Ergin Keles,31,Kardemir Karabükspor,TUR - Süper Lig,right,184,Turkey,CF,30,32,28,28,37,12,8,11,5,11,8,0,1695,2624,2179,2079,2655,759,1,6,2,2,4,0
-Yusuf Akbulut,27,Kardemir Karabükspor,TUR - Süper Lig,,0,Turkey,CF,1,25,28,12,13,15,0,4,6,1,3,5,90,1678,1756,593,875,644,0,0,0,0,0,0
+Yusuf Akbulut,27,Kardemir Karabükspor,TUR - Süper Lig,,,Turkey,CF,1,25,28,12,13,15,0,4,6,1,3,5,90,1678,1756,593,875,644,0,0,0,0,0,0
 Sebá,25,Olympiacos Piraeus,GRC - Super League,left,182,Brazil,W,30,33,42,33,43,23,2,8,5,4,7,0,2023,2463,3671,1765,3592,1197,7,4,7,6,12,1
 Marko Marin,28,Olympiacos Piraeus,GRC - Super League,right,170,Germany,W,19,30,12,29,23,33,3,2,2,2,4,8,621,1530,713,1844,1361,2131,2,7,0,5,5,5
 Kevin Mirallas,30,Olympiacos Piraeus,GRC - Super League,right,182,Belgium,W,33,37,36,30,37,24,9,8,11,6,4,1,2240,2619,1957,1342,2130,1474,9,11,3,3,6,2
@@ -640,11 +640,11 @@ Samed Yesil,23,Panionios Athens,GRC - Super League,right,180,Germany  Turkey,CF,
 Fiorin Durmishaj,21,Panionios Athens,GRC - Super League,right,185,Albania  Greece,CF,,,23,16,28,25,,,6,1,8,5,,,1281,776,2015,1557,,,1,0,3,1
 Nicki Bille Nielsen,30,Panionios Athens,GRC - Super League,right,181,Denmark,CF,45,16,22,31,11,26,16,8,2,8,2,3,3125,923,1039,2432,437,1059,6,4,0,2,0,2
 Farley Rosa,24,Panetolikos Agrinio,GRC - Super League,right,174,Brazil  Portugal,W,,23,27,24,23,29,,1,2,1,5,6,,990,1663,881,1427,2155,,1,0,0,6,2
-Ilias Gianniotis,20,Panetolikos Agrinio,GRC - Super League,,0,Greece,W,,,,,4,5,,,,,0,0,,,,,82,149,,,,,0,0
+Ilias Gianniotis,20,Panetolikos Agrinio,GRC - Super League,,,Greece,W,,,,,4,5,,,,,0,0,,,,,82,149,,,,,0,0
 Clésio Baúque,23,Panetolikos Agrinio,GRC - Super League,right,174,Mozambique,W,,13,4,17,30,26,,3,1,0,2,3,,615,116,759,2257,1500,,0,0,0,3,1
 Jorge Díaz,28,Panetolikos Agrinio,GRC - Super League,right,169,Uruguay  Spain,W,14,9,35,23,34,28,1,1,5,1,1,5,887,728,1940,816,1850,2340,1,1,0,1,2,3
 Vlad Morar,24,Panetolikos Agrinio,GRC - Super League,right,183,Romania,CF,13,10,19,15,29,24,3,0,3,9,10,7,452,258,1138,991,1910,1725,0,0,2,1,3,1
-Georgios Vakrakos,20,Panetolikos Agrinio,GRC - Super League,,0,Greece,CF,,,,,1,1,,,,,0,0,,,,,64,1,,,,,0,0
+Georgios Vakrakos,20,Panetolikos Agrinio,GRC - Super League,,,Greece,CF,,,,,1,1,,,,,0,0,,,,,64,1,,,,,0,0
 Eugenio Isnaldo,24,Asteras Tripolis,GRC - Super League,left,180,Argentina,W,4,10,25,12,15,16,0,0,3,1,0,0,115,392,1557,878,544,855,0,1,1,2,2,0
 Gyeol-Hee Jang,19,Asteras Tripolis,GRC - Super League,left,175,Korea South,W,,,,,2,,,,,,0,,,,,,150,,,,,,0,
 Nikolaos Kaltsas,27,Asteras Tripolis,GRC - Super League,right,171,Greece,W,30,31,33,27,28,22,4,3,13,5,2,4,1314,2263,2641,1282,2019,1491,5,7,7,3,5,3
@@ -652,7 +652,7 @@ Giannis Kotsiras,25,Asteras Tripolis,GRC - Super League,right,183,Greece,W,,,,,1
 Nabil Jaadi,21,Asteras Tripolis,GRC - Super League,right,178,Morocco  Belgium,W,6,12,22,27,18,14,1,2,5,1,0,5,254,1140,1713,1321,451,1143,0,2,1,0,1,1
 Giannis Bastianos,19,Asteras Tripolis,GRC - Super League,right,173,Greece,W,,,,,6,16,,,,,0,1,,,,,234,1394,,,,,0,1
 Michalis Manias,28,Asteras Tripolis,GRC - Super League,right,189,Greece,CF,44,33,33,30,34,26,20,7,9,10,12,8,3203,2360,2008,2330,2204,1895,5,1,2,2,0,0
-Anastasios Douvikas,18,Asteras Tripolis,GRC - Super League,,0,Greece,CF,,,,,,18,,,,,,2,,,,,,630,,,,,,0
+Anastasios Douvikas,18,Asteras Tripolis,GRC - Super League,,,Greece,CF,,,,,,18,,,,,,2,,,,,,630,,,,,,0
 Rooney Wankewai,21,Asteras Tripolis,GRC - Super League,both,185,Cameroon,CF,,,,,21,17,,,,,3,5,,,,,1589,1485,,,,,0,0
 Enes Dolovac,19,PAS Giannina,GRC - Super League,,176,Serbia,W,,,,,3,2,,,,,2,0,,,,,219,65,,,,,0,0
 Georgios Manthatis,20,PAS Giannina,GRC - Super League,right,174,Greece,W,,0,7,8,27,29,,0,0,3,2,0,,0,386,555,1103,1715,,0,2,0,1,3
@@ -685,7 +685,7 @@ Matías Castro,26,AO Xanthi,GRC - Super League,right,182,Argentina,CF,,2,38,1,9,
 Nikolaos Sampanidis,19,AO Xanthi,GRC - Super League,,187,Greece,CF,,,,,,1,,,,,,0,,,,,,25,,,,,,0
 Milos Deletic,24,AE Larisa,GRC - Super League,right,179,Serbia,W,8,19,21,28,28,24,1,2,7,2,0,4,193,1195,1511,1470,1890,1847,0,4,0,2,2,3
 Nemanja Mladenovic,25,AE Larisa,GRC - Super League,left,179,Serbia,W,28,18,32,34,23,23,1,2,3,8,3,1,1669,1192,2351,2683,1202,1573,0,0,0,4,3,1
-Konstantinos Makris,19,AE Larisa,GRC - Super League,,0,Greece,W,,,,,0,1,,,,,0,0,,,,,0,8,,,,,0,0
+Konstantinos Makris,19,AE Larisa,GRC - Super League,,,Greece,W,,,,,0,1,,,,,0,0,,,,,0,8,,,,,0,0
 Thomas Nazlidis,30,AE Larisa,GRC - Super League,right,185,Greece,CF,27,8,22,33,30,31,5,4,4,5,9,7,1552,645,1185,2516,2627,2403,4,0,0,2,3,2
 Sandi Krizman,28,AE Larisa,GRC - Super League,right,179,Croatia,CF,28,26,2,22,24,30,5,7,0,3,8,8,2508,1890,153,1105,1832,2208,3,4,0,1,0,2
 Emanuel Perrone,34,AE Larisa,GRC - Super League,right,191,Argentina  Italy,CF,30,24,31,19,25,29,11,4,6,5,4,2,2454,1527,2135,810,1929,977,5,1,8,1,3,6
@@ -701,7 +701,7 @@ Nikolaos Tsoukalos,25,PAS Lamia 1964,GRC - Super League,left,183,Greece,W,4,22,1
 Michalis Frangos,27,PAS Lamia 1964,GRC - Super League,right,179,Greece,W,1,28,27,31,33,10,0,15,5,9,13,0,120,2388,1539,2081,2536,337,0,2,0,0,1,0
 Evgen Budnik,27,PAS Lamia 1964,GRC - Super League,right,185,Ukraine,CF,27,20,2,31,21,24,8,1,0,3,4,1,1277,849,96,1269,1659,1631,1,1,0,1,3,0
 Nikola Asceric,26,PAS Lamia 1964,GRC - Super League,right,193,Serbia,CF,1,18,14,32,25,9,0,3,1,8,4,1,16,1613,826,2081,1087,490,0,0,0,3,2,1
-Vangelis Patsarouchas,19,PAS Lamia 1964,GRC - Super League,,0,Greece,CF,,,,,5,2,,,,,0,0,,,,,78,28,,,,,0,0
+Vangelis Patsarouchas,19,PAS Lamia 1964,GRC - Super League,,,Greece,CF,,,,,5,2,,,,,0,0,,,,,78,28,,,,,0,0
 Petros Giakoumakis,25,APO Levadiakos,GRC - Super League,both,179,Greece,W,,,20,29,30,28,,,1,8,8,8,,,1005,2335,2056,2069,,,1,1,1,2
 Mohamed Youssouf,29,APO Levadiakos,GRC - Super League,left,168,Comoros  France,W,1,2,30,19,11,23,0,0,6,1,1,2,34,210,2286,1134,630,1980,0,0,4,1,0,2
 Chahir Belghazouani,31,APO Levadiakos,GRC - Super League,left,180,Morocco  France,W,30,18,29,5,5,19,6,0,3,0,0,2,2040,1174,1907,154,198,1114,1,0,0,1,0,3
@@ -965,7 +965,7 @@ Abdoulay Diaby,26,Club Brugge KV,BEL - Jupiler Pro League,left,173,Mali  France,
 Jelle Vossen,28,Club Brugge KV,BEL - Jupiler Pro League,right,180,Belgium,CF,49,53,42,46,45,30,25,19,9,16,18,7,3976,4515,2324,2544,3096,1287,7,9,3,3,8,3
 Krépin Diatta,19,Club Brugge KV,BEL - Jupiler Pro League,right,173,Senegal,CF,,,,,27,0,,,,,8,0,,,,,1744,0,,,,,8,0
 Leandro Trossard,23,KRC Genk,BEL - Jupiler Pro League,right,172,Belgium,W,13,20,41,31,52,7,7,4,17,9,9,3,896,1353,3376,2130,2800,411,0,0,1,7,6,2
-Holly Tshimanga,20,KRC Genk,BEL - Jupiler Pro League,,0,Belgium  DR Congo,W,,,4,,2,,,,0,,0,,,,131,,11,,,,0,,0,
+Holly Tshimanga,20,KRC Genk,BEL - Jupiler Pro League,,,Belgium  DR Congo,W,,,4,,2,,,,0,,0,,,,131,,11,,,,0,,0,
 Dieumerci Ndongala,26,KRC Genk,BEL - Jupiler Pro League,right,170,DR Congo  Belgium,W,11,7,35,41,18,23,2,1,5,7,0,2,760,285,2507,3255,718,1195,0,4,5,2,3,1
 Edon Zhegrova,18,KRC Genk,BEL - Jupiler Pro League,left,174,Kosovo  Albania,W,,,,,,14,,,,,,1,,,,,,708,,,,,,2
 Dante Vanzeir,19,KRC Genk,BEL - Jupiler Pro League,right,175,Belgium,W,,,,,2,6,,,,,0,1,,,,,26,191,,,,,0,0
@@ -981,14 +981,14 @@ Roman Yaremchuk,22,KAA Gent,BEL - Jupiler Pro League,right,191,Ukraine,CF,,19,23
 Rangelo Janga,25,KAA Gent,BEL - Jupiler Pro League,right,192,Curacao  Netherlands,CF,27,17,,37,40,27,4,1,,24,17,20,1257,588,,3101,3293,1787,1,0,,2,4,5
 Edmílson Junior,23,Standard Liège,BEL - Jupiler Pro League,right,180,Brazil  Belgium,W,29,21,24,35,39,26,2,1,2,9,7,4,1378,814,1523,2881,2728,1876,0,1,0,6,6,2
 Paul-José Mpoku,25,Standard Liège,BEL - Jupiler Pro League,right,174,DR Congo  Belgium,W,31,49,43,20,36,32,9,12,10,0,4,5,2228,3442,3348,753,2031,2529,8,9,8,0,4,6
-Moussa Djenepo,19,Standard Liège,BEL - Jupiler Pro League,,0,Mali,W,,,,,,14,,,,,,1,,,,,,134,,,,,,1
+Moussa Djenepo,19,Standard Liège,BEL - Jupiler Pro League,,,Mali,W,,,,,,14,,,,,,1,,,,,,134,,,,,,1
 Mehdi Carcela-González,28,Standard Liège,BEL - Jupiler Pro League,left,179,Morocco  Belgium,W,36,33,23,29,24,23,2,3,3,3,5,3,1853,1954,1772,1342,1774,1553,7,3,2,7,1,4
 Duje Cop,28,Standard Liège,BEL - Jupiler Pro League,right,186,Croatia,CF,31,50,43,32,31,22,11,32,19,7,9,4,2062,3610,2631,2064,2281,1106,4,8,4,3,3,2
 Renaud Emond,26,Standard Liège,BEL - Jupiler Pro League,right,186,Belgium,CF,,16,34,31,16,23,,3,14,4,3,9,,533,2553,1426,557,1135,,0,1,1,1,3
 Hassane Bandé,19,KV Mechelen,BEL - Jupiler Pro League,right,178,Burkina Faso,W,,,,,,27,,,,,,12,,,,,,2136,,,,,,2
 Clément Tainmont,32,KV Mechelen,BEL - Jupiler Pro League,left,185,France,W,35,27,40,29,33,19,6,5,8,1,1,3,2666,2118,3066,1512,2005,1289,7,2,6,9,8,2
 Andy Kawaya,21,KV Mechelen,BEL - Jupiler Pro League,left,174,Belgium  DR Congo,W,,11,17,17,,13,,4,1,0,,0,,925,793,651,,481,,1,10,0,,0
-Abou Ouattara,18,KV Mechelen,BEL - Jupiler Pro League,,0,Burkina Faso,W,,,,,,1,,,,,,0,,,,,,11,,,,,,0
+Abou Ouattara,18,KV Mechelen,BEL - Jupiler Pro League,,,Burkina Faso,W,,,,,,1,,,,,,0,,,,,,11,,,,,,0
 Fatos Beqiraj,29,KV Mechelen,BEL - Jupiler Pro League,right,188,Montenegro  Kosovo,CF,37,48,27,28,33,22,6,13,13,8,10,2,2283,2953,2351,2339,2024,1159,6,8,8,3,5,2
 Nicolas Verdier,31,KV Mechelen,BEL - Jupiler Pro League,left,187,France,CF,25,35,33,35,37,24,5,10,3,10,9,2,1215,2376,1355,2592,2532,1019,1,0,3,5,3,1
 Nicklas Pedersen,30,KV Mechelen,BEL - Jupiler Pro League,right,188,Denmark,CF,27,32,10,13,15,27,13,6,4,1,1,5,2009,1851,423,323,218,1238,2,3,1,0,1,0
@@ -1030,7 +1030,7 @@ Jordan Botaka,24,Sint-Truidense VV,BEL - Jupiler Pro League,right,184,DR Congo  
 Yohan Boli,24,Sint-Truidense VV,BEL - Jupiler Pro League,,181,Cote d'Ivoire  France,CF,,18,,16,27,29,,2,,5,7,6,,783,,742,1666,1762,,0,,0,2,2
 Chuba Akpom,22,Sint-Truidense VV,BEL - Jupiler Pro League,right,186,England  Nigeria,CF,20,29,25,41,15,14,13,11,9,7,3,3,1670,2032,1457,2152,563,1000,2,4,2,1,2,1
 Babacar Gueye,23,Sint-Truidense VV,BEL - Jupiler Pro League,right,190,Senegal,CF,,,3,11,19,10,,,0,1,3,0,,,98,738,628,449,,,0,2,2,1
-Kurt Abrahams,21,Sint-Truidense VV,BEL - Jupiler Pro League,,0,South Africa,CF,,,,,7,8,,,,,3,0,,,,,178,170,,,,,1,0
+Kurt Abrahams,21,Sint-Truidense VV,BEL - Jupiler Pro League,,,South Africa,CF,,,,,7,8,,,,,3,0,,,,,178,170,,,,,1,0
 Nana Opoku Ampomah,22,Waasland-Beveren,BEL - Jupiler Pro League,,175,Ghana,W,,,,,20,32,,,,,2,8,,,,,510,2472,,,,,1,3
 Aleksandar Boljevic,22,Waasland-Beveren,BEL - Jupiler Pro League,both,186,Montenegro,W,8,27,31,25,32,30,0,5,5,5,1,2,656,1992,1981,1902,1679,1946,2,1,1,4,6,4
 Tuur Dierckx,22,Waasland-Beveren,BEL - Jupiler Pro League,both,171,Belgium,W,2,7,39,34,27,23,1,0,6,5,6,3,154,90,699,1061,1779,799,0,0,2,3,6,2
@@ -1040,7 +1040,7 @@ Isaac Thelin,25,Waasland-Beveren,BEL - Jupiler Pro League,right,189,Sweden  DR C
 Ryan Mmaee,20,Waasland-Beveren,BEL - Jupiler Pro League,,183,Belgium  Morocco,CF,,,,5,7,18,,,,0,1,1,,,,226,417,663,,,,1,1,5
 Cherif Ndiaye,22,Waasland-Beveren,BEL - Jupiler Pro League,,188,Senegal,CF,,,,,4,4,,,,,0,0,,,,,67,51,,,,,0,0
 Steve De Ridder,31,KSC Lokeren,BEL - Jupiler Pro League,right,178,Belgium,W,13,36,36,39,34,29,0,12,3,5,4,7,635,2977,2169,2928,2496,2438,1,6,3,4,6,4
-Bob Straetman,20,KSC Lokeren,BEL - Jupiler Pro League,,0,Belgium,W,,,,,26,8,,,,,2,1,,,,,1190,292,,,,,1,1
+Bob Straetman,20,KSC Lokeren,BEL - Jupiler Pro League,,,Belgium,W,,,,,26,8,,,,,2,1,,,,,1190,292,,,,,1,1
 Mohamed Ofkir,21,KSC Lokeren,BEL - Jupiler Pro League,,178,Norway,W,,,12,26,9,,,,0,4,0,,,,868,1488,402,,,,2,5,1,
 Guus Hupperts,25,KSC Lokeren,BEL - Jupiler Pro League,right,176,Netherlands,W,38,38,34,41,27,18,4,13,5,2,3,2,2613,2961,1829,2068,2061,1117,3,6,3,5,5,3
 Marko Miric,30,KSC Lokeren,BEL - Jupiler Pro League,right,193,Serbia,W,16,24,30,34,31,16,0,5,11,5,5,4,887,1445,2055,2535,1715,842,0,3,5,5,3,1
@@ -1126,11 +1126,11 @@ Pires,36,Portimonense SC,PRT - Liga NOS,right,179,Portugal,CF,41,45,25,52,43,18,
 Yannick Djaló,31,Vitória Setúbal FC,PRT - Liga NOS,right,171,Portugal  Guinea-Bissau,W,20,18,10,34,,,1,3,1,16,,,1033,1134,771,2378,,,0,1,0,7,,
 André Pereira,22,Vitória Setúbal FC,PRT - Liga NOS,left,188,Portugal,CF,,,0,,13,25,,,0,,4,10,,,0,,815,1704,,,0,,1,5
 Edinho,35,Vitória Setúbal FC,PRT - Liga NOS,right,182,Portugal  Guinea-Bissau,CF,40,29,27,33,32,29,18,13,10,13,9,5,2640,1957,1439,2106,2070,1271,2,2,0,3,0,3
-Allef,23,Vitória Setúbal FC,PRT - Liga NOS,right,0,Brazil,CF,,,,,,6,,,,,,1,,,,,,69,,,,,,0
+Allef,23,Vitória Setúbal FC,PRT - Liga NOS,right,,Brazil,CF,,,,,,6,,,,,,1,,,,,,69,,,,,,0
 Nathan,21,CF Belenenses,PRT - Liga NOS,right,177,Brazil,W,,13,,31,32,7,,0,,8,5,1,,400,,1553,1774,262,,1,,3,3,0
 Diogo Viana,28,CF Belenenses,PRT - Liga NOS,right,174,Portugal,W,32,31,37,11,24,25,4,4,1,2,5,0,2588,2275,2547,419,1546,2005,1,4,7,1,1,1
 Licá,29,CF Belenenses,PRT - Liga NOS,right,181,Portugal,W,35,36,23,33,22,8,6,4,0,6,1,0,3054,1630,1463,2156,1376,481,3,5,3,4,2,1
-Benny,21,CF Belenenses,PRT - Liga NOS,right,0,Portugal,W,,,,,8,20,,,,,0,2,,,,,258,888,,,,,0,1
+Benny,21,CF Belenenses,PRT - Liga NOS,right,,Portugal,W,,,,,8,20,,,,,0,2,,,,,258,888,,,,,0,1
 Maurides,24,CF Belenenses,PRT - Liga NOS,left,189,Brazil,CF,0,1,,42,12,28,0,0,,6,6,4,0,10,,2279,930,2013,0,0,,3,3,3
 Yazalde,29,CF Belenenses,PRT - Liga NOS,right,183,Guinea-Bissau  Portugal,CF,31,34,29,35,19,7,3,8,1,3,1,1,2518,2181,1520,1974,900,245,1,2,0,5,0,0
 Tiago Caeiro,33,CF Belenenses,PRT - Liga NOS,right,192,Portugal,CF,29,20,22,38,20,19,12,2,4,9,4,1,1573,862,601,1599,474,639,1,0,1,3,0,0

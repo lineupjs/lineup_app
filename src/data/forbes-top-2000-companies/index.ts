@@ -1,11 +1,13 @@
-import {IDataset} from '../IDataset';
+import {IDataset, PRELOADED_TYPE} from '../IDataset';
 import {parse, ParseResult} from 'papaparse';
 import {builder, buildRanking, buildStringColumn, buildCategoricalColumn, buildNumberColumn} from 'lineupjs';
 import image from './forbes.png';
 
 export const data: IDataset = {
   id: 'forbes',
-  title: 'Forbes Top 2000',
+  type: PRELOADED_TYPE,
+  creationDate: new Date(),
+  name: 'Forbes Top 2000',
   image,
   link: 'https://www.kaggle.com/ash316/forbes-top-2000-companies',
   description: `<p>
@@ -13,31 +15,28 @@ export const data: IDataset = {
   the company size, its market value, sales, profit,etc.
 </p>`,
   rawData: '',
-  buildScript(rawVariable: string, domVariable: string) {
+  buildScript(rawVariable: string, domVariable: string, dumpVariable: string) {
     return `
-  const parsed = Papa.parse(${rawVariable}, {
-    dynamicTyping: true,
-    header: true,
-    skipEmptyLines: true
-  });
+const parsed = Papa.parse(${rawVariable}, {
+  dynamicTyping: true,
+  header: true,
+  skipEmptyLines: true
+});
+const dump = ${dumpVariable};
 
-  const lineup = LineUpJS.builder(parsed.data)
-    .column(buildStringColumn('Company'))
-    .column(buildStringColumn('Country'))
-    .column(buildNumberColumn('Rank'))
-    .column(buildNumberColumn('Sales'))
-    .column(buildNumberColumn('Market Value'))
-    .column(buildNumberColumn('Profits'))
-    .column(buildNumberColumn('Assets'))
-    .column(buildCategoricalColumn('Sector'))
-    .column(buildStringColumn('Industry'))
-    .deriveColors()
-    .ranking(buildRanking()
-      .supportTypes()
-      .allColumns()
-      .sortBy('Rank', 'asc')
-    )
-    .buildTaggle(${domVariable});
+const lineup = LineUpJS.builder(parsed.data)
+  .column(LineUpJS.buildStringColumn('Company'))
+  .column(LineUpJS.buildStringColumn('Country'))
+  .column(LineUpJS.buildNumberColumn('Rank'))
+  .column(LineUpJS.buildNumberColumn('Sales'))
+  .column(LineUpJS.buildNumberColumn('Market Value'))
+  .column(LineUpJS.buildNumberColumn('Profits'))
+  .column(LineUpJS.buildNumberColumn('Assets'))
+  .column(LineUpJS.buildCategoricalColumn('Sector'))
+  .column(LineUpJS.buildStringColumn('Industry'))
+  .deriveColors()
+  .restore(dump)
+  .buildTaggle(${domVariable});
   `;
   },
   build(node: HTMLElement) {

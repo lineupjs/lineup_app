@@ -1,0 +1,39 @@
+@import '~font-awesome/scss/variables';
+@import '~font-awesome/scss/path';
+@import '~font-awesome/scss/mixins';
+
+.fa-codepen::before,
+.fa-jsfiddle::before,
+.fa-file-code-o::before,
+.fa-code::before,
+.fa-file-excel-o::before,
+.fa-file-archive-o::before {
+  @include fa-icon();
+
+  font-size: 20px;
+  transform: translateY(-4px);
+}
+
+.fa-codepen::before {
+  content: $fa-var-codepen;
+}
+
+.fa-jsfiddle::before {
+  content: $fa-var-jsfiddle;
+}
+
+.fa-code::before {
+  content: $fa-var-code;
+}
+
+.fa-file-code-o::before {
+  content: $fa-var-file-code-o;
+}
+
+.fa-file-excel-o::before {
+  content: $fa-var-file-excel-o;
+}
+
+.fa-file-archive-o::before {
+  content: $fa-var-file-archive-o;
+}

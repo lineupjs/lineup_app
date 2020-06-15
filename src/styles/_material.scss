@@ -1,0 +1,43 @@
+@import './vars';
+
+// modify checkbox style
+[type="checkbox"] {
+  + span {
+    padding-left: 25px;
+  }
+
+  + span::before,
+  &:not(.filled-in) + span::after {
+    border: 1px solid color("grey", "darken-1");
+  }
+
+  &:not(:checked):disabled + span {
+    cursor: not-allowed;
+  }
+
+  &:not(:checked):disabled + span::before {
+    border: 1px solid color("grey", "lighten-1");
+    background: color("grey", "lighten-2");
+  }
+}
+
+.lu-textarea {
+  background-color: transparent;
+  border: none;
+  border-bottom: 1px solid #9e9e9e;
+  border-radius: 0;
+  outline: none;
+  height: 2.4rem * 5;
+  width: 100%;
+  min-width: 20rem;
+  font-size: 16px;
+  margin: 0 0 8px 0;
+  box-shadow: none;
+  transition: box-shadow 0.3s, border 0.3s;
+  line-height: normal;
+  overflow-y: hidden;
+  padding: 0.8rem 0;
+  resize: none;
+  min-height: 2.4rem;
+  box-sizing: border-box;
+}
