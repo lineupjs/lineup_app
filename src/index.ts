@@ -1,3 +1,8 @@
+import '!file-loader?name=LineUpJS.js!lineupjs/build/LineUpJS.js';
+import '!file-loader?name=LineUpJS.css!lineupjs/build/LineUpJS.css';
+import '!file-loader?name=LineUpJS.js.map!lineupjs/build/LineUpJS.js.map';
+import '!file-loader?name=LineUpJS.css.map!lineupjs/build/LineUpJS.css.map';
+
 import {Tooltip, Carousel, FloatingActionButton, toast} from 'materialize-css';
 import 'file-loader?name=index.html!extract-loader!html-loader?interpolate!./index.html';
 import './assets/favicon/favicon';
