@@ -82,7 +82,9 @@ module.exports = (_env, options) => {
         skipWaiting: true,
       })
     ]),
-    externals: {},
+    externals: {
+      'lineupjs': 'LineUpJS',
+    },
     module: {
       rules: [{
           test: /\.s?css$/,
