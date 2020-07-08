@@ -14,7 +14,7 @@ import {IDataset, fromFile, allDatasets, ISession, PRELOADED_TYPE, createCard} f
 import {storeDataset, storeSession, deleteDataset, editDataset} from './data/db';
 import {saveDialog, areyousure} from './ui';
 
-declare const __LINEUP_VERSION__: string;
+declare const LineUpJS: {version: string};
 
 function forEach(selector: string, callback: (d: HTMLElement)=>void) {
   Array.from(document.querySelectorAll<HTMLElement>(selector)).forEach(callback);
@@ -255,7 +255,7 @@ Tooltip.init(document.querySelectorAll('.tooltipped'));
 
 {
   // update version info
-  document.querySelector<HTMLElement>('.version-info')!.innerHTML = `LineUp.js v${__LINEUP_VERSION__}`;
+  document.querySelector<HTMLElement>('.version-info')!.innerHTML = `LineUp.js v${LineUpJS.version}`;
 }
 
 document.querySelector<HTMLElement>('.save-session')!.onclick = (evt) => {
