@@ -60,7 +60,7 @@ const lineup = LineUpJS.builder(parsed.data)
           skipEmptyLines: true,
         });
       })
-      .then((parsed: ParseResult) => {
+      .then((parsed: ParseResult<any>) => {
         const suffix = [12, 13, 14, 15, 16, 17];
         const cols = ['games', 'goals', 'minutes', 'assists'];
         const labels = suffix.map((d) => `20${d}`);

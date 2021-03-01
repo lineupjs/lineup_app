@@ -1,5 +1,5 @@
-import { ISession, IDataset } from './data';
-import { LineUp, Taggle } from 'lineupjs';
+import type { ISession, IDataset } from './data';
+import type { LineUp, Taggle } from 'lineupjs';
 
 export const shared: {
   lineup: LineUp | Taggle | null;

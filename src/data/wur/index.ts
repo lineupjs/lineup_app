@@ -27,7 +27,7 @@ and for undermining non-English-instructing institutions.
 </p>`,
   rawData: '',
   buildScript(rawVariable: string, domVariable: string, dumpVariable: string) {
-    const yearArray = (<any>this).yearArray;
+    const yearArray = (this as any).yearArray;
     return `
 // per year:
 const yearArray = ${JSON.stringify(yearArray)};
@@ -63,10 +63,10 @@ const lineup = b.deriveColors().restore(dump).buildTaggle(${domVariable});
           skipEmptyLines: true,
         });
       })
-      .then((parsed: ParseResult) => {
+      .then((parsed: ParseResult<any>) => {
         const { rows, yearArray } = reGroup(parsed.data, 'institution');
         this.rawData = JSON.stringify(rows);
-        (<any>this).yearArray = yearArray;
+        (this as any).yearArray = yearArray;
 
         // world_rank,institution,country,national_rank,quality_of_education,alumni_employment,quality_of_faculty,publications,influence,citations,broad_impact,patents,year
         // multiple years
@@ -119,7 +119,7 @@ and for undermining humanities and quality of instruction.
 </p>`,
   rawData: '',
   buildScript(rawVariable: string, domVariable: string, dumpVariable: string) {
-    const yearArray = (<any>this).yearArray;
+    const yearArray = (this as any).yearArray;
     return `// per year:
 const yearArray = ${JSON.stringify(yearArray)};
 const rows = JSON.parse(${rawVariable});
@@ -160,11 +160,11 @@ const lineup = b.deriveColors().restore(dump).buildTaggle(${domVariable});`;
           skipEmptyLines: true,
         });
       })
-      .then((parsed: ParseResult) => {
+      .then((parsed: ParseResult<any>) => {
         const { rows, yearArray } = reGroup(parsed.data, 'university_name');
 
         this.rawData = JSON.stringify(rows);
-        (<any>this).yearArray = yearArray;
+        (this as any).yearArray = yearArray;
         // world_rank,university_name,national_rank,total_score,alumni,award,hici,ns,pub,pcp,year
         // multiple years
         // per year:

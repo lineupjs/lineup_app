@@ -9,13 +9,13 @@ import LZString from 'lz-string';
 declare const LineUpJS: { version: string };
 
 export default function initExport() {
-  const downloadHelper = <HTMLLinkElement>document.querySelector('#downloadHelper');
+  const downloadHelper = document.querySelector<HTMLAnchorElement>('#downloadHelper');
 
   const downloadImpl = (data: string, name: string, mimetype: string) => {
     // download link
     const b = new Blob([data], { type: mimetype });
     downloadHelper.href = URL.createObjectURL(b);
-    (<any>downloadHelper).download = name;
+    downloadHelper.download = name;
     downloadHelper.click();
   };
 
@@ -41,9 +41,9 @@ export default function initExport() {
     });
   });
 
-  const createCodepen = <HTMLLinkElement>document.querySelector('#createCodePen');
-  const createCodepenHelper = <HTMLFormElement>document.querySelector('#createCodePenHelper');
-  createCodepen.addEventListener('click', (evt) => {
+  const createCodePen = document.querySelector<HTMLLinkElement>('#createCodePen');
+  const createCodePenHelper = document.querySelector<HTMLFormElement>('#createCodePenHelper');
+  createCodePen.addEventListener('click', (evt) => {
     evt.preventDefault();
     evt.stopPropagation();
 
@@ -76,12 +76,12 @@ export default function initExport() {
       .replace(/"/g, '&quot;')
       .replace(/'/g, '&apos;');
 
-    createCodepenHelper.querySelector('input')!.value = json;
-    createCodepenHelper.submit();
+    createCodePenHelper.querySelector('input')!.value = json;
+    createCodePenHelper.submit();
   });
 
-  const createJSFiddle = <HTMLLinkElement>document.querySelector('#createJSFiddle');
-  const createJSFiddleHelper = <HTMLFormElement>document.querySelector('#createJSFiddleHelper');
+  const createJSFiddle = document.querySelector<HTMLLinkElement>('#createJSFiddle');
+  const createJSFiddleHelper = document.querySelector<HTMLFormElement>('#createJSFiddleHelper');
   createJSFiddle.addEventListener('click', (evt) => {
     evt.preventDefault();
     evt.stopPropagation();
@@ -120,8 +120,8 @@ export default function initExport() {
     createJSFiddleHelper.submit();
   });
 
-  const createCodeSandbox = <HTMLLinkElement>document.querySelector('#createCodeSandbox');
-  const createCodeSandboxHelper = <HTMLFormElement>document.querySelector('#createCodeSandboxHelper');
+  const createCodeSandbox = document.querySelector<HTMLLinkElement>('#createCodeSandbox');
+  const createCodeSandboxHelper = document.querySelector<HTMLFormElement>('#createCodeSandboxHelper');
   createCodeSandbox.addEventListener('click', (evt) => {
     evt.preventDefault();
     evt.stopPropagation();

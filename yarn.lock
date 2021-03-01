@@ -1981,6 +1981,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/html-minifier-terser@npm:^5.0.0":
+  version: 5.1.1
+  resolution: "@types/html-minifier-terser@npm:5.1.1"
+  checksum: 1e750b93e1240a6a3bc6d2748a4f09215c9557b8f6655ee57d1e88c7afcc171e2998a1e97a771c64ef8eeadc9db5623f9e08e09574a549cb74549cdbad5a73b7
+  languageName: node
+  linkType: hard
+
 "@types/http-cache-semantics@npm:*":
   version: 4.0.0
   resolution: "@types/http-cache-semantics@npm:4.0.0"
@@ -4062,6 +4069,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"boolbase@npm:^1.0.0, boolbase@npm:~1.0.0":
+  version: 1.0.0
+  resolution: "boolbase@npm:1.0.0"
+  checksum: e827963c416fdb1dbcd57e066a43c40829518f4dcdc9f58ed04519daeebb610adacbb6cf102518bda9f08be593c5b1b49a83e36bf6b7d91b3403f7e35510eeae
+  languageName: node
+  linkType: hard
+
 "boxen@npm:^5.0.0":
   version: 5.0.0
   resolution: "boxen@npm:5.0.0"
@@ -5000,6 +5014,25 @@ __metadata:
   languageName: node
   linkType: hard
 
+"css-select@npm:^2.0.2":
+  version: 2.1.0
+  resolution: "css-select@npm:2.1.0"
+  dependencies:
+    boolbase: ^1.0.0
+    css-what: ^3.2.1
+    domutils: ^1.7.0
+    nth-check: ^1.0.2
+  checksum: b534aad04abbd433849d55b93e234b81c1ade4422c638a916fd7163db5a3b07186e92ce43c292d954417c8ce020eb31b8990ed2fb30c9c145c7f2549621e8095
+  languageName: node
+  linkType: hard
+
+"css-what@npm:^3.2.1":
+  version: 3.4.2
+  resolution: "css-what@npm:3.4.2"
+  checksum: f9f258ad625f54485981aac75bed584984310fee33d3ba9a25fbb9e84d5abbf2a13ff8599fd0c13a76f96accc3dc6e569679bf84047fc6c0148268ca8248e008
+  languageName: node
+  linkType: hard
+
 "cssesc@npm:^3.0.0":
   version: 3.0.0
   resolution: "cssesc@npm:3.0.0"
@@ -5520,6 +5553,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"dom-converter@npm:^0.2":
+  version: 0.2.0
+  resolution: "dom-converter@npm:0.2.0"
+  dependencies:
+    utila: ~0.4
+  checksum: 437b4464bd3c5e654decf855f9263e939d633d7bb720512f9a400b3e1005d870eb4a5fbead7d9ccb7849f7df5ee30c62f9a56b68143c13575ae5fef16007742c
+  languageName: node
+  linkType: hard
+
 "dom-serializer@npm:0":
   version: 0.2.2
   resolution: "dom-serializer@npm:0.2.2"
@@ -5562,7 +5604,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"domutils@npm:^1.5.1":
+"domutils@npm:^1.5.1, domutils@npm:^1.7.0":
   version: 1.7.0
   resolution: "domutils@npm:1.7.0"
   dependencies:
@@ -7373,19 +7415,7 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"html-loader@npm:^2.1.1":
-  version: 2.1.1
-  resolution: "html-loader@npm:2.1.1"
-  dependencies:
-    html-minifier-terser: ^5.1.1
-    parse5: ^6.0.1
-  peerDependencies:
-    webpack: ^5.0.0
-  checksum: 7f170a2d0a519668720b366987fcd0d18582a5b527baaa930dbf313b918da2d8bac35c5577bdc0cf2d22bda4a1902433491c241f81a2ef52b98bb72a736b5bd6
-  languageName: node
-  linkType: hard
-
-"html-minifier-terser@npm:^5.1.1":
+"html-minifier-terser@npm:^5.0.1":
   version: 5.1.1
   resolution: "html-minifier-terser@npm:5.1.1"
   dependencies:
@@ -7409,7 +7439,23 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"htmlparser2@npm:^3.10.0":
+"html-webpack-plugin@npm:^5.2.0":
+  version: 5.2.0
+  resolution: "html-webpack-plugin@npm:5.2.0"
+  dependencies:
+    "@types/html-minifier-terser": ^5.0.0
+    html-minifier-terser: ^5.0.1
+    loader-utils: ^2.0.0
+    lodash: ^4.17.20
+    pretty-error: ^2.1.1
+    tapable: ^2.0.0
+  peerDependencies:
+    webpack: ^5.20.0
+  checksum: a7476f0fb75c6728754bd963f1f09abaebacf6a238bf75a852ec2b07afaa3c0c1872d74ea81175598dccd0b9375093034035a505454919a708be7c7453ca6df6
+  languageName: node
+  linkType: hard
+
+"htmlparser2@npm:^3.10.0, htmlparser2@npm:^3.10.1":
   version: 3.10.1
   resolution: "htmlparser2@npm:3.10.1"
   dependencies:
@@ -9258,7 +9304,7 @@ fsevents@^1.2.7:
     file-loader: ^6.2.0
     font-awesome: ^4.7.0
     fork-ts-checker-webpack-plugin: ^6.1.0
-    html-loader: ^2.1.1
+    html-webpack-plugin: ^5.2.0
     jest: ^26.6.3
     lineupjs: ^4.1.2
     lz-string: ^1.4.4
@@ -10271,6 +10317,15 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
+"nth-check@npm:^1.0.2":
+  version: 1.0.2
+  resolution: "nth-check@npm:1.0.2"
+  dependencies:
+    boolbase: ~1.0.0
+  checksum: 88a58b8b6289344749102019422705e8e6fa870d55e4bd4c71f860105ea5b8145ae71657f6edd6df953964081f52d65936a3eec4af1d9ee42122e42d293b2abe
+  languageName: node
+  linkType: hard
+
 "num2fraction@npm:^1.2.2":
   version: 1.2.2
   resolution: "num2fraction@npm:1.2.2"
@@ -10768,13 +10823,6 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"parse5@npm:^6.0.1":
-  version: 6.0.1
-  resolution: "parse5@npm:6.0.1"
-  checksum: e312014edd76a6dc2eac35248ad53477b2594a7b92b7a00f66169483bb87c3d1d36660daddeb720457418dfe0893eb3ad1043085047fc3699167afa6834cb4c4
-  languageName: node
-  linkType: hard
-
 "parseurl@npm:~1.3.2, parseurl@npm:~1.3.3":
   version: 1.3.3
   resolution: "parseurl@npm:1.3.3"
@@ -11190,6 +11238,16 @@ fsevents@^1.2.7:
   version: 5.6.0
   resolution: "pretty-bytes@npm:5.6.0"
   checksum: 2a2db3daaee5c7271dbc68cc875118f4e2b6697e9e4e73b4ea5d5639f50cff2c1f1f7db4775119974eff86fdbd1fac2a5d9f16bc41d90626821a9f6a0e6e26cf
+  languageName: node
+  linkType: hard
+
+"pretty-error@npm:^2.1.1":
+  version: 2.1.2
+  resolution: "pretty-error@npm:2.1.2"
+  dependencies:
+    lodash: ^4.17.20
+    renderkid: ^2.0.4
+  checksum: 8c0982203661527cb43f24d4a692584d7df0e47582cc0d215b1f84b815db7fe1ddde736b96a3f47f67b200e0167b213aee8549fed8f30c5024d20ecaa324dc77
   languageName: node
   linkType: hard
 
@@ -11834,6 +11892,19 @@ fsevents@^1.2.7:
   version: 1.1.0
   resolution: "remove-trailing-separator@npm:1.1.0"
   checksum: 17dadf3d1f7c51411b7c426c8e2d6a660359bc8dae7686137120483fe4345bfca4bf7460d2c302aa741a7886c932d8dad708d2b971669d74e0fb3ff9a4814408
+  languageName: node
+  linkType: hard
+
+"renderkid@npm:^2.0.4":
+  version: 2.0.5
+  resolution: "renderkid@npm:2.0.5"
+  dependencies:
+    css-select: ^2.0.2
+    dom-converter: ^0.2
+    htmlparser2: ^3.10.1
+    lodash: ^4.17.20
+    strip-ansi: ^3.0.0
+  checksum: 12189dd90eeea03b2a4c81145749d1e214b7dd3ce4667c6d6e4d09359f16d3b2f7845bd1f19e7a6a53a93f83f778dfe0119f23c30983c3e1a28cc483338ade65
   languageName: node
   linkType: hard
 
@@ -13294,7 +13365,7 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"tapable@npm:^2.1.1, tapable@npm:^2.2.0":
+"tapable@npm:^2.0.0, tapable@npm:^2.1.1, tapable@npm:^2.2.0":
   version: 2.2.0
   resolution: "tapable@npm:2.2.0"
   checksum: f8ed725aedb3d777bf908ff06c02d1a2108667d3e64af87dd45354ac8de67e7e4fe1a567e215057fb1a2a5437b31d80cc5e5ddbb8327f7280afd4494967a9a93
@@ -14053,6 +14124,13 @@ typescript@~4.1.5:
   version: 1.0.2
   resolution: "util-deprecate@npm:1.0.2"
   checksum: 73c2b1cf0210ccac300645384d8443cabbd93194117b2dc1b3bae8d8279ad39aedac857e020c4ea505e96a1045059c7359db3df6a9df0be6b8584166c9d61dc9
+  languageName: node
+  linkType: hard
+
+"utila@npm:~0.4":
+  version: 0.4.0
+  resolution: "utila@npm:0.4.0"
+  checksum: 6799b0a5666ac26fb547068e6967e51b534e290174b10ae26e500c216197b0faed9be8a12108bc408ce475ce1002c866aac2d1d4e1453dc72b441d8900f2063a
   languageName: node
   linkType: hard
 

@@ -17,7 +17,7 @@ jobs:
       - save_cache:
           key: deps2-{{ checksum "package.json" }}-{{ checksum "package-lock.json" }}
           paths:
-          - ./node_modules
+            - ./node_modules
       - restore_cache:
           key: deps2-e-{{ checksum "electron/package.tmpl.json" }}
       - run:
@@ -26,7 +26,7 @@ jobs:
       - save_cache:
           key: deps2-e-{{ checksum "electron/package.tmpl.json" }}
           paths:
-          - ./electron/node_modules
+            - ./electron/node_modules
       - store_artifacts:
           path: dist
       - run: #update build doc and readme

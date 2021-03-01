@@ -1,7 +1,7 @@
 import { IDataset, PRELOADED_TYPE } from './IDataset';
 import { toast } from 'materialize-css';
 import { deleteSession } from './db';
-import { areyousure, fromNow } from '../ui';
+import { areYouSure, fromNow } from '../ui';
 
 function sessions(dataset: IDataset, card: HTMLElement) {
   if (!dataset.sessions || dataset.sessions.length === 0) {
@@ -48,7 +48,7 @@ function sessions(dataset: IDataset, card: HTMLElement) {
         return;
       }
       try {
-        await areyousure(`to delete session "${session.name}" of dataset "${dataset.name}"`);
+        await areYouSure(`to delete session "${session.name}" of dataset "${dataset.name}"`);
         await deleteSession(session);
         toast({ html: `Session "${session.name}" of dataset "${dataset.name}" deleted`, displayLength: 5000 });
         d.closest('li')!.remove();
@@ -104,7 +104,7 @@ export function createCard(
       ${dataset.link ? `<p><a href="${dataset.link}" target="_blank" rel="noopener">Kaggle Link</a></p>` : ''}
     </div>
   </div>`;
-  sessions(dataset, <HTMLElement>card);
+  sessions(dataset, card as HTMLElement);
 
   if (dataset.type === PRELOADED_TYPE) {
     // no further actions

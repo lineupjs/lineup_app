@@ -1,4 +1,4 @@
-import { LineUp, Taggle } from 'lineupjs';
+import type { LineUp, Taggle } from 'lineupjs';
 
 export const PRELOADED_TYPE = 'preloaded';
 

@@ -17,8 +17,8 @@ class LineUpDB extends Dexie {
       sessions: '++uid,dataset,creationDate',
     });
     // hack for linting
-    this.datasets = (<any>this).datasets || <any>undefined;
-    this.sessions = (<any>this).sessions || <any>undefined;
+    this.datasets = (this as any).datasets ?? undefined;
+    this.sessions = (this as any).sessions ?? undefined;
   }
 }
 
@@ -44,8 +44,8 @@ export function storeDataset(dataset: IDataset): Promise<IDataset> {
     };
     return db.sessions.add(row).then((uid) => Object.assign(row, { uid }));
   });
-  return Promise.all<(IDataset | ISession)[]>([<any>add].concat(s)).then((r: any[]) => {
-    const ds = <IDataset>r[0];
+  return Promise.all<(IDataset | ISession)[]>([add as any].concat(s)).then((r: any[]) => {
+    const ds = r[0] as IDataset;
     ds.sessions = r.slice(1);
     return ds;
   });
@@ -53,7 +53,7 @@ export function storeDataset(dataset: IDataset): Promise<IDataset> {
 
 export function editDataset(dataset: IDataset): Promise<IDataset> {
   return db.datasets
-    .update((<any>dataset).uid, {
+    .update((dataset as any).uid, {
       name: dataset.name,
       description: dataset.description,
     })

@@ -18,8 +18,8 @@ const preloaded: IDataset[] = [soccer, wur, shanghai, forbes, happiness, ieeebar
 const loaders = [JSON_LOADER, CSV_LOADER];
 
 function complete(db: IDataset | IDatasetMeta) {
-  if (typeof (<IDataset>db).build === 'function') {
-    return <IDataset>db;
+  if (typeof (db as IDataset).build === 'function') {
+    return db as IDataset;
   }
 
   for (const loader of loaders) {
@@ -39,7 +39,7 @@ function complete(db: IDataset | IDatasetMeta) {
       });
     }
   }
-  return <IDataset>db;
+  return db as IDataset;
 }
 
 export function fromFile(file: File): Promise<IDataset> {
@@ -53,7 +53,7 @@ export function fromFile(file: File): Promise<IDataset> {
 
 export function allDatasets() {
   return Promise.all([listDatasets(), listSessions()]).then(([ds, sessions]) => {
-    const full = <IDataset[]>ds.map(complete).filter((d) => d != null);
+    const full = ds.map(complete).filter((d) => d != null) as IDataset[];
     const data = preloaded.concat(full);
 
     // insert sessions

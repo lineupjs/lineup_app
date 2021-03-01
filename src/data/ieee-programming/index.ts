@@ -13,7 +13,7 @@ export const ieeebars: IDataset = {
   image: imageBars,
   description: `<p>
   55 programming languages are compared by 11 metrics from 2014 to 2018.
-  For each year, the languages are ranked with stacked bars by their total popularity accross all metrics.
+  For each year, the languages are ranked with stacked bars by their total popularity across all metrics.
 </p>
   <p>Source: <a href="https://spectrum.ieee.org/static/ieee-top-programming-languages-2018-methods">IEEE Spectrum</a></p>`,
   rawData: '',
@@ -81,7 +81,7 @@ export const ieeebars: IDataset = {
           skipEmptyLines: true,
         });
       })
-      .then((parsed: ParseResult) => {
+      .then((parsed: ParseResult<any>) => {
         const years = [2014, 2015, 2016, 2017, 2018]; // 5 years
         const sources = [
           'Career Builder',
@@ -164,7 +164,7 @@ export const ieeeheat: IDataset = {
   image: imageHeat,
   description: `<p>
   55 programming languages are compared by 11 metrics from 2014 to 2018.
-  For each year, the languages are ranked by their total popularity accross all metrics, collected in a heatmap.
+  For each year, the languages are ranked by their total popularity across all metrics, collected in a heatmap.
 </p>
   <p>Source: <a href="https://spectrum.ieee.org/static/ieee-top-programming-languages-2018-methods">IEEE Spectrum</a></p>`,
   rawData: '',
@@ -226,7 +226,7 @@ export const ieeeheat: IDataset = {
           skipEmptyLines: true,
         });
       })
-      .then((parsed: ParseResult) => {
+      .then((parsed: ParseResult<any>) => {
         const years = [2014, 2015, 2016, 2017, 2018]; // 5 years
         const sources = [
           'Career Builder',

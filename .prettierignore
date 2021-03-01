@@ -10,18 +10,14 @@
 *.svg
 *.map
 *.tsbuildinfo
-/src/**/*.d.ts
-/src/**/*.js
-/tests/**/*.d.ts
-/tests/**/*.js
-/demo/**/*.d.ts
-/demo/**/*.js
+/app/build/
 /.stylelintrc
 /.editorconfig
 /.yarn
 /.pnp.js
 /.yarnrc.yml
 /.vscode
+/tmp
 *.lock
 *.tgz
 *.png
@@ -32,3 +28,6 @@
 *.woff2
 *.mp4
 *.csv
+*.tcss
+*.xml
+*.ico

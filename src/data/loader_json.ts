@@ -19,7 +19,7 @@ const lineup = LineUpJS
 }
 
 export function exportJSON(lineup: LineUp | Taggle) {
-  const data = <LocalDataProvider>lineup!.data;
+  const data = lineup!.data as LocalDataProvider;
   const ranking = data.getRankings()[0];
   const cols = ranking.flatColumns.filter((d) => !isSupportType(d));
   const ordered = data.viewRawRows(ranking.getOrder());
@@ -38,7 +38,7 @@ export const JSON_LOADER: IDataLoader = {
   type: 'json',
   supports: (file: File) => file.name.endsWith('.json') || file.type === 'application/json',
   loadFile: (file: File) => {
-    return new Promise<{ raw: string; parsed: object[] }>((resolve) => {
+    return new Promise<{ raw: string; parsed: unknown[] }>((resolve) => {
       const reader = new FileReader();
       reader.onload = () => {
         const raw = String(reader.result);
@@ -70,7 +70,7 @@ export const JSON_LOADER: IDataLoader = {
   },
 
   complete: (db: IDatasetMeta): IDataset => {
-    return <IDataset>Object.assign(db, {
+    return Object.assign(db, {
       type: 'json',
       buildScript,
       build: (node: HTMLElement) => {

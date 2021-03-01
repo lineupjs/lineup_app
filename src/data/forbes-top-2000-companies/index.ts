@@ -50,7 +50,7 @@ const lineup = LineUpJS.builder(parsed.data)
           skipEmptyLines: true,
         });
       })
-      .then((parsed: ParseResult) => {
+      .then((parsed: ParseResult<any>) => {
         return builder(parsed.data)
           .column(buildStringColumn('Company'))
           .column(buildStringColumn('Country'))

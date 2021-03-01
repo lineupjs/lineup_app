@@ -4,12 +4,7 @@
   "$id": "https://lineup.js.org/app_develop/schema.1.0.0.json",
   "type": "object",
   "title": "LineUp App Dump Schema",
-  "required": [
-    "name",
-    "type",
-    "creationDate",
-    "rawData"
-  ],
+  "required": ["name", "type", "creationDate", "rawData"],
   "properties": {
     "creationDate": {
       "type": "string",

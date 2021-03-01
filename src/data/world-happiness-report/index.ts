@@ -51,7 +51,7 @@ const lineup = LineUpJS.builder(parsed.data)
           skipEmptyLines: true,
         });
       })
-      .then((parsed: ParseResult) => {
+      .then((parsed: ParseResult<any>) => {
         // "Country","Happiness.Rank","Happiness.Score","Whisker.high","Whisker.low","Economy..GDP.per.Capita.","Family","Health..Life.Expectancy.","Freedom","Generosity","Trust..Government.Corruption.","Dystopia.Residual"
         return builder(parsed.data)
           .column(buildStringColumn('Country'))

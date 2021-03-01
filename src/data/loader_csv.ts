@@ -31,7 +31,7 @@ export const CSV_LOADER: IDataLoader = {
   supports: (file: File) =>
     file.name.endsWith('.csv') || file.name.endsWith('.tsv') || file.name.endsWith('.txt') || file.type === 'text/csv',
   loadFile: (file: File) => {
-    return new Promise<{ raw: string; parsed: ParseResult }>((resolve) => {
+    return new Promise<{ raw: string; parsed: ParseResult<any> }>((resolve) => {
       const reader = new FileReader();
       reader.onload = () => {
         const raw = fixHeaders(String(reader.result));
@@ -65,7 +65,7 @@ export const CSV_LOADER: IDataLoader = {
   },
 
   complete: (db: IDatasetMeta): IDataset => {
-    return <IDataset>Object.assign(db, {
+    return Object.assign(db, {
       type: 'csv',
       buildScript,
       build: (node: HTMLElement) => {
@@ -74,7 +74,11 @@ export const CSV_LOADER: IDataLoader = {
           header: true,
           skipEmptyLines: true,
         });
-        return builder(parsed.data).deriveColumns(parsed.meta.fields).deriveColors().defaultRanking().buildTaggle(node);
+        return builder(parsed.data as any[])
+          .deriveColumns(parsed.meta.fields)
+          .deriveColors()
+          .defaultRanking()
+          .buildTaggle(node);
       },
     });
   },

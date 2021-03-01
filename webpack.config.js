@@ -6,6 +6,8 @@ const pkg = require('./package.json');
 const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const WorkboxPlugin = require('workbox-webpack-plugin');
 
 const now = new Date();
 const prefix = (n) => (n < 10 ? '0' + n : n.toString());
@@ -25,19 +27,7 @@ const banner =
 module.exports = (_env, options) => {
   const dev = options.mode.startsWith('d');
   return {
-    node: {
-      fs: false,
-      global: true,
-      Buffer: false,
-      crypto: false,
-      stream: 'empty',
-      tls: false,
-      net: false,
-      process: true,
-      module: false,
-      clearImmediate: false,
-      setImmediate: false,
-    },
+    node: false,
     entry: {
       app: './src/index.ts',
     },
@@ -66,6 +56,10 @@ module.exports = (_env, options) => {
         chunkFilename: '[id].css',
       }),
       new ForkTsCheckerWebpackPlugin(),
+      new HtmlWebpackPlugin({
+        template: './src/index.html',
+        inject: 'body',
+      }),
     ].concat(
       dev
         ? [

@@ -4,7 +4,6 @@ import '!file-loader?name=LineUpJS.js.map!lineupjs/build/LineUpJS.js.map';
 import '!file-loader?name=LineUpJS.css.map!lineupjs/build/LineUpJS.css.map';
 
 import { Tooltip, Carousel, FloatingActionButton, toast } from 'materialize-css';
-import 'file-loader?name=index.html!extract-loader!html-loader?interpolate!./index.html';
 import './assets/favicon/favicon';
 import './style.scss';
 import 'typeface-roboto/index.css';
@@ -12,7 +11,7 @@ import initExport from './export';
 import shared from './shared';
 import { IDataset, fromFile, allDatasets, ISession, PRELOADED_TYPE, createCard } from './data';
 import { storeDataset, storeSession, deleteDataset, editDataset } from './data/db';
-import { saveDialog, areyousure } from './ui';
+import { saveDialog, areYouSure } from './ui';
 
 declare const LineUpJS: { version: string };
 
@@ -20,19 +19,19 @@ function forEach(selector: string, callback: (d: HTMLElement) => void) {
   Array.from(document.querySelectorAll<HTMLElement>(selector)).forEach(callback);
 }
 
-const uploader = <HTMLElement>document.querySelector('main');
+const uploader = document.querySelector<HTMLElement>('main');
 
 function build(builder: Promise<IDataset>, session?: ISession | null) {
   uploader.dataset.state = 'uploading';
   return builder
     .then((d: IDataset) => {
       shared.dataset = d;
-      return d.build(<HTMLElement>document.querySelector('div.lu-c'));
+      return d.build(document.querySelector<HTMLElement>('div.lu-c'));
     })
     .then((l) => {
       shared.lineup = l;
       disableBubbling(
-        <HTMLElement>document.querySelector('div.lu-c > main > main'),
+        document.querySelector<HTMLElement>('div.lu-c > main > main'),
         'mousemove',
         'mouseout',
         'mouseover'
@@ -41,14 +40,14 @@ function build(builder: Promise<IDataset>, session?: ISession | null) {
     })
     .then(() => {
       // patch switch button
-      const side = <HTMLElement>document.querySelector('.lu-rule-button-chooser');
+      const side = document.querySelector<HTMLElement>('.lu-rule-button-chooser');
       if (side) {
         side.classList.add('switch');
-        const input = <HTMLElement>side.querySelector('input');
+        const input = side.querySelector<HTMLElement>('input');
         input.insertAdjacentHTML('afterend', `<span class="lever"></span>`);
         input.insertAdjacentHTML('beforebegin', `<span>Item</span>`);
       } //
-      (<HTMLElement>document.querySelector('.brand-logo')).textContent = document.title = `LineUp ${
+      document.querySelector<HTMLElement>('.brand-logo').textContent = document.title = `LineUp ${
         shared.dataset!.name
       }`;
       forEach('.export-dataset, .save-session', (d) => {
@@ -72,8 +71,8 @@ function build(builder: Promise<IDataset>, session?: ISession | null) {
           shared.lineup!.data.restore(shared.dataset!.dump);
         }
       }
-      if (location.hash !== next) {
-        location.assign(next);
+      if (window.location.hash !== next) {
+        window.location.assign(next);
       }
       return new Promise<any>((resolve) => setTimeout(resolve, 1000));
     })
@@ -94,7 +93,7 @@ function loadSession(session?: ISession) {
   }
   shared.session = session;
   shared.lineup.data.restore(session.dump);
-  location.replace(`#${shared.dataset!.id}@${session.uid}`);
+  window.location.replace(`#${shared.dataset!.id}@${session.uid}`);
 }
 
 function disableBubbling(node: HTMLElement, ...events: string[]) {
@@ -104,7 +103,7 @@ function disableBubbling(node: HTMLElement, ...events: string[]) {
 }
 
 function refreshCarousel(focus?: number) {
-  const base = <HTMLElement>document.querySelector('.carousel');
+  const base = document.querySelector<HTMLElement>('.carousel');
   const instance = Carousel.getInstance(base);
   if (instance) {
     instance.destroy();
@@ -120,7 +119,7 @@ function refreshCarousel(focus?: number) {
 }
 
 function ensureCarousel() {
-  const base = <HTMLElement>document.querySelector('.carousel');
+  const base = document.querySelector<HTMLElement>('.carousel');
   const instance = Carousel.getInstance(base);
   if (!instance) {
     refreshCarousel();
@@ -129,7 +128,7 @@ function ensureCarousel() {
 
 function markCarouselForRefresh(tohighlight: number) {
   // destroy such that it has to be recreated when visible
-  const base = <HTMLElement>document.querySelector('.carousel');
+  const base = document.querySelector<HTMLElement>('.carousel');
   const instance = Carousel.getInstance(base);
   if (instance) {
     instance.destroy();
@@ -144,7 +143,7 @@ function reset() {
   }
   shared.dataset = null;
   shared.session = null;
-  (<HTMLElement>document.querySelector('.brand-logo')).textContent = document.title = `LineUp`;
+  document.querySelector<HTMLElement>('.brand-logo').textContent = document.title = `LineUp`;
   forEach('.export-dataset, .save-session', (d) => {
     d.classList.add('disabled');
   });
@@ -157,7 +156,7 @@ function reset() {
 
 async function deleteDatasetFromUI(dataset: IDataset) {
   try {
-    await areyousure(`to delete dataset "${dataset.name}"`);
+    await areYouSure(`to delete dataset "${dataset.name}"`);
     await deleteDataset(dataset);
     toast({ html: `Dataset "${dataset.name}" deleted`, displayLength: 5000 });
     const index = shared.datasets!.findIndex((d) => d.id === dataset.id);
@@ -191,7 +190,7 @@ async function editDatasetInUI(dataset: IDataset) {
 
     if (dataset === shared.dataset) {
       // edit current visible one, update title
-      (<HTMLElement>document.querySelector('.brand-logo')).textContent = document.title = `LineUp ${dataset.name}`;
+      document.querySelector<HTMLElement>('.brand-logo').textContent = document.title = `LineUp ${dataset.name}`;
     }
 
     toast({ html: `Dataset "${dataset.name}" edited`, displayLength: 5000 });
@@ -202,14 +201,14 @@ async function editDatasetInUI(dataset: IDataset) {
 }
 
 function addToCarousel(dataset: IDataset) {
-  const base = <HTMLElement>document.querySelector('.carousel');
+  const base = document.querySelector<HTMLElement>('.carousel');
   const node = createCard(dataset, deleteDatasetFromUI, editDatasetInUI);
   node.dataset.id = dataset.id;
   base.appendChild(node);
 }
 
 function recreateCard(dataset: IDataset) {
-  const base = <HTMLElement>document.querySelector('.carousel');
+  const base = document.querySelector<HTMLElement>('.carousel');
   const card = document.querySelector<HTMLElement>(`.card[data-id="${dataset.id}"]`)!;
   const node = createCard(dataset, deleteDatasetFromUI, editDatasetInUI);
   node.dataset.id = dataset.id;
@@ -234,14 +233,14 @@ async function saveSession() {
     return;
   }
   try {
-    // dump and parse to get rid of not cloneable things
+    // dump and parse to get rid of not clone able things
     const dump = JSON.parse(JSON.stringify(shared.lineup.dump()));
     const desc = await saveDialog('Save Session as &hellip;', 'Auto Save');
     const session = await storeSession(shared.dataset, desc.name, dump);
     toast({ html: `Session "${session.name}" of dataset "${shared.dataset.name}" saved`, displayLength: 5000 });
     shared.dataset.sessions!.unshift(session); // since newest
     shared.session = session;
-    location.replace(`#${shared.dataset!.id}@${session.uid}`);
+    window.location.replace(`#${shared.dataset!.id}@${session.uid}`);
     recreateCard(shared.dataset);
   } catch (error) {
     toast({ html: `Error while saving session: <pre>${error}</pre>`, displayLength: 5000 });
@@ -269,10 +268,8 @@ FloatingActionButton.init(document.querySelectorAll('.fixed-action-btn'), {
 });
 Tooltip.init(document.querySelectorAll('.tooltipped'));
 
-{
-  // update version info
-  document.querySelector<HTMLElement>('.version-info')!.innerHTML = `LineUp.js v${LineUpJS.version}`;
-}
+// update version info
+document.querySelector<HTMLElement>('.version-info')!.innerHTML = `LineUp.js v${LineUpJS.version}`;
 
 document.querySelector<HTMLElement>('.save-session')!.onclick = (evt) => {
   evt.preventDefault();
@@ -344,7 +341,7 @@ allDatasets().then((data) => {
 
   // handle hash changes
   const findAndLoadViaHash = (doReset = true) => {
-    const h = location.hash.slice(1).split('@');
+    const h = window.location.hash.slice(1).split('@');
     const newDataset = data.find((d) => d.id === h[0]);
     const session = findSession(newDataset, h[1]);
     if (newDataset === shared.dataset) {
