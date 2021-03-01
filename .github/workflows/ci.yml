@@ -27,3 +27,35 @@ jobs:
       - run: yarn compile
       - run: yarn build
       - run: yarn lint
+      - run: |
+          mkdir -p public/app
+          cp -rt public/app/ build/*
+
+          mkdir -p public_dev/app_develop
+          cp -rt public_dev/develop/ build/*
+
+      - name: Deploy Main
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        uses: upsetjs/actions-gh-pages@sgratzl
+        env:
+          ACTIONS_ALLOW_UNSECURE_COMMANDS: true
+        with:
+          personal_token: ${{ secrets.PRIVATE_GITHUB_TOKEN }}
+          external_repository: lineupjs/lineup.js.org
+          publish_branch: main
+          publish_dir: ./public
+          enable_jekyll: true
+          remove_path_spec: 'app'
+
+      - name: Deploy Develop
+        if: github.ref == 'refs/heads/develop' && github.event_name == 'push'
+        uses: upsetjs/actions-gh-pages@sgratzl
+        env:
+          ACTIONS_ALLOW_UNSECURE_COMMANDS: true
+        with:
+          personal_token: ${{ secrets.PRIVATE_GITHUB_TOKEN }}
+          external_repository: lineupjs/lineup.js.org
+          publish_branch: main
+          publish_dir: ./public_dev
+          enable_jekyll: true
+          remove_path_spec: 'app_develop'
