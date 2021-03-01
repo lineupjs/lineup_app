@@ -32,7 +32,7 @@ jobs:
           cp -rt public/app/ build/*
 
           mkdir -p public_dev/app_develop
-          cp -rt public_dev/develop/ build/*
+          cp -rt public_dev/app_develop/ build/*
 
       - name: Deploy Main
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
