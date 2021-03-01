@@ -1,12 +1,12 @@
 LineUp App
 ==========
 
-[![License: MIT][mit-image]][mit-url] [![CircleCI][ci-image]][ci-url]  [![CircleCI][ci-image-dev]][ci-url-dev] <sup>(v4)</sup>
+[![License: MIT][mit-image]][mit-url] [![Github Actions][github-actions-image]][github-actions-url]
 
 LineUp is an interactive technique designed to create, visualize and explore rankings of items based on a set of heterogeneous attributes. 
 This is a demo application using [LineUp.js](https://github.com/lineupjs/lineupjs). Details about the LineUp visualization technique can be found at [http://lineup.caleydo.org](http://lineup.caleydo.org). 
 
-The application is deployed at: https://lineup.js.org/app. The develop version using LineUp v4 is deployed at https://lineup.js.org/app_develop. It is a Single Pape Application that requires no server installation. No data is transfered to any server but just kept local in your browser local storage using [IndexedDB](https://developer.mozilla.org/de/docs/Web/API/IndexedDB_API).
+The application is deployed at: https://lineup.js.org/app. The develop version using LineUp v4 is deployed at https://lineup.js.org/app_develop. It is a Single Page Application that requires no server installation. No data is transferred to any server but just kept local in your browser local storage using [IndexedDB](https://developer.mozilla.org/de/docs/Web/API/IndexedDB_API).
 
 ![Start Page](./_readme/homepage.png)
 
@@ -64,28 +64,28 @@ Development Environment
 ```bash
 git clone https://github.com/lineupjs/lineup_app.git
 cd lineup_app
-npm install
+npm i -g yarn
+yarn set version berry
+yarn set version latest
+# cat .yarnrc_patch.yml >> .yarnrc.yml
+yarn install
+yarn pnpify --sdk vscode
 ```
 
-**Build distribution packages**
+### Common commands
 
-```bash
-npm run build
+```sh
+yarn start
+yarn clean
+yarn compile
+yarn test
+yarn lint
+yarn fix
+yarn build
+yarn docs
+yarn release
+yarn release:pre
 ```
-
-**Run Linting**
-
-```bash
-npm run lint
-```
-
-
-**Serve integrated webserver**
-
-```bash
-npm start
-```
-
 
 Authors
 -------
@@ -94,7 +94,5 @@ Authors
 
 [mit-image]: https://img.shields.io/badge/License-MIT-yellow.svg
 [mit-url]: https://opensource.org/licenses/MIT
-[ci-image]: https://circleci.com/gh/lineupjs/lineup_app.svg?style=shield
-[ci-url]: https://circleci.com/gh/lineupjs/lineup_app
-[ci-image-dev]: https://circleci.com/gh/lineupjs/lineup_app/tree/develop.svg?style=shield
-[ci-url-dev]: https://circleci.com/gh/lineupjs/lineup_app/tree/develop
+[github-actions-image]: https://github.com/lineupjs/lineup_app/workflows/ci/badge.svg
+[github-actions-url]: https://github.com/lineupjs/lineup_app/actions

@@ -1,8 +1,8 @@
-import {IDataset, PRELOADED_TYPE} from '../IDataset';
-import {parse, ParseResult} from 'papaparse';
-import {builder, buildRanking, buildStringColumn, buildNumberColumn} from 'lineupjs';
+import { IDataset, PRELOADED_TYPE } from '../IDataset';
+import { parse, ParseResult } from 'papaparse';
+import { builder, buildRanking, buildStringColumn, buildNumberColumn } from 'lineupjs';
 import image from './happiness.png';
-import {fixHeaders} from '../utils';
+import { fixHeaders } from '../utils';
 
 export const data: IDataset = {
   id: 'happiness',
@@ -41,35 +41,33 @@ const lineup = LineUpJS.builder(parsed.data)
 `;
   },
   build(node: HTMLElement) {
-    return import('raw-loader!./2017.csv').then((content: any) => {
-      const csv: string = content.default ? content.default : content;
-      this.rawData = fixHeaders(csv);
-      return parse(this.rawData, {
-        dynamicTyping: true,
-        header: true,
-        skipEmptyLines: true
+    return import('raw-loader!./2017.csv')
+      .then((content: any) => {
+        const csv: string = content.default ? content.default : content;
+        this.rawData = fixHeaders(csv);
+        return parse(this.rawData, {
+          dynamicTyping: true,
+          header: true,
+          skipEmptyLines: true,
+        });
+      })
+      .then((parsed: ParseResult) => {
+        // "Country","Happiness.Rank","Happiness.Score","Whisker.high","Whisker.low","Economy..GDP.per.Capita.","Family","Health..Life.Expectancy.","Freedom","Generosity","Trust..Government.Corruption.","Dystopia.Residual"
+        return builder(parsed.data)
+          .column(buildStringColumn('Country'))
+          .column(buildNumberColumn('Happiness_Score', [0, 10]))
+          .column(buildNumberColumn('Economy_GDP_per_Capita_', [0, 10]))
+          .column(buildNumberColumn('Family', [0, 10]))
+          .column(buildNumberColumn('Health_Life_Expectancy_', [0, 10]))
+          .column(buildNumberColumn('Freedom', [0, 10]))
+          .column(buildNumberColumn('Generosity', [0, 10]))
+          .column(buildNumberColumn('Trust_Government_Corruption_', [0, 10]))
+          .column(buildNumberColumn('Dystopia_Residual', [0, 10]))
+          .deriveColors()
+          .ranking(buildRanking().supportTypes().allColumns().sortBy('Happiness_Score', 'desc'))
+          .buildTaggle(node);
       });
-    }).then((parsed: ParseResult) => {
-      // "Country","Happiness.Rank","Happiness.Score","Whisker.high","Whisker.low","Economy..GDP.per.Capita.","Family","Health..Life.Expectancy.","Freedom","Generosity","Trust..Government.Corruption.","Dystopia.Residual"
-      return builder(parsed.data)
-        .column(buildStringColumn('Country'))
-        .column(buildNumberColumn('Happiness_Score', [0, 10]))
-        .column(buildNumberColumn('Economy_GDP_per_Capita_', [0, 10]))
-        .column(buildNumberColumn('Family', [0, 10]))
-        .column(buildNumberColumn('Health_Life_Expectancy_', [0, 10]))
-        .column(buildNumberColumn('Freedom', [0, 10]))
-        .column(buildNumberColumn('Generosity', [0, 10]))
-        .column(buildNumberColumn('Trust_Government_Corruption_', [0, 10]))
-        .column(buildNumberColumn('Dystopia_Residual', [0, 10]))
-        .deriveColors()
-        .ranking(buildRanking()
-          .supportTypes()
-          .allColumns()
-          .sortBy('Happiness_Score', 'desc')
-        )
-        .buildTaggle(node);
-    });
-  }
+  },
 };
 
 export default data;

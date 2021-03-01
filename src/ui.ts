@@ -1,5 +1,4 @@
-import {Modal, updateTextFields, textareaAutoResize} from 'materialize-css';
-
+import { Modal, updateTextFields, textareaAutoResize } from 'materialize-css';
 
 const areYouSureModal = Modal.init(document.getElementById('modalAreYouSure')!);
 const saveModal = Modal.init(document.getElementById('modalSave')!);
@@ -12,7 +11,11 @@ export function areyousure(content: string): Promise<boolean> {
   });
 }
 
-export function saveDialog(title: string, name: string, description?: string): Promise<{name: string, description: string}> {
+export function saveDialog(
+  title: string,
+  name: string,
+  description?: string
+): Promise<{ name: string; description: string }> {
   const form = <HTMLFormElement>saveModal.el;
   form.querySelector('h4')!.innerHTML = title;
   form.querySelector('input')!.value = name;
@@ -29,14 +32,13 @@ export function saveDialog(title: string, name: string, description?: string): P
       saveModal.close();
       resolve({
         name: <string>data.get('name'),
-        description: <string>data.get('description')
+        description: <string>data.get('description'),
       });
     };
     saveModal.open();
     textareaAutoResize(area);
   });
 }
-
 
 const MIN = 60;
 const HOUR = MIN * 60;
@@ -54,7 +56,7 @@ const areas: [number, string | ((d: number) => string)][] = [
   [25 * DAY, (d) => `${Math.ceil(d / DAY)} days ago`],
   [45 * DAY, 'a month ago'],
   [319 * DAY, (d) => `${Math.ceil(d / DAY / 30)} months ago`],
-  [547 * DAY, () => 'a year ago']
+  [547 * DAY, () => 'a year ago'],
 ];
 
 /**
@@ -76,8 +78,11 @@ export function fromNow(date: Date | number) {
 
 export function niceDate(date: Date) {
   const formatter = new Intl.DateTimeFormat(undefined, {
-    year: 'numeric', month: 'numeric', day: 'numeric',
-    hour: 'numeric', minute: 'numeric'
+    year: 'numeric',
+    month: 'numeric',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric',
   });
   return formatter.format(date);
 }

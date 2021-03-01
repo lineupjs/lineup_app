@@ -1,4 +1,4 @@
-import {LineUp, Taggle} from 'lineupjs';
+import { LineUp, Taggle } from 'lineupjs';
 
 export const PRELOADED_TYPE = 'preloaded';
 
@@ -14,7 +14,6 @@ export interface IDatasetMeta {
   rawData: string;
 }
 
-
 export interface ISession {
   uid?: number; // auto increment;
   dataset: string; // <-> IDBDataset.id
@@ -22,7 +21,6 @@ export interface ISession {
   creationDate: Date;
   dump: any; // TOOD typing
 }
-
 
 export interface IDataset extends IDatasetMeta {
   buildScript(rawVariable: string, domVariable: string, dumpVariable: string): string;

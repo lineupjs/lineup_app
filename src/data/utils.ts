@@ -1,4 +1,3 @@
-
 export function randomChars(count: number) {
   return Math.random().toString(36).slice(-8).substr(0, count);
 }
@@ -10,7 +9,6 @@ export function normalize(name: string) {
 export function cleanName(name: string) {
   return `${normalize(name)}-${randomChars(3)}`;
 }
-
 
 export function fixHeaders(csv: string) {
   const line = csv.search(/[\n\r]/);

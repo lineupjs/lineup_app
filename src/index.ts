@@ -3,20 +3,20 @@ import '!file-loader?name=LineUpJS.css!lineupjs/build/LineUpJS.css';
 import '!file-loader?name=LineUpJS.js.map!lineupjs/build/LineUpJS.js.map';
 import '!file-loader?name=LineUpJS.css.map!lineupjs/build/LineUpJS.css.map';
 
-import {Tooltip, Carousel, FloatingActionButton, toast} from 'materialize-css';
+import { Tooltip, Carousel, FloatingActionButton, toast } from 'materialize-css';
 import 'file-loader?name=index.html!extract-loader!html-loader?interpolate!./index.html';
 import './assets/favicon/favicon';
 import './style.scss';
 import 'typeface-roboto/index.css';
 import initExport from './export';
 import shared from './shared';
-import {IDataset, fromFile, allDatasets, ISession, PRELOADED_TYPE, createCard} from './data';
-import {storeDataset, storeSession, deleteDataset, editDataset} from './data/db';
-import {saveDialog, areyousure} from './ui';
+import { IDataset, fromFile, allDatasets, ISession, PRELOADED_TYPE, createCard } from './data';
+import { storeDataset, storeSession, deleteDataset, editDataset } from './data/db';
+import { saveDialog, areyousure } from './ui';
 
-declare const LineUpJS: {version: string};
+declare const LineUpJS: { version: string };
 
-function forEach(selector: string, callback: (d: HTMLElement)=>void) {
+function forEach(selector: string, callback: (d: HTMLElement) => void) {
   Array.from(document.querySelectorAll<HTMLElement>(selector)).forEach(callback);
 }
 
@@ -24,54 +24,67 @@ const uploader = <HTMLElement>document.querySelector('main');
 
 function build(builder: Promise<IDataset>, session?: ISession | null) {
   uploader.dataset.state = 'uploading';
-  return builder.then((d: IDataset) => {
-    shared.dataset = d;
-    return d.build(<HTMLElement>document.querySelector('div.lu-c'));
-  }).then((l) => {
-    shared.lineup = l;
-    disableBubbling(<HTMLElement>document.querySelector('div.lu-c > main > main'), 'mousemove', 'mouseout', 'mouseover');
-    return new Promise<any>((resolve) => setTimeout(resolve, 500));
-  }).then(() => {
-    // patch switch button
-    const side = <HTMLElement>document.querySelector('.lu-rule-button-chooser');
-    if (side) {
-      side.classList.add('switch');
-      const input = (<HTMLElement>side.querySelector('input'));
-      input.insertAdjacentHTML('afterend', `<span class="lever"></span>`);
-      input.insertAdjacentHTML('beforebegin', `<span>Item</span>`);
-    } //
-    (<HTMLElement>document.querySelector('.brand-logo')).textContent = document.title = `LineUp ${shared.dataset!.name}`;
-    forEach('.export-dataset, .save-session', (d) => {
-      d.classList.remove('disabled');
-    });
-    forEach('.edit-dataset, .delete-dataset', (d) => {
-      d.style.display = shared.dataset!.type === PRELOADED_TYPE ? 'none' : '';
-    });
-  }).then(() => {
-    let next: string;
-    if (session) {
-      shared.session = session;
-      next = `#${shared.dataset!.id}@${session.uid}`;
-      shared.lineup!.data.restore(session.dump);
-    } else {
-      shared.session = null;
-      next = `#${shared.dataset!.id}`;
+  return builder
+    .then((d: IDataset) => {
+      shared.dataset = d;
+      return d.build(<HTMLElement>document.querySelector('div.lu-c'));
+    })
+    .then((l) => {
+      shared.lineup = l;
+      disableBubbling(
+        <HTMLElement>document.querySelector('div.lu-c > main > main'),
+        'mousemove',
+        'mouseout',
+        'mouseover'
+      );
+      return new Promise<any>((resolve) => setTimeout(resolve, 500));
+    })
+    .then(() => {
+      // patch switch button
+      const side = <HTMLElement>document.querySelector('.lu-rule-button-chooser');
+      if (side) {
+        side.classList.add('switch');
+        const input = <HTMLElement>side.querySelector('input');
+        input.insertAdjacentHTML('afterend', `<span class="lever"></span>`);
+        input.insertAdjacentHTML('beforebegin', `<span>Item</span>`);
+      } //
+      (<HTMLElement>document.querySelector('.brand-logo')).textContent = document.title = `LineUp ${
+        shared.dataset!.name
+      }`;
+      forEach('.export-dataset, .save-session', (d) => {
+        d.classList.remove('disabled');
+      });
+      forEach('.edit-dataset, .delete-dataset', (d) => {
+        d.style.display = shared.dataset!.type === PRELOADED_TYPE ? 'none' : '';
+      });
+    })
+    .then(() => {
+      let next: string;
+      if (session) {
+        shared.session = session;
+        next = `#${shared.dataset!.id}@${session.uid}`;
+        shared.lineup!.data.restore(session.dump);
+      } else {
+        shared.session = null;
+        next = `#${shared.dataset!.id}`;
 
-      if (shared.dataset!.dump) {
-        shared.lineup!.data.restore(shared.dataset!.dump);
+        if (shared.dataset!.dump) {
+          shared.lineup!.data.restore(shared.dataset!.dump);
+        }
       }
-    }
-    if (location.hash !== next) {
-      location.assign(next);
-    }
-    return new Promise<any>((resolve) => setTimeout(resolve, 1000));
-  }).then(() => {
-    uploader.dataset.state = 'ready';
-  }).catch((error) => {
-    console.error(error);
-    uploader.dataset.state = 'initial';
-    toast({html: `<pre>${error}</pre>`, displayLength: 5000});
-  });
+      if (location.hash !== next) {
+        location.assign(next);
+      }
+      return new Promise<any>((resolve) => setTimeout(resolve, 1000));
+    })
+    .then(() => {
+      uploader.dataset.state = 'ready';
+    })
+    .catch((error) => {
+      console.error(error);
+      uploader.dataset.state = 'initial';
+      toast({ html: `<pre>${error}</pre>`, displayLength: 5000 });
+    });
 }
 
 function loadSession(session?: ISession) {
@@ -146,7 +159,7 @@ async function deleteDatasetFromUI(dataset: IDataset) {
   try {
     await areyousure(`to delete dataset "${dataset.name}"`);
     await deleteDataset(dataset);
-    toast({html: `Dataset "${dataset.name}" deleted`, displayLength: 5000});
+    toast({ html: `Dataset "${dataset.name}" deleted`, displayLength: 5000 });
     const index = shared.datasets!.findIndex((d) => d.id === dataset.id);
     shared.datasets!.splice(index, 1);
 
@@ -162,7 +175,7 @@ async function deleteDatasetFromUI(dataset: IDataset) {
     }
   } catch (error) {
     console.error(error);
-    toast({html: `Error while deleting dataset: <pre>${error}</pre>`, displayLength: 5000});
+    toast({ html: `Error while deleting dataset: <pre>${error}</pre>`, displayLength: 5000 });
   }
 }
 
@@ -173,18 +186,18 @@ async function editDatasetInUI(dataset: IDataset) {
     dataset.description = desc.description;
     await editDataset(dataset);
 
-    forEach(`.card[data-id="${dataset.id}"] .dd-title`, (d) => d.innerHTML = dataset.name);
-    forEach(`.card[data-id="${dataset.id}"] .dd-desc`, (d) => d.innerHTML = dataset.description);
+    forEach(`.card[data-id="${dataset.id}"] .dd-title`, (d) => (d.innerHTML = dataset.name));
+    forEach(`.card[data-id="${dataset.id}"] .dd-desc`, (d) => (d.innerHTML = dataset.description));
 
     if (dataset === shared.dataset) {
       // edit current visible one, update title
       (<HTMLElement>document.querySelector('.brand-logo')).textContent = document.title = `LineUp ${dataset.name}`;
     }
 
-    toast({html: `Dataset "${dataset.name}" edited`, displayLength: 5000});
+    toast({ html: `Dataset "${dataset.name}" edited`, displayLength: 5000 });
   } catch (error) {
     console.error(error);
-    toast({html: `Error while editing dataset: <pre>${error}</pre>`, displayLength: 5000});
+    toast({ html: `Error while editing dataset: <pre>${error}</pre>`, displayLength: 5000 });
   }
 }
 
@@ -225,31 +238,34 @@ async function saveSession() {
     const dump = JSON.parse(JSON.stringify(shared.lineup.dump()));
     const desc = await saveDialog('Save Session as &hellip;', 'Auto Save');
     const session = await storeSession(shared.dataset, desc.name, dump);
-    toast({html: `Session "${session.name}" of dataset "${shared.dataset.name}" saved`, displayLength: 5000});
+    toast({ html: `Session "${session.name}" of dataset "${shared.dataset.name}" saved`, displayLength: 5000 });
     shared.dataset.sessions!.unshift(session); // since newest
     shared.session = session;
     location.replace(`#${shared.dataset!.id}@${session.uid}`);
     recreateCard(shared.dataset);
   } catch (error) {
-    toast({html: `Error while saving session: <pre>${error}</pre>`, displayLength: 5000});
+    toast({ html: `Error while saving session: <pre>${error}</pre>`, displayLength: 5000 });
   }
 }
 
-window.addEventListener('resize', () => {
-  setTimeout(() => {
-    if (shared.lineup) {
-      shared.lineup.update();
-    }
-  }, 100);
-}, {
-  passive: false
-});
+window.addEventListener(
+  'resize',
+  () => {
+    setTimeout(() => {
+      if (shared.lineup) {
+        shared.lineup.update();
+      }
+    }, 100);
+  },
+  {
+    passive: false,
+  }
+);
 
 initExport();
 
-
 FloatingActionButton.init(document.querySelectorAll('.fixed-action-btn'), {
-  direction: 'left'
+  direction: 'left',
 });
 Tooltip.init(document.querySelectorAll('.tooltipped'));
 
@@ -280,10 +296,13 @@ document.querySelector<HTMLElement>('.delete-dataset')!.onclick = (evt) => {
   }
 };
 
-forEach('.modal-close', (d) => d.onclick = (evt) => {
-  evt.preventDefault();
-});
-
+forEach(
+  '.modal-close',
+  (d) =>
+    (d.onclick = (evt) => {
+      evt.preventDefault();
+    })
+);
 
 allDatasets().then((data) => {
   shared.datasets = data;
@@ -291,27 +310,23 @@ allDatasets().then((data) => {
     const file = document.querySelector<HTMLInputElement>('input[type=file]')!;
     file.addEventListener('change', () => {
       showFile(file.files![0]);
-    }
-    );
+    });
     document.querySelector<HTMLElement>('#dropper a.btn')!.addEventListener('click', (evt) => {
       evt.preventDefault();
       evt.stopPropagation();
       file.click();
-    }
-    );
+    });
     uploader.addEventListener('dragover', (evt) => {
       evt.preventDefault();
       evt.stopPropagation();
-    }
-    );
+    });
     uploader.addEventListener('drop', (evt) => {
       if (evt.dataTransfer!.files.length !== 1) {
         return;
       }
       showFile(evt.dataTransfer!.files[0]);
       evt.preventDefault();
-    }
-    );
+    });
   }
 
   for (const d of data) {
@@ -328,7 +343,7 @@ allDatasets().then((data) => {
   };
 
   // handle hash changes
-  const findAndLoadViaHash = (doReset: boolean = true) => {
+  const findAndLoadViaHash = (doReset = true) => {
     const h = location.hash.slice(1).split('@');
     const newDataset = data.find((d) => d.id === h[0]);
     const session = findSession(newDataset, h[1]);
@@ -355,10 +370,13 @@ declare const __DEBUG__: boolean;
 // register service worker
 if (!__DEBUG__ && 'serviceWorker' in navigator) {
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('./service-worker.js').then((registration) => {
-    console.log('SW registered: ', registration);
-  }).catch((registrationError) => {
-    console.warn('SW registration failed: ', registrationError);
-    });
+    navigator.serviceWorker
+      .register('./service-worker.js')
+      .then((registration) => {
+        console.log('SW registered: ', registration);
+      })
+      .catch((registrationError) => {
+        console.warn('SW registration failed: ', registrationError);
+      });
   });
 }

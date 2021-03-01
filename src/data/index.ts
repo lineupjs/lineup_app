@@ -1,30 +1,19 @@
-import {IDataset} from './IDataset';
-import {wur, shanghai} from './wur';
+import { IDataset } from './IDataset';
+import { wur, shanghai } from './wur';
 import forbes from './forbes-top-2000-companies';
 import happiness from './world-happiness-report';
 import soccer from './soccer';
-import {ieeeheat, ieeebars} from './ieee-programming';
-import {simple, big} from './simple';
-import {listDatasets, listSessions} from './db';
+import { ieeeheat, ieeebars } from './ieee-programming';
+import { simple, big } from './simple';
+import { listDatasets, listSessions } from './db';
 import JSON_LOADER from './loader_json';
 import CSV_LOADER from './loader_csv';
-import {IDatasetMeta, PRELOADED_TYPE} from './IDataset';
+import { IDatasetMeta, PRELOADED_TYPE } from './IDataset';
 
 export * from './IDataset';
 export * from './ui';
 
-const preloaded: IDataset[] = [
-  soccer,
-  wur,
-  shanghai,
-  forbes,
-  happiness,
-  ieeebars,
-  ieeeheat,
-  simple,
-  big
-];
-
+const preloaded: IDataset[] = [soccer, wur, shanghai, forbes, happiness, ieeebars, ieeeheat, simple, big];
 
 const loaders = [JSON_LOADER, CSV_LOADER];
 
@@ -46,7 +35,7 @@ function complete(db: IDataset | IDatasetMeta) {
       return Object.assign(db, {
         buildScript: preloadedDataset.buildScript,
         build: preloadedDataset.build,
-        rawData: preloadedDataset.rawData
+        rawData: preloadedDataset.rawData,
       });
     }
   }
@@ -61,7 +50,6 @@ export function fromFile(file: File): Promise<IDataset> {
   }
   return Promise.reject(`unknown file type: ${file.name}`);
 }
-
 
 export function allDatasets() {
   return Promise.all([listDatasets(), listSessions()]).then(([ds, sessions]) => {
