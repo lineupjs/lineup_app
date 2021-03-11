@@ -41,7 +41,7 @@
   left: calc(1.2em + 2px);
 }
 
-input[type=search].lu-search-input {
+input[type='search'].lu-search-input {
   margin-bottom: 0;
   border: 1px solid $secondary-color;
   border-radius: 0 3px 3px 0;
@@ -59,7 +59,7 @@ input[type=search].lu-search-input {
     border-color: #dedede;
   }
 
-  input[type=search].lu-search-input {
+  input[type='search'].lu-search-input {
     margin: 0;
     height: 2em;
     border-color: #dedede;
@@ -73,7 +73,7 @@ input[type=search].lu-search-input {
   }
 }
 
-.lu-summary .lu-checkbox > [type=checkbox] + label {
+.lu-summary .lu-checkbox > [type='checkbox'] + label {
   margin: 0;
   font-size: 12px;
   line-height: 100%;
@@ -103,11 +103,11 @@ input[type=search].lu-search-input {
   padding: 1.5em 0.2em;
 }
 
-.lu-dialog-table > .lu-checkbox > [type="checkbox"] + label {
+.lu-dialog-table > .lu-checkbox > [type='checkbox'] + label {
   display: inline-flex;
 }
 
-.lu-dialog-weights-table-entry > input[type=number] {
+.lu-dialog-weights-table-entry > input[type='number'] {
   width: unset;
 }
 
@@ -136,11 +136,11 @@ input[type=search].lu-search-input {
 }
 
 // color mapping dialog
-input[name=kind] + span > input {
+input[name='kind'] + span > input {
   width: 4em !important;
 }
 
-input[name=threshold] + span {
+input[name='threshold'] + span {
   height: 2.4rem !important;
 
   > input {

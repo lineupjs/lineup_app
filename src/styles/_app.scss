@@ -49,13 +49,13 @@ body {
     z-index: 101;
   }
 
-  &[data-state=initial] {
+  &[data-state='initial'] {
     #uploader {
       display: none;
     }
   }
 
-  &[data-state=uploading] {
+  &[data-state='uploading'] {
     #dropper {
       display: none;
     }
@@ -70,7 +70,7 @@ body {
     }
   }
 
-  &[data-state=ready] {
+  &[data-state='ready'] {
     > *:not(.lu) {
       display: none;
     }
@@ -98,7 +98,7 @@ body {
 }
 
 label {
-  color: color("grey", "darken-3");
+  color: color('grey', 'darken-3');
 }
 
 .carousel {
