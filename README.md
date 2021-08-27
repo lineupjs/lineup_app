@@ -57,11 +57,8 @@ This app is a client only app. Thus, requires no server since all data is stored
 git clone https://github.com/lineupjs/lineup_app.git
 cd lineup_app
 npm i -g yarn
-yarn set version berry
-yarn set version latest
-# cat .yarnrc_patch.yml >> .yarnrc.yml
 yarn install
-yarn pnpify --sdk vscode
+yarn sdks vscode
 ```
 
 ### Common commands
@@ -75,8 +72,6 @@ yarn lint
 yarn fix
 yarn build
 yarn docs
-yarn release
-yarn release:pre
 ```
 
 ## Authors
