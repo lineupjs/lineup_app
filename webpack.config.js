@@ -145,7 +145,7 @@ module.exports = (_env, options) => {
       ignored: /node_modules/,
     },
     devServer: {
-      contentBase: 'demo',
+      static: 'demo',
     },
   };
 };
