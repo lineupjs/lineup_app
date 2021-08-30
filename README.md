@@ -33,7 +33,6 @@ The application is deployed at: https://lineup.js.org/app. The develop version u
 - last 2 Edge versions (best performance)
 - last 2 Firefox versions
 - Firefox [Extended Support Release](https://www.mozilla.org/en-US/firefox/enterprise/) (ESR)
-- Edge 18
 
 ## Usage
 
