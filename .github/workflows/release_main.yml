@@ -39,7 +39,7 @@ jobs:
           name: v${{ steps.extract_version.outputs.version }}
           tag: v${{ steps.extract_version.outputs.version }}
           version: ${{ steps.extract_version.outputs.version }}
-          prerelease: ${{ needs.create_release.outputs.tag_name == 'next' }}
+          prerelease: ${{ needs.extract_version.outputs.npm_tag == 'next' }}
           publish: true
     outputs:
       version: ${{ steps.extract_version.outputs.version }}
