@@ -48,7 +48,7 @@
     "json-loader": "^0.5.7",
     "mini-css-extract-plugin": "^0.9.0",
     "mkdirp": "^1.0.3",
-    "node-sass": "^4.14.1",
+    "node-sass": "^7.0.0",
     "raw-loader": "^4.0.0",
     "release-it": "^13.5.8",
     "rimraf": "^3.0.2",
