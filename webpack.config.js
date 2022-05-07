@@ -25,7 +25,7 @@ const banner =
  * generate a webpack configuration
  */
 module.exports = (_env, options) => {
-  const dev = options.mode.startsWith('d');
+  const dev = options.mode && options.mode.startsWith('d');
   return {
     node: false,
     entry: {
