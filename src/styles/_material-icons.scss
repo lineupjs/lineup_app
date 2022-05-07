@@ -2,20 +2,20 @@
  * http://google.github.io/material-design-icons/ */
 
 @font-face {
-  font-family: "Material Icons";
+  font-family: 'Material Icons';
   font-style: normal;
   font-weight: 400;
-  src: url("~material-design-icons/iconfont/MaterialIcons-Regular.eot");
+  src: url('~material-design-icons/iconfont/MaterialIcons-Regular.eot');
 
   /* For IE6-8 */
-  src: local("Material Icons"), local("MaterialIcons-Regular"),
-    url("~material-design-icons/iconfont/MaterialIcons-Regular.woff2") format("woff2"),
-    url("~material-design-icons/iconfont/MaterialIcons-Regular.woff") format("woff"),
-    url("~material-design-icons/iconfont/MaterialIcons-Regular.ttf") format(" truetype");
+  src: local('Material Icons'), local('MaterialIcons-Regular'),
+    url('~material-design-icons/iconfont/MaterialIcons-Regular.woff2') format('woff2'),
+    url('~material-design-icons/iconfont/MaterialIcons-Regular.woff') format('woff'),
+    url('~material-design-icons/iconfont/MaterialIcons-Regular.ttf') format(' truetype');
 }
 
 .material-icons {
-  font-family: "Material Icons", sans-serif;
+  font-family: 'Material Icons', sans-serif;
   font-weight: normal;
   font-style: normal;
   font-size: 24px; /* Preferred icon size */
@@ -37,5 +37,5 @@
   -moz-osx-font-smoothing: grayscale;
 
   // Support for IE.
-  font-feature-settings: "liga";
+  font-feature-settings: 'liga';
 }

@@ -1,17 +1,17 @@
-$primary-color: color("grey", "lighten-3");
-$secondary-color: color("grey", "darken-3");
+$primary-color: color('grey', 'lighten-3');
+$secondary-color: color('grey', 'darken-3');
 
 $navbar-height: 40px;
-$navbar-font-color: color("grey", "darken-2");
+$navbar-font-color: color('grey', 'darken-2');
 $navbar-brand-font-size: 1.2em;
 
-$footer-font-color: color("grey", "darken-4");
+$footer-font-color: color('grey', 'darken-4');
 $footer-copyright-font-color: $footer-font-color;
 
 $input-height: 2.4rem;
 
-$radio-fill-color: color("grey", "base") !default;
+$radio-fill-color: color('grey', 'base') !default;
 $radio-empty-color: #5a5a5a !default;
 $radio-border: 2px solid $secondary-color !default;
 
-$fa-font-path: "~font-awesome/fonts";
+$fa-font-path: '~font-awesome/fonts';
