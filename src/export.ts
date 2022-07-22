@@ -22,7 +22,7 @@ export default function initExport() {
   document.querySelector('#downloadCSV')!.addEventListener('click', (evt) => {
     evt.preventDefault();
     evt.stopPropagation();
-    exportCSV(shared.lineup!).then((csv) => {
+    Promise.resolve(exportCSV(shared.lineup!)).then((csv) => {
       downloadImpl(csv, `${shared.dataset!.name}.csv`, 'text/csv');
     });
   });

@@ -47,7 +47,7 @@ export const CSV_LOADER: IDataLoader = {
       const name = file.name.split('.').slice(0, -1).join('.');
       return {
         id: cleanName(name),
-        type: <const>'csv',
+        type: 'csv' as const,
         name,
         creationDate: new Date(),
         description: `Imported from "${file.name}" on ${niceDate(new Date())}`,

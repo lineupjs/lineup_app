@@ -1,0 +1,63 @@
+name: Release Main
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  correct_repository:
+    runs-on: ubuntu-latest
+    steps:
+      - name: fail on fork
+        if: github.repository_owner != 'lineupjs'
+        run: exit 1
+
+  create_release:
+    needs: correct_repository
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      - name: Extract version
+        id: extract_version
+        run: |
+          node -pe "'::set-output name=version::' + require('./package.json').version"
+          node -pe "'::set-output name=npm_tag::' + (require('./package.json').version.includes('-') ? 'next' : 'latest')"
+      - name: Print version
+        run: |
+          echo "releasing ${{ steps.extract_version.outputs.version }} with tag ${{ steps.extract_version.outputs.npm_tag }}"
+      - name: Create Release
+        id: create_release
+        uses: release-drafter/release-drafter@v5
+        env:
+          GITHUB_TOKEN: ${{ secrets.PRIVATE_GITHUB_TOKEN }}
+        with:
+          name: v${{ steps.extract_version.outputs.version }}
+          tag: v${{ steps.extract_version.outputs.version }}
+          version: ${{ steps.extract_version.outputs.version }}
+          prerelease: ${{ needs.extract_version.outputs.npm_tag == 'next' }}
+          publish: true
+    outputs:
+      version: ${{ steps.extract_version.outputs.version }}
+      npm_tag: ${{ steps.extract_version.outputs.npm_tag }}
+      upload_url: ${{ steps.create_release.outputs.upload_url }}
+      tag_name: ${{ steps.create_release.outputs.tag_name }}
+
+  sync_dev:
+    needs: correct_repository
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+        with:
+          ref: develop
+          ssh-key: ${{ secrets.SSH_PRIVATE_KEY }}
+      - name: Reset dev branch
+        run: |
+          git fetch origin main:main
+          git merge main
+          git push

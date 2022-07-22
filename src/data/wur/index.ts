@@ -71,9 +71,10 @@ const lineup = b.deriveColors().restore(dump).buildTaggle(${domVariable});
         // world_rank,institution,country,national_rank,quality_of_education,alumni_employment,quality_of_faculty,publications,influence,citations,broad_impact,patents,year
         // multiple years
         // per year:
-        const perYear = `score,national_rank,quality_of_education,alumni_employment,quality_of_faculty,publications,influence,citations,broad_impact,patents`.split(
-          ','
-        );
+        const perYear =
+          `score,national_rank,quality_of_education,alumni_employment,quality_of_faculty,publications,influence,citations,broad_impact,patents`.split(
+            ','
+          );
         const b = builder(rows).column(buildStringColumn('institution')).column(buildStringColumn('country'));
 
         yearArray.slice(0, 2).forEach((year) => {
