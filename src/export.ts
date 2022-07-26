@@ -159,7 +159,10 @@ import "./main.css";
 import * as exportDump from "./data/dump.json";
 import * as exportData from "./data/raw_data.txt";
 
-${shared.dataset!.buildScript(`exportData.default`, 'document.body', `exportDump`)}`,
+// decode csv data url
+const csv = atob(exportData.default.slice("data:text/plain;base64,".length));
+
+${shared.dataset!.buildScript('csv', 'document.body', `exportDump`)}`,
         },
         'package.json': {
           content: {
@@ -167,7 +170,7 @@ ${shared.dataset!.buildScript(`exportData.default`, 'document.body', `exportDump
             description: shared.dataset!.description,
             dependencies: {
               lineupjs: LineUpJS.version,
-              papaparse: '^4.6.2',
+              papaparse: '^5.3.2',
             },
           },
         },
