@@ -1,5 +1,5 @@
 import Dexie from 'dexie';
-import {IDatasetMeta, IDataset, ISession} from './IDataset';
+import { IDatasetMeta, IDataset, ISession } from './IDataset';
 
 const SCHEMA_VERSION = 1;
 
@@ -14,11 +14,11 @@ class LineUpDB extends Dexie {
     super('LineUp App DB');
     this.version(SCHEMA_VERSION).stores({
       datasets: '++uid,id,name,creationDate',
-      sessions: '++uid,dataset,creationDate'
+      sessions: '++uid,dataset,creationDate',
     });
     // hack for linting
-    this.datasets = (<any>this).datasets || <any>undefined;
-    this.sessions = (<any>this).sessions || <any>undefined;
+    this.datasets = (this as any).datasets ?? undefined;
+    this.sessions = (this as any).sessions ?? undefined;
   }
 }
 
@@ -30,7 +30,7 @@ export function storeDataset(dataset: IDataset): Promise<IDataset> {
   delete copy.buildScript;
   const sessions = copy.sessions;
   delete copy.sessions;
-  const add = db.datasets.add(copy).then((uid) => Object.assign(dataset, {uid}));
+  const add = db.datasets.add(copy).then((uid) => Object.assign(dataset, { uid }));
 
   if (!sessions || sessions.length === 0) {
     return add;
@@ -40,25 +40,27 @@ export function storeDataset(dataset: IDataset): Promise<IDataset> {
       dataset: dataset.id,
       creationDate: s.creationDate || new Date(),
       name: s.name,
-      dump: s.dump
+      dump: s.dump,
     };
-    return db.sessions.add(row).then((uid) => Object.assign(row, {uid}));
+    return db.sessions.add(row).then((uid) => Object.assign(row, { uid }));
   });
-  return Promise.all<(IDataset | ISession)[]>([<any>add].concat(s)).then((r: any[]) => {
-    const ds = <IDataset>r[0];
+  return Promise.all<(IDataset | ISession)[]>([add as any].concat(s)).then((r: any[]) => {
+    const ds = r[0] as IDataset;
     ds.sessions = r.slice(1);
     return ds;
   });
 }
 
 export function editDataset(dataset: IDataset): Promise<IDataset> {
-  return db.datasets.update((<any>dataset).uid, {
-    name: dataset.name,
-    description: dataset.description
-  }).then(() => dataset);
+  return db.datasets
+    .update((dataset as any).uid, {
+      name: dataset.name,
+      description: dataset.description,
+    })
+    .then(() => dataset);
 }
 
-function byCreationDate<T extends {creationDate: Date}>(arr: T[]) {
+function byCreationDate<T extends { creationDate: Date }>(arr: T[]) {
   for (const entry of arr) {
     entry.creationDate = entry.creationDate instanceof Date ? entry.creationDate : new Date(entry.creationDate);
   }
@@ -70,10 +72,12 @@ export function listDatasets(): Promise<IDatasetMeta[]> {
 }
 
 export function deleteDataset(dataset: IDatasetMeta): Promise<any> {
-  return db.transaction('rw', db.datasets, db.sessions, () => Promise.all([
-    db.sessions.where('dataset').equals(dataset.id).delete(),
-    db.datasets.where('id').equals(dataset.id).delete()
-  ]));
+  return db.transaction('rw', db.datasets, db.sessions, () =>
+    Promise.all([
+      db.sessions.where('dataset').equals(dataset.id).delete(),
+      db.datasets.where('id').equals(dataset.id).delete(),
+    ])
+  );
 }
 
 export function storeSession(dataset: IDatasetMeta, name: string, dump: any) {
@@ -81,9 +85,9 @@ export function storeSession(dataset: IDatasetMeta, name: string, dump: any) {
     dataset: dataset.id,
     creationDate: new Date(),
     name,
-    dump
+    dump,
   };
-  return db.sessions.add(row).then((uid) => Object.assign(row, {uid}));
+  return db.sessions.add(row).then((uid) => Object.assign(row, { uid }));
 }
 
 export function listSessions(dataset?: IDatasetMeta): Promise<ISession[]> {

@@ -1,0 +1,61 @@
+name: ci
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3.4.1
+        with:
+          node-version: 16
+      - run: npm i -g yarn
+      - run: yarn config set checksumBehavior ignore
+      - name: Cache Node.js modules
+        uses: actions/cache@v3
+        with:
+          path: |
+            ./.yarn/cache
+            ./.yarn/unplugged
+            ~/.cache/Cypress
+          key: ${{ runner.os }}-yarn2-v4-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn2-v4
+      - run: yarn install
+      - run: yarn clean
+      - run: yarn compile
+      - run: yarn build
+      - run: yarn lint
+      - run: |
+          mkdir -p public/app
+          cp -rt public/app/ build/*
+
+          mkdir -p public_dev/app_develop
+          cp -rt public_dev/app_develop/ build/*
+
+      - name: Deploy Main
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        uses: upsetjs/actions-gh-pages@sgratzl
+        env:
+          ACTIONS_ALLOW_UNSECURE_COMMANDS: true
+        with:
+          personal_token: ${{ secrets.PRIVATE_GITHUB_TOKEN }}
+          external_repository: lineupjs/lineup.js.org
+          publish_branch: main
+          publish_dir: ./public
+          enable_jekyll: true
+          remove_path_spec: 'app'
+
+      - name: Deploy Develop
+        if: github.ref == 'refs/heads/develop' && github.event_name == 'push'
+        uses: upsetjs/actions-gh-pages@sgratzl
+        env:
+          ACTIONS_ALLOW_UNSECURE_COMMANDS: true
+        with:
+          personal_token: ${{ secrets.PRIVATE_GITHUB_TOKEN }}
+          external_repository: lineupjs/lineup.js.org
+          publish_branch: main
+          publish_dir: ./public_dev
+          enable_jekyll: true
+          remove_path_spec: 'app_develop'

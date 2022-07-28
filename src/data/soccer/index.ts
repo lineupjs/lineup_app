@@ -1,6 +1,6 @@
-import {IDataset, PRELOADED_TYPE} from '../IDataset';
-import {parse, ParseResult} from 'papaparse';
-import {builder, buildRanking, buildStringColumn, buildCategoricalColumn, buildNumberColumn} from 'lineupjs';
+import { IDataset, PRELOADED_TYPE } from '../IDataset';
+import { parse, ParseResult } from 'papaparse';
+import { builder, buildRanking, buildStringColumn, buildCategoricalColumn, buildNumberColumn } from 'lineupjs';
 import '!file-loader?name=preview.png!./soccer.png';
 
 export const data: IDataset = {
@@ -50,54 +50,57 @@ const lineup = LineUpJS.builder(parsed.data)
 `;
   },
   build(node: HTMLElement) {
-    return import('raw-loader!./soccer.csv').then((content: any) => {
-      const csv: string = content.default ? content.default : content;
-      this.rawData = csv;
-      return parse(csv, {
-        dynamicTyping: true,
-        header: true,
-        skipEmptyLines: true
-      });
-    }).then((parsed: ParseResult) => {
-      const suffix = [12, 13, 14, 15, 16, 17];
-      const cols = ['games', 'goals', 'minutes', 'assists'];
-      const labels = suffix.map((d) => `20${d}`);
-      parsed.data.forEach((row) => {
-        cols.forEach((col) => {
-          row[col] = suffix.map((d) => !row[`${col}${d}`] && row[`${col}${d}`] !== 0 ? null : row[`${col}${d}`]);
+    return import('raw-loader!./soccer.csv')
+      .then((content: any) => {
+        const csv: string = content.default ? content.default : content;
+        this.rawData = csv;
+        return parse(csv, {
+          dynamicTyping: true,
+          header: true,
+          skipEmptyLines: true,
         });
+      })
+      .then((parsed: ParseResult<any>) => {
+        const suffix = [12, 13, 14, 15, 16, 17];
+        const cols = ['games', 'goals', 'minutes', 'assists'];
+        const labels = suffix.map((d) => `20${d}`);
+        parsed.data.forEach((row) => {
+          cols.forEach((col) => {
+            row[col] = suffix.map((d) => (!row[`${col}${d}`] && row[`${col}${d}`] !== 0 ? null : row[`${col}${d}`]));
+          });
+        });
+        return builder(parsed.data)
+          .column(buildStringColumn('player').width(150))
+          .column(buildNumberColumn('age', [0, NaN]))
+          .column(buildStringColumn('current_club').width(100))
+          .column(buildCategoricalColumn('current_league'))
+          .column(buildCategoricalColumn('foot'))
+          .column(buildNumberColumn('height', [160, 210]))
+          .column(buildStringColumn('nationality'))
+          .column(buildCategoricalColumn('position'))
+          .column(buildNumberColumn('games', [0, NaN]).asArray(labels).width(300))
+          .column(buildNumberColumn('goals', [0, NaN]).asArray(labels).width(300))
+          .column(buildNumberColumn('minutes', [0, NaN]).asArray(labels))
+          .column(buildNumberColumn('assists', [0, NaN]).asArray(labels))
+          .deriveColors()
+          .ranking(
+            buildRanking()
+              .supportTypes()
+              .column('player')
+              .column('current_league')
+              .column('current_club')
+              .column('position')
+              .column('foot')
+              .column('age')
+              .column('height')
+              .column('goals')
+              .column('games')
+            //.allColumns()
+          )
+          .aggregationStrategy('group+top+item')
+          .buildTaggle(node);
       });
-      return builder(parsed.data)
-        .column(buildStringColumn('player').width(150))
-        .column(buildNumberColumn('age', [0, NaN]))
-        .column(buildStringColumn('current_club').width(100))
-        .column(buildCategoricalColumn('current_league'))
-        .column(buildCategoricalColumn('foot'))
-        .column(buildNumberColumn('height', [160, 210]))
-        .column(buildStringColumn('nationality'))
-        .column(buildCategoricalColumn('position'))
-        .column(buildNumberColumn('games', [0, NaN]).asArray(labels).width(300))
-        .column(buildNumberColumn('goals', [0, NaN]).asArray(labels).width(300))
-        .column(buildNumberColumn('minutes', [0, NaN]).asArray(labels))
-        .column(buildNumberColumn('assists', [0, NaN]).asArray(labels))
-        .deriveColors()
-        .ranking(buildRanking()
-          .supportTypes()
-          .column('player')
-          .column('current_league')
-          .column('current_club')
-          .column('position')
-          .column('foot')
-          .column('age')
-          .column('height')
-          .column('goals')
-          .column('games')
-          //.allColumns()
-        )
-        .aggregationStrategy('group+top+item')
-        .buildTaggle(node);
-    });
-  }
+  },
 };
 
 export default data;
